@@ -1,6 +1,6 @@
 package org.toxsoft.skide.core;
 
-import org.toxsoft.unit.txtproj.core.impl.TsProjectFileFormatInfo;
+import org.toxsoft.core.unit.txtproj.lib.impl.TsProjectFileFormatInfo;
 
 /**
  * Plugin constants.

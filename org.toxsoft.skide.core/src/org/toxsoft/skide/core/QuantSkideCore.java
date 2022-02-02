@@ -1,7 +1,7 @@
 package org.toxsoft.skide.core;
 
 import org.eclipse.e4.core.contexts.IEclipseContext;
-import org.toxsoft.tsgui.bricks.quant.AbstractQuant;
+import org.toxsoft.core.tsgui.bricks.quant.AbstractQuant;
 
 /**
  * The library quant.

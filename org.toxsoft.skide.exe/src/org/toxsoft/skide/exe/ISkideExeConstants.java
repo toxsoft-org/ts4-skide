@@ -2,9 +2,9 @@ package org.toxsoft.skide.exe;
 
 import static org.toxsoft.skide.exe.ISkResources.*;
 
-import org.toxsoft.tsgui.mws.appinf.ITsApplicationInfo;
-import org.toxsoft.tsgui.mws.appinf.TsApplicationInfo;
-import org.toxsoft.tslib.utils.TsVersion;
+import org.toxsoft.core.tsgui.mws.appinf.ITsApplicationInfo;
+import org.toxsoft.core.tsgui.mws.appinf.TsApplicationInfo;
+import org.toxsoft.core.tslib.utils.TsVersion;
 
 /**
  * Общие константы приложения Hmade.
