@@ -1,7 +1,7 @@
 package org.toxsoft.skide.core;
 
-import org.eclipse.e4.core.contexts.IEclipseContext;
-import org.toxsoft.core.tsgui.bricks.quant.AbstractQuant;
+import org.eclipse.e4.core.contexts.*;
+import org.toxsoft.core.tsgui.bricks.quant.*;
 
 /**
  * The library quant.
@@ -25,7 +25,7 @@ public class QuantSkideCore
 
   @Override
   protected void doInitWin( IEclipseContext aWinContext ) {
-    // FIXME ISkideCoreConstants.init( aWinContext );
+    ISkideCoreConstants.init( aWinContext );
   }
 
 }
