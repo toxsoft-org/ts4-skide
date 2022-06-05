@@ -1,6 +1,9 @@
 package org.toxsoft.skide.core.project;
 
 import org.toxsoft.core.tslib.av.opset.*;
+import org.toxsoft.core.tslib.bricks.strid.coll.*;
+import org.toxsoft.core.tslib.utils.errors.*;
+import org.toxsoft.uskat.core.connection.*;
 
 /**
  * The SkIDE project main and the only access point.
@@ -12,9 +15,9 @@ public interface ISkideProject {
   /**
    * Returns the information about project.
    *
-   * @return {@link ISkideProjectInfo} - the project info
+   * @return {@link IOptionSet} - the project info
    */
-  ISkideProjectInfo projectInfo();
+  IOptionSet projectInfo();
 
   /**
    * Changes project info? any option except project ID.
@@ -23,6 +26,30 @@ public interface ISkideProject {
    */
   void setProjectInfo( IOptionSet aParams );
 
-  // TODO API
+  /**
+   * Return connection to the project content.
+   *
+   * @return {@link ISkConnection} - project content
+   */
+  ISkConnection projConn();
+
+  /**
+   * Returns project units.
+   *
+   * @return {@link IStridablesList}&lt;{@link ISkideProjectUnit}&gt; - units list
+   */
+  IStridablesList<ISkideProjectUnit> units();
+
+  /**
+   * Returns the project unit of expected kind by specified ID.
+   *
+   * @param <U> - expected type of unit
+   * @param aUnitId String - unit ID
+   * @param aUnitClass &lt;U&gt; - expected type of unit
+   * @return &lt;U&gt; - found unit or <code>null</code>
+   * @throws TsNullArgumentRtException any argument = <code>null</code>
+   * @throws ClassCastException found unit is not of expected type
+   */
+  <U extends ISkideProjectUnit> U getUnit( String aUnitId, Class<U> aUnitClass );
 
 }
