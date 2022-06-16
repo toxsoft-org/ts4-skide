@@ -1,0 +1,23 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Sectioned text file content management GUI components
+Bundle-SymbolicName: org.toxsoft.tool.sfv.gui
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: org.toxsoft.tool.sfv.gui.Activator
+Bundle-Vendor: toxsoft.org
+Require-Bundle: javax.annotation,
+ javax.inject,
+ org.eclipse.core.runtime,
+ org.eclipse.ui,
+ org.eclipse.e4.core.contexts,
+ org.eclipse.e4.core.di,
+ org.eclipse.e4.ui.model.workbench,
+ org.eclipse.e4.ui.workbench,
+ org.toxsoft.core.tslib,
+ org.toxsoft.core.singlesrc.rcp,
+ org.toxsoft.core.tsgui,
+ org.toxsoft.core.tsgui.mws
+Bundle-RequiredExecutionEnvironment: JavaSE-17
+Automatic-Module-Name: org.toxsoft.tool.sfv.gui
+Bundle-ActivationPolicy: lazy
+Export-Package: org.toxsoft.tool.sfv.gui

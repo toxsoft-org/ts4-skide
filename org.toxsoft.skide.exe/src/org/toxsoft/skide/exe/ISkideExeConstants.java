@@ -2,6 +2,8 @@ package org.toxsoft.skide.exe;
 
 import static org.toxsoft.skide.exe.ISkResources.*;
 
+import java.time.*;
+
 import org.toxsoft.core.tsgui.mws.appinf.*;
 import org.toxsoft.core.tslib.utils.*;
 
@@ -16,9 +18,9 @@ public interface ISkideExeConstants {
   // ------------------------------------------------------------------------------------
   // App info
 
-  String    APP_ID      = "org.toxsoft.skide";     //$NON-NLS-1$
-  String    APP_ALIAS   = "skide";                 //$NON-NLS-1$
-  TsVersion APP_VERSION = new TsVersion( 3, 0, 0 );
+  String    APP_ID      = "org.toxsoft.skide";                        //$NON-NLS-1$
+  String    APP_ALIAS   = "skide";                                    //$NON-NLS-1$
+  TsVersion APP_VERSION = new TsVersion( 3, 0, 2022, Month.JUNE, 16 );
 
   ITsApplicationInfo APP_INFO = new TsApplicationInfo( APP_ID, STR_N_APP_INFO, STR_D_APP_INFO, APP_ALIAS, APP_VERSION );
 

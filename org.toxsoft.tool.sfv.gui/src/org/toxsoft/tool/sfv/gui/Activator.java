@@ -1,9 +1,6 @@
-package org.toxsoft.skide.exe;
-
-import static org.toxsoft.skide.exe.ISkideExeConstants.*;
+package org.toxsoft.tool.sfv.gui;
 
 import org.toxsoft.core.tsgui.mws.bases.*;
-import org.toxsoft.core.tsgui.mws.osgi.*;
 
 /**
  * The plugin activator.
@@ -16,7 +13,7 @@ public class Activator
   /**
    * The plugin ID (for Java static imports).
    */
-  public static final String PLUGIN_ID = "org.toxsoft.skide.exe"; //$NON-NLS-1$
+  public static final String PLUGIN_ID = "org.toxsoft.tool.sfv.gui"; //$NON-NLS-1$
 
   private static Activator instance = null;
 
@@ -27,12 +24,6 @@ public class Activator
     super( PLUGIN_ID );
     checkInstance( instance );
     instance = this;
-  }
-
-  @Override
-  protected void doStart() {
-    IMwsOsgiService mws = findOsgiService( IMwsOsgiService.class );
-    mws.setAppInfo( APP_INFO );
   }
 
   /**

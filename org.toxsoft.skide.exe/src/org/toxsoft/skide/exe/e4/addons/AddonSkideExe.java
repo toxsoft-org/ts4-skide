@@ -3,21 +3,21 @@ package org.toxsoft.skide.exe.e4.addons;
 import static org.toxsoft.core.tsgui.graphics.icons.EIconSize.*;
 import static org.toxsoft.skide.core.ISkideCoreConstants.*;
 
-import org.eclipse.e4.core.contexts.IEclipseContext;
-import org.eclipse.e4.ui.model.application.MApplication;
-import org.eclipse.e4.ui.model.application.ui.basic.MTrimmedWindow;
-import org.eclipse.e4.ui.workbench.modeling.EModelService;
-import org.eclipse.swt.graphics.Rectangle;
-import org.eclipse.swt.widgets.Display;
-import org.toxsoft.core.tsgui.bricks.quant.IQuantRegistrator;
-import org.toxsoft.core.tsgui.graphics.icons.impl.TsIconManagerUtils;
-import org.toxsoft.core.tsgui.mws.IMwsCoreConstants;
-import org.toxsoft.core.tsgui.mws.bases.MwsAbstractAddon;
-import org.toxsoft.skide.core.QuantSkideCore;
+import org.eclipse.e4.core.contexts.*;
+import org.eclipse.e4.ui.model.application.*;
+import org.eclipse.e4.ui.model.application.ui.basic.*;
+import org.eclipse.e4.ui.workbench.modeling.*;
+import org.eclipse.swt.graphics.*;
+import org.eclipse.swt.widgets.*;
+import org.toxsoft.core.tsgui.bricks.quant.*;
+import org.toxsoft.core.tsgui.graphics.icons.impl.*;
+import org.toxsoft.core.tsgui.mws.*;
+import org.toxsoft.core.tsgui.mws.bases.*;
+import org.toxsoft.skide.core.*;
 import org.toxsoft.skide.exe.Activator;
 
 /**
- * Alloication addon.
+ * Application addon.
  *
  * @author hazard157
  */
