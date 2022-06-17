@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:advanced="http://www.eclipse.org/ui/2010/UIModel/application/ui/advanced" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:commands="http://www.eclipse.org/ui/2010/UIModel/application/commands" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmi:id="_M6ZaQO1BEeyRC9qIMYaSZg">
+<fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:advanced="http://www.eclipse.org/ui/2010/UIModel/application/ui/advanced" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:commands="http://www.eclipse.org/ui/2010/UIModel/application/commands" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_M6ZaQO1BEeyRC9qIMYaSZg">
   <imports xsi:type="commands:Category" xmi:id="_Ny-oEO1BEeyRC9qIMYaSZg" elementId="org.toxsoft.mws.cmdcategory.global"/>
   <imports xsi:type="commands:Command" xmi:id="_PshjoO1BEeyRC9qIMYaSZg" elementId="org.toxsoft.mws.cmd.switch_persp">
     <parameters xmi:id="_Qv-ksO1BEeyRC9qIMYaSZg" elementId="org.toxsoft.mws.cmd.switch_persp.arg.perspId" name="org.toxsoft.mws.cmd.switch_persp.arg.perspId"/>
@@ -8,6 +8,25 @@
     <elements xsi:type="application:Addon" xmi:id="_EjBDIO1CEeyRC9qIMYaSZg" elementId="org.toxsoft.tool.sfv.mws.addon.0" contributionURI="bundleclass://org.toxsoft.tool.sfv.mws/org.toxsoft.tool.sfv.mws.e4.addons.AddonToolSfvMws"/>
   </fragments>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_F4HN0O1CEeyRC9qIMYaSZg" featurename="children" parentElementId="org.toxsoft.mws.perspectivestack.main">
-    <elements xsi:type="advanced:Perspective" xmi:id="_H9oI0O1CEeyRC9qIMYaSZg" elementId="org.toxsoft.too.sfv.persp.main"/>
+    <elements xsi:type="advanced:Perspective" xmi:id="_H9oI0O1CEeyRC9qIMYaSZg" elementId="org.toxsoft.too.sfv.persp.main" label="%Persp_SfvTool" iconURI="platform:/plugin/org.toxsoft.tool.sfv.gui/icons/is24x24/sfv-tool.png" tooltip="%Persp_SfvTool_D">
+      <children xsi:type="basic:PartSashContainer" xmi:id="_GrXdcO1HEey2HuSF1G5AUw" elementId="org.toxsoft.tool.sfv.mws.partsashcontainer.0" horizontal="true">
+        <children xsi:type="basic:PartStack" xmi:id="_syjacO1IEey2HuSF1G5AUw" elementId="org.toxsoft.tool.sfv.mws.partstack.0" containerData="2000">
+          <children xsi:type="basic:Part" xmi:id="_vfwnkO1IEey2HuSF1G5AUw" elementId="org.toxsoft.too.sfv.part.sections_list" contributionURI="bundleclass://org.toxsoft.tool.sfv.gui/org.toxsoft.tool.sfv.gui.e4.uiparts.UipartSfvSectionsList" label="%Part_SectionsList" tooltip="%Part_SectionsList_D"/>
+        </children>
+        <children xsi:type="basic:PartStack" xmi:id="_tDG-8O1IEey2HuSF1G5AUw" elementId="org.toxsoft.tool.sfv.mws.partstack.1" containerData="8000">
+          <children xsi:type="basic:Part" xmi:id="_vzHocO1IEey2HuSF1G5AUw" elementId="org.toxsoft.too.sfv.part.section_content" contributionURI="bundleclass://org.toxsoft.tool.sfv.gui/org.toxsoft.tool.sfv.gui.e4.uiparts.UipartSfvSectionContent" label="%Part_SectionContent" tooltip="%Part_SectionContent_D"/>
+        </children>
+      </children>
+    </elements>
+  </fragments>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_UV8B8O1FEey2HuSF1G5AUw" featurename="children" parentElementId="org.toxsoft.mws.menu.main.perspectives-">
+    <elements xsi:type="menu:HandledMenuItem" xmi:id="_YV20IO1FEey2HuSF1G5AUw" elementId="org.toxsoft.tool.sfv.mws.handledmenuitem.persp_sfvtool" label="%Persp_SfvTool" iconURI="platform:/plugin/org.toxsoft.tool.sfv.gui/icons/is24x24/sfv-tool.png" tooltip="%Persp_SfvTool_D" type="Radio" command="_PshjoO1BEeyRC9qIMYaSZg">
+      <parameters xmi:id="_yPnncO1FEey2HuSF1G5AUw" elementId="org.toxsoft.tool.sfv.mws.parameter.0" name="org.toxsoft.mws.cmd.switch_persp.arg.perspId" value="org.toxsoft.too.sfv.persp.main"/>
+    </elements>
+  </fragments>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_UiDyYO1FEey2HuSF1G5AUw" featurename="children" parentElementId="org.toxsoft.mws.toolbar.perspectives">
+    <elements xsi:type="menu:HandledToolItem" xmi:id="_cM2T0O1FEey2HuSF1G5AUw" elementId="org.toxsoft.tool.sfv.mws.handledtoolitem.persp_sfvtool" label="%Persp_SfvTool" iconURI="platform:/plugin/org.toxsoft.tool.sfv.gui/icons/is24x24/sfv-tool.png" tooltip="%Persp_SfvTool_D" type="Radio" command="_PshjoO1BEeyRC9qIMYaSZg">
+      <parameters xmi:id="_z9Q1AO1FEey2HuSF1G5AUw" elementId="org.toxsoft.tool.sfv.mws.parameter.1" name="org.toxsoft.mws.cmd.switch_persp.arg.perspId" value="org.toxsoft.too.sfv.persp.main"/>
+    </elements>
   </fragments>
 </fragment:ModelFragments>

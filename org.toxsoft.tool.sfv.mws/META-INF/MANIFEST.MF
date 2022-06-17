@@ -5,7 +5,8 @@ Bundle-SymbolicName: org.toxsoft.tool.sfv.mws;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: org.toxsoft.tool.sfv.mws.Activator
 Bundle-Vendor: toxsoft.org
-Export-Package: org.toxsoft.tool.sfv.mws
+Export-Package: org.toxsoft.tool.sfv.mws,
+ org.toxsoft.tool.sfv.mws.e4.addons
 Require-Bundle: javax.annotation,
  javax.inject,
  org.eclipse.core.runtime,

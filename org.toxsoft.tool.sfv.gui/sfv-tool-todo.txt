@@ -1,0 +1,13 @@
+2022-06-17
+--- ISfvToolService.isAltered()
+--- perspective-specific menu (Open/Save/SaveAs/New, Find/Validate/, Undo/Redo/ClearContent/, etc...)
+--- local menu on Sections list (Add/Remove/Edit Content)
+--- run external editor (like KWrite) on selected content
+--- drag-n-drop reoredr in list
+--- remember N last files
+--- small filesystem browser
+--- undo/redo
+--- live find field over content
+--- builtin content editor
+--- content validator
+--- editor with syntax lighlightening for KTOR format
