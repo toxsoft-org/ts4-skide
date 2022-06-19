@@ -29,4 +29,9 @@
       <parameters xmi:id="_z9Q1AO1FEey2HuSF1G5AUw" elementId="org.toxsoft.tool.sfv.mws.parameter.1" name="org.toxsoft.mws.cmd.switch_persp.arg.perspId" value="org.toxsoft.too.sfv.persp.main"/>
     </elements>
   </fragments>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_t9C9EO8IEeyNYPTtiKglUw" featurename="children" parentElementId="org.toxsoft.mws.menu.main" positionInList="after:org.toxsoft.mws.menu.main.service">
+    <elements xsi:type="menu:Menu" xmi:id="_1B440O8IEeyNYPTtiKglUw" elementId="org.toxsoft.too.sfv.mainmenu.sfv_tool" label="%Persp_SfvTool" mnemonics="%Persp_SfvTool_D">
+      <children xsi:type="menu:DirectMenuItem" xmi:id="_6H8MoO8IEeyNYPTtiKglUw" elementId="org.toxsoft.tool.sfv.mws.directmenuitem.foo" label="Foo"/>
+    </elements>
+  </fragments>
 </fragment:ModelFragments>

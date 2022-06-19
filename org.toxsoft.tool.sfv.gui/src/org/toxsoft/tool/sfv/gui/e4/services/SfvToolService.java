@@ -112,19 +112,6 @@ public class SfvToolService
   }
 
   // ------------------------------------------------------------------------------------
-  // implementation
-  //
-
-  private ISfvSection findFirstSectionById( String aSectionId ) {
-    for( ISfvSection ss : sectionsList ) {
-      if( ss.sectionId().equals( aSectionId ) ) {
-        return ss;
-      }
-    }
-    return null;
-  }
-
-  // ------------------------------------------------------------------------------------
   // ISfvToolService
   //
 

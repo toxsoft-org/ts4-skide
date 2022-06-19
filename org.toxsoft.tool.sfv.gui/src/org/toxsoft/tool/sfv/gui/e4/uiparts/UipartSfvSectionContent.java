@@ -11,8 +11,6 @@ import org.toxsoft.core.tsgui.graphics.fonts.*;
 import org.toxsoft.core.tsgui.mws.bases.*;
 import org.toxsoft.core.tslib.bricks.apprefs.*;
 import org.toxsoft.core.tslib.bricks.events.change.*;
-import org.toxsoft.core.tslib.coll.helpers.*;
-import org.toxsoft.core.tslib.coll.notifier.basis.*;
 import org.toxsoft.core.tslib.utils.*;
 import org.toxsoft.tool.sfv.gui.e4.services.*;
 

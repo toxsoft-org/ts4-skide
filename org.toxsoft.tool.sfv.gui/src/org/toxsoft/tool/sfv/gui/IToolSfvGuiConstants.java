@@ -32,6 +32,7 @@ public interface IToolSfvGuiConstants {
   String PERSPID_SFV_TOOL           = "org.toxsoft.too.sfv.persp.main";           //$NON-NLS-1$
   String PARTID_SFV_SECTIONS_LIST   = "org.toxsoft.too.sfv.part.sections_list";   //$NON-NLS-1$
   String PARTID_SFV_SECTION_CONTENT = "org.toxsoft.too.sfv.part.section_content"; //$NON-NLS-1$
+  String MMNUID_SFV_TOOL            = "org.toxsoft.too.sfv.mainmenu.sfv_tool";    //$NON-NLS-1$
 
   // ------------------------------------------------------------------------------------
   // Icons

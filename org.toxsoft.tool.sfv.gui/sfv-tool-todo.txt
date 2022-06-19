@@ -11,3 +11,4 @@
 --- builtin content editor
 --- content validator
 --- editor with syntax lighlightening for KTOR format
+--- manage two (or more) files, move sections,exchange, etc...

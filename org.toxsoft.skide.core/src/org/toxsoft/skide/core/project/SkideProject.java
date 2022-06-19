@@ -16,7 +16,7 @@ class SkideProject
     implements ISkideProject {
 
   private final IOptionSetEdit projectInfo = new OptionSet();
-  private final ITsProject     tsPorj;
+  private final ITsProject     tsProj;
 
   /**
    * Creates project bound to the {@link ITsProject} storage.
@@ -26,7 +26,7 @@ class SkideProject
    */
   public SkideProject( ITsProject aTsProj ) {
     TsNullArgumentRtException.checkNulls( aTsProj );
-    tsPorj = aTsProj;
+    tsProj = aTsProj;
   }
 
   // ------------------------------------------------------------------------------------
