@@ -100,7 +100,7 @@ public class UipartSfvSectionsList
     @Override
     protected void doUpdateActionsState( boolean aIsAlive, boolean aIsSel, ISfvSection aSel ) {
       ISfvToolService sts = tsContext().get( ISfvToolService.class );
-      toolbar().setActionEnabled( ACTID_SAVE, sts.getFile() != null );
+      toolbar().setActionEnabled( ACTID_SAVE, sts.getFile() != null && sts.isAltered() );
       File f = sts.getFile();
       if( f != null ) {
         toolbar().setNameLabelText( f.getName() );

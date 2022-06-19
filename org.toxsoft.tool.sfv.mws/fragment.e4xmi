@@ -19,7 +19,7 @@
       </children>
     </elements>
   </fragments>
-  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_UV8B8O1FEey2HuSF1G5AUw" featurename="children" parentElementId="org.toxsoft.mws.menu.main.perspectives-">
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_UV8B8O1FEey2HuSF1G5AUw" featurename="children" parentElementId="org.toxsoft.mws.menu.main.perspectives">
     <elements xsi:type="menu:HandledMenuItem" xmi:id="_YV20IO1FEey2HuSF1G5AUw" elementId="org.toxsoft.tool.sfv.mws.handledmenuitem.persp_sfvtool" label="%Persp_SfvTool" iconURI="platform:/plugin/org.toxsoft.tool.sfv.gui/icons/is24x24/sfv-tool.png" tooltip="%Persp_SfvTool_D" type="Radio" command="_PshjoO1BEeyRC9qIMYaSZg">
       <parameters xmi:id="_yPnncO1FEey2HuSF1G5AUw" elementId="org.toxsoft.tool.sfv.mws.parameter.0" name="org.toxsoft.mws.cmd.switch_persp.arg.perspId" value="org.toxsoft.too.sfv.persp.main"/>
     </elements>

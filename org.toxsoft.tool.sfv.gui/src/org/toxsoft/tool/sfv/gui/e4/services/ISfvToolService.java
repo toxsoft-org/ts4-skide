@@ -23,6 +23,12 @@ public interface ISfvToolService {
 
   void saveAs( File aFile );
 
+  boolean isAltered();
+
+  default boolean hasFile() {
+    return getFile() != null;
+  }
+
   IGenericChangeEventer fileBindingChangeEventer();
 
   INotifierListEdit<ISfvSection> sections();

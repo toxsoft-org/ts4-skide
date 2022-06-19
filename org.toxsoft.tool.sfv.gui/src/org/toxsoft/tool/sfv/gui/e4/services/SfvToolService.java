@@ -35,6 +35,7 @@ public class SfvToolService
 
     @Override
     public void onCollectionChanged( Object aSource, ECrudOp aOp, Object aItem ) {
+      altered = true;
       // reset existing current section ID if no such section exsist after editing
       if( currSect != null && sectionsList.hasElem( currSect ) ) {
         currSect = null;
@@ -100,6 +101,8 @@ public class SfvToolService
   private File        file     = null;
   private ISfvSection currSect = null;
 
+  private boolean altered = false;
+
   /**
    * Constructor.
    */
@@ -132,6 +135,7 @@ public class SfvToolService
       currSect = null;
       sectIdEventer.fireChangeEvent();
     }
+    altered = false;
   }
 
   @Override
@@ -147,6 +151,12 @@ public class SfvToolService
       file = aFile;
       fileEventer.fireChangeEvent();
     }
+    altered = false;
+  }
+
+  @Override
+  public boolean isAltered() {
+    return altered;
   }
 
   @Override
