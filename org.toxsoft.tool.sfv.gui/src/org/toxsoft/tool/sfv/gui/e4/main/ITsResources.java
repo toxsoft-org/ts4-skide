@@ -1,4 +1,4 @@
-package org.toxsoft.tool.sfv.gui.e4.services;
+package org.toxsoft.tool.sfv.gui.e4.main;
 
 /**
  * Localizable resources.

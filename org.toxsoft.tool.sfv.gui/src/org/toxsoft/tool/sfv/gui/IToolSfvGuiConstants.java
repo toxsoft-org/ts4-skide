@@ -34,7 +34,11 @@ public interface IToolSfvGuiConstants {
   String PARTID_SFV_SECTION_CONTENT = "org.toxsoft.too.sfv.part.section_content"; //$NON-NLS-1$
   String MMNUID_SFV_TOOL            = "org.toxsoft.too.sfv.mainmenu.sfv_tool";    //$NON-NLS-1$
 
-  String CMDID_OPEN_FILE = "org.toxsoft.too.sfv.cmd.open_file"; //$NON-NLS-1$
+  String CMDCATEGID_SFV_TOOL = "org.toxsoft.too.sfv.cmdcateg.sfv_tool"; //$NON-NLS-1$
+  String CMDID_NEW_FILE      = "org.toxsoft.too.sfv.cmd.new_file";      //$NON-NLS-1$
+  String CMDID_OPEN_FILE     = "org.toxsoft.too.sfv.cmd.open_file";     //$NON-NLS-1$
+  String CMDID_SAVE_FILE     = "org.toxsoft.too.sfv.cmd.save_file";     //$NON-NLS-1$
+  String CMDID_SAVEN_FILE_AS = "org.toxsoft.too.sfv.cmd.save_file_as";  //$NON-NLS-1$
 
   // ------------------------------------------------------------------------------------
   // Icons

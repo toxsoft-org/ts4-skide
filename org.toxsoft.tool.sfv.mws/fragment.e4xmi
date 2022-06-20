@@ -17,6 +17,10 @@
           <children xsi:type="basic:Part" xmi:id="_vzHocO1IEey2HuSF1G5AUw" elementId="org.toxsoft.too.sfv.part.section_content" contributionURI="bundleclass://org.toxsoft.tool.sfv.gui/org.toxsoft.tool.sfv.gui.e4.uiparts.UipartSfvSectionContent" label="%Part_SectionContent" tooltip="%Part_SectionContent_D"/>
         </children>
       </children>
+      <handlers xmi:id="_O7ci0O_wEeyMZs8IM-A5ig" elementId="org.toxsoft.tool.sfv.mws.handler.1" contributionURI="bundleclass://org.toxsoft.tool.sfv.gui/org.toxsoft.tool.sfv.gui.e4.handlers.CmdToolSfvNewFile" command="_hB_SQO_AEeyMZs8IM-A5ig"/>
+      <handlers xmi:id="_ZNiJYO--EeyMZs8IM-A5ig" elementId="org.toxsoft.tool.sfv.mws.handler.0" contributionURI="bundleclass://org.toxsoft.tool.sfv.gui/org.toxsoft.tool.sfv.gui.e4.handlers.CmdToolSfvOpenFile" command="_P-OhMO--EeyMZs8IM-A5ig"/>
+      <handlers xmi:id="_ShsQwO_wEeyMZs8IM-A5ig" elementId="org.toxsoft.tool.sfv.mws.handler.2" contributionURI="bundleclass://org.toxsoft.tool.sfv.gui/org.toxsoft.tool.sfv.gui.e4.handlers.CmdToolSfvSaveFile" command="_iijtIO_AEeyMZs8IM-A5ig"/>
+      <handlers xmi:id="_UEhVcO_wEeyMZs8IM-A5ig" elementId="org.toxsoft.tool.sfv.mws.handler.3" contributionURI="bundleclass://org.toxsoft.tool.sfv.gui/org.toxsoft.tool.sfv.gui.e4.handlers.CmdToolSfvSaveFileAs" command="_i4_QIO_AEeyMZs8IM-A5ig"/>
     </elements>
   </fragments>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_UV8B8O1FEey2HuSF1G5AUw" featurename="children" parentElementId="org.toxsoft.mws.menu.main.perspectives">
@@ -31,7 +35,19 @@
   </fragments>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_t9C9EO8IEeyNYPTtiKglUw" featurename="children" parentElementId="org.toxsoft.mws.menu.main" positionInList="after:org.toxsoft.mws.menu.main.service">
     <elements xsi:type="menu:Menu" xmi:id="_1B440O8IEeyNYPTtiKglUw" elementId="org.toxsoft.too.sfv.mainmenu.sfv_tool" label="%Persp_SfvTool" mnemonics="%Persp_SfvTool_D">
-      <children xsi:type="menu:DirectMenuItem" xmi:id="_6H8MoO8IEeyNYPTtiKglUw" elementId="org.toxsoft.tool.sfv.mws.directmenuitem.foo" label="Foo"/>
+      <children xsi:type="menu:HandledMenuItem" xmi:id="_Xmg84O_tEeyMZs8IM-A5ig" elementId="org.toxsoft.tool.sfv.mws.handledmenuitem.0" iconURI="platform:/plugin/org.toxsoft.core.tsgui/icons/is24x24/document-new.png" command="_hB_SQO_AEeyMZs8IM-A5ig"/>
+      <children xsi:type="menu:HandledMenuItem" xmi:id="_tJ18QO-9EeyMZs8IM-A5ig" elementId="org.toxsoft.tool.sfv.mws.handledmenuitem.cmd_openfile" label="" iconURI="platform:/plugin/org.toxsoft.core.tsgui/icons/is24x24/document-open.png" tooltip="" command="_P-OhMO--EeyMZs8IM-A5ig"/>
+      <children xsi:type="menu:HandledMenuItem" xmi:id="_bRc9kO_tEeyMZs8IM-A5ig" elementId="org.toxsoft.tool.sfv.mws.handledmenuitem.1" iconURI="platform:/plugin/org.toxsoft.core.tsgui/icons/is24x24/document-save.png" command="_iijtIO_AEeyMZs8IM-A5ig"/>
+      <children xsi:type="menu:HandledMenuItem" xmi:id="_eREwYO_tEeyMZs8IM-A5ig" elementId="org.toxsoft.tool.sfv.mws.handledmenuitem.2" iconURI="platform:/plugin/org.toxsoft.core.tsgui/icons/is24x24/document-save-as.png" command="_i4_QIO_AEeyMZs8IM-A5ig"/>
     </elements>
+  </fragments>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_C7TdcO--EeyMZs8IM-A5ig" featurename="categories" parentElementId="org.toxsoft.mws.app.main">
+    <elements xsi:type="commands:Category" xmi:id="_E46ZoO--EeyMZs8IM-A5ig" elementId="org.toxsoft.too.sfv.cmdcateg.sfv_tool" name="SFV Tool" description="Commands specifi to SFV tool"/>
+  </fragments>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_OwHIQO--EeyMZs8IM-A5ig" featurename="commands" parentElementId="org.toxsoft.mws.app.main">
+    <elements xsi:type="commands:Command" xmi:id="_hB_SQO_AEeyMZs8IM-A5ig" elementId="org.toxsoft.too.sfv.cmd.new_file" commandName="%Cmd_NewFile" description="%Cmd_NewFile_D" category="_E46ZoO--EeyMZs8IM-A5ig"/>
+    <elements xsi:type="commands:Command" xmi:id="_P-OhMO--EeyMZs8IM-A5ig" elementId="org.toxsoft.too.sfv.cmd.open_file" commandName="%Cmd_OpenFile" description="%Cmd_OpenFile_D" category="_E46ZoO--EeyMZs8IM-A5ig"/>
+    <elements xsi:type="commands:Command" xmi:id="_iijtIO_AEeyMZs8IM-A5ig" elementId="org.toxsoft.too.sfv.cmd.save_file" commandName="%Cmd_SaveFile" description="%Cmd_SaveFile_D" category="_E46ZoO--EeyMZs8IM-A5ig"/>
+    <elements xsi:type="commands:Command" xmi:id="_i4_QIO_AEeyMZs8IM-A5ig" elementId="org.toxsoft.too.sfv.cmd.save_file_as" commandName="%Cmd_SaveFileAs" description="%Cmd_SaveFileAs_D" category="_E46ZoO--EeyMZs8IM-A5ig"/>
   </fragments>
 </fragment:ModelFragments>

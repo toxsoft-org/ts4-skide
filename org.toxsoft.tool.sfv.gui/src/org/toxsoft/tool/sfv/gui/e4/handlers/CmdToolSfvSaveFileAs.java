@@ -12,19 +12,19 @@ import org.toxsoft.core.tslib.utils.*;
 import org.toxsoft.tool.sfv.gui.e4.services.*;
 
 /**
- * "Open" command.
+ * "Save as" command.
  *
  * @author hazard157
  */
-public class CmdToolSfvOpenFile {
+public class CmdToolSfvSaveFileAs {
 
   @Execute
   void exec( ISfvToolService aSts, Shell aShell, IAppPreferences aAppPrefs ) {
     IPrefBundle pb = aAppPrefs.findBundle( PBID_SFV_TOOL );
     String lastPath = pb.prefs().getStr( APPRM_LAST_PATH.id(), TsLibUtils.EMPTY_STRING );
-    File f = TsRcpDialogUtils.askFileOpen( aShell, lastPath );
+    File f = TsRcpDialogUtils.askFileSave( aShell, lastPath );
     if( f != null ) {
-      aSts.bound().open( f );
+      aSts.bound().saveAs( f );
       pb.prefs().setStr( APPRM_LAST_PATH, lastPath );
     }
   }

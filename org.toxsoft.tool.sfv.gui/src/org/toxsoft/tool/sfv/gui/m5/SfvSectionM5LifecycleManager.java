@@ -22,7 +22,7 @@ class SfvSectionM5LifecycleManager
   SfvSectionM5LifecycleManager( IM5Model<ISfvSection> aModel, ISfvToolService aMaster ) {
     super( aModel, true, true, true, true, aMaster );
     TsNullArgumentRtException.checkNull( aMaster );
-    reorderer = new ListReorderer<>( master().sections() );
+    reorderer = new ListReorderer<>( master().content().sections() );
   }
 
   @Override
@@ -30,7 +30,7 @@ class SfvSectionM5LifecycleManager
     String sectId = aValues.getAsAv( SfvSectionM5Model.FID_SECTION_ID ).asString();
     String sectContent = aValues.getAsAv( SfvSectionM5Model.FID_SECTION_CONTENT ).asString();
     ISfvSection ss = new SfvSection( sectId, sectContent );
-    return master().sections().canAdd( ss );
+    return master().content().sections().canAdd( ss );
   }
 
   @Override
@@ -38,7 +38,7 @@ class SfvSectionM5LifecycleManager
     String sectId = aValues.getAsAv( SfvSectionM5Model.FID_SECTION_ID ).asString();
     String sectContent = aValues.getAsAv( SfvSectionM5Model.FID_SECTION_CONTENT ).asString();
     ISfvSection ss = new SfvSection( sectId, sectContent );
-    master().sections().add( ss );
+    master().content().sections().add( ss );
     return ss;
   }
 
@@ -47,8 +47,8 @@ class SfvSectionM5LifecycleManager
     String sectId = aValues.getAsAv( SfvSectionM5Model.FID_SECTION_ID ).asString();
     String sectContent = aValues.getAsAv( SfvSectionM5Model.FID_SECTION_CONTENT ).asString();
     ISfvSection ss = new SfvSection( sectId, sectContent );
-    int prevIndex = master().sections().indexOf( aValues.originalEntity() );
-    return master().sections().canReplace( prevIndex, ss );
+    int prevIndex = master().content().sections().indexOf( aValues.originalEntity() );
+    return master().content().sections().canReplace( prevIndex, ss );
   }
 
   @Override
@@ -56,25 +56,25 @@ class SfvSectionM5LifecycleManager
     String sectId = aValues.getAsAv( SfvSectionM5Model.FID_SECTION_ID ).asString();
     String sectContent = aValues.getAsAv( SfvSectionM5Model.FID_SECTION_CONTENT ).asString();
     ISfvSection ss = new SfvSection( sectId, sectContent );
-    int prevIndex = master().sections().indexOf( aValues.originalEntity() );
-    master().sections().set( prevIndex, ss );
+    int prevIndex = master().content().sections().indexOf( aValues.originalEntity() );
+    master().content().sections().set( prevIndex, ss );
     return ss;
   }
 
   @Override
   protected ValidationResult doBeforeRemove( ISfvSection aEntity ) {
-    int index = master().sections().indexOf( aEntity );
-    return master().sections().canRemove( index );
+    int index = master().content().sections().indexOf( aEntity );
+    return master().content().sections().canRemove( index );
   }
 
   @Override
   protected void doRemove( ISfvSection aEntity ) {
-    master().sections().remove( aEntity );
+    master().content().sections().remove( aEntity );
   }
 
   @Override
   protected IList<ISfvSection> doListEntities() {
-    return master().sections();
+    return master().content().sections();
   }
 
   @Override
