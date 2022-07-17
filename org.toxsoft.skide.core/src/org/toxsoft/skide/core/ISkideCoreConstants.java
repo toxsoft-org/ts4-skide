@@ -16,9 +16,8 @@ public interface ISkideCoreConstants {
   // ------------------------------------------------------------------------------------
   // E4
 
-  String CATEGID_SKIDE_GENERAL           = "org.toxsoft.skide.category.skide_general";  //$NON-NLS-1$
-  String CMDID_SKIDE_OPEN_PROJECT_SERVER = "org.toxsoft.skide.cmd.open_project_server"; //$NON-NLS-1$
-  String CMDID_SKIDE_OPEN_PROJECT_FILE   = "org.toxsoft.skide.cmd.open_project_file";   //$NON-NLS-1$
+  String CATEGID_SKIDE_GENERAL       = "org.toxsoft.skide.category.skide_general"; //$NON-NLS-1$
+  String CMDID_SKIDE_EDIT_PROJ_PROPS = "org.toxsoft.skide.cmd.edit_proj_props";    //$NON-NLS-1$
 
   // ------------------------------------------------------------------------------------
   // Icons

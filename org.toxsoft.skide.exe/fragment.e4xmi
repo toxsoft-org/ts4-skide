@@ -7,7 +7,9 @@
     <elements xsi:type="commands:Category" xmi:id="_Je9gsLc0EeyC46cNnMUECg" elementId="org.toxsoft.skide.category.skide_general" name="SkIDE General" description="General application-wide SkIDE commands"/>
   </fragments>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_q9szQLcyEeyC46cNnMUECg" featurename="commands" parentElementId="org.toxsoft.mws.app.main">
-    <elements xsi:type="commands:Command" xmi:id="_yrrLkLcyEeyC46cNnMUECg" elementId="org.toxsoft.skide.cmd.open_project_server" commandName="%Cmd_OpenProjectServer" description="%Cmd_OpenProjectServer_D" category="_Je9gsLc0EeyC46cNnMUECg"/>
-    <elements xsi:type="commands:Command" xmi:id="_Pi724LeYEeyC46cNnMUECg" elementId="org.toxsoft.skide.cmd.open_project_file" commandName="%Cmd_OpenProjectFile" description="%Cmd_OpenProjectFile_D" category="_Je9gsLc0EeyC46cNnMUECg"/>
+    <elements xsi:type="commands:Command" xmi:id="_Ez0wUAQtEe2hRKhK56vB9g" elementId="org.toxsoft.skide.cmd.edit_proj_props" commandName="%Cmd_EditProjectProperties" description="%Cmd_EditProjectProperties_D" category="_Je9gsLc0EeyC46cNnMUECg"/>
+  </fragments>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_YGmokAQtEe2hRKhK56vB9g" featurename="handlers" parentElementId="org.toxsoft.mws.window.main">
+    <elements xsi:type="commands:Handler" xmi:id="_bvfa0AQtEe2hRKhK56vB9g" elementId="org.toxsoft.skide.exe.handler.0" contributionURI="bundleclass://org.toxsoft.skide.core/org.toxsoft.skide.core.e4.handlers.CmdSkideEditProjectProps" command="_Ez0wUAQtEe2hRKhK56vB9g"/>
   </fragments>
 </fragment:ModelFragments>
