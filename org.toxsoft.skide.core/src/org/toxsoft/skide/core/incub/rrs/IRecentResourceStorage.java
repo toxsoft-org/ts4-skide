@@ -5,7 +5,6 @@ import java.net.*;
 
 import org.toxsoft.core.tslib.av.metainfo.*;
 import org.toxsoft.core.tslib.av.opset.*;
-import org.toxsoft.core.tslib.av.utils.*;
 import org.toxsoft.core.tslib.bricks.apprefs.*;
 import org.toxsoft.core.tslib.bricks.events.change.*;
 import org.toxsoft.core.tslib.bricks.strid.*;
@@ -37,7 +36,7 @@ import org.toxsoft.core.tslib.utils.errors.*;
  * @author hazard157
  */
 public interface IRecentResourceStorage
-    extends IStridableParameterized, IIconIdable, ITsClearable, IGenericChangeEventCapable {
+    extends IStridableParameterized, ITsClearable, IGenericChangeEventCapable {
 
   /**
    * Returns recent resources stored by this instance.

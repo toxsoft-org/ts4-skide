@@ -25,4 +25,8 @@ Automatic-Module-Name: org.toxsoft.skide.core
 Bundle-ActivationPolicy: lazy
 Export-Package: org.toxsoft.skide.core,
  org.toxsoft.skide.core.e4.handlers,
+ org.toxsoft.skide.core.incub.rrs,
+ org.toxsoft.skide.core.incub.strigr,
+ org.toxsoft.skide.core.main,
+ org.toxsoft.skide.core.main.impl,
  org.toxsoft.skide.core.proj

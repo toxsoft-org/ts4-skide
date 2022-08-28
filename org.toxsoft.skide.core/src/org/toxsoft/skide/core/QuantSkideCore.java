@@ -2,6 +2,8 @@ package org.toxsoft.skide.core;
 
 import org.eclipse.e4.core.contexts.*;
 import org.toxsoft.core.tsgui.bricks.quant.*;
+import org.toxsoft.skide.core.main.*;
+import org.toxsoft.skide.core.main.impl.*;
 
 /**
  * The library quant.
@@ -20,7 +22,8 @@ public class QuantSkideCore
 
   @Override
   protected void doInitApp( IEclipseContext aAppContext ) {
-    // nop
+    ISkideEnvironment skideEnv = new SkideEnvironment();
+    aAppContext.set( ISkideEnvironment.class, skideEnv );
   }
 
   @Override

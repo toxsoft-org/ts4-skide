@@ -15,6 +15,7 @@ import org.toxsoft.core.tsgui.mws.*;
 import org.toxsoft.core.tsgui.mws.bases.*;
 import org.toxsoft.skide.core.*;
 import org.toxsoft.skide.exe.Activator;
+import org.toxsoft.uskat.base.gui.*;
 
 /**
  * Application addon.
@@ -33,6 +34,7 @@ public class AddonSkideExe
 
   @Override
   protected void doRegisterQuants( IQuantRegistrator aQuantRegistrator ) {
+    aQuantRegistrator.registerQuant( new QuantSkBaseGui() );
     aQuantRegistrator.registerQuant( new QuantSkideCore() );
   }
 
