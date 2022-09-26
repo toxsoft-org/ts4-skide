@@ -15,9 +15,9 @@ import org.toxsoft.core.tsgui.m5.gui.mpc.impl.*;
 import org.toxsoft.core.tsgui.m5.model.*;
 import org.toxsoft.core.tsgui.mws.bases.*;
 import org.toxsoft.core.tslib.bricks.events.change.*;
-import org.toxsoft.tool.sfv.gui.e4.main.*;
 import org.toxsoft.tool.sfv.gui.e4.services.*;
 import org.toxsoft.tool.sfv.gui.m5.*;
+import org.toxsoft.tool.sfv.gui.main.*;
 
 /**
  * SFV tool: sections list of the open file.

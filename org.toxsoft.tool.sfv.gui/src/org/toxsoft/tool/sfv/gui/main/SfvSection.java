@@ -1,4 +1,4 @@
-package org.toxsoft.tool.sfv.gui.e4.main;
+package org.toxsoft.tool.sfv.gui.main;
 
 import org.toxsoft.core.tslib.bricks.strid.impl.*;
 import org.toxsoft.core.tslib.utils.*;

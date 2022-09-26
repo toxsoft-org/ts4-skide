@@ -21,14 +21,14 @@ import org.toxsoft.core.tslib.utils.*;
 import org.toxsoft.core.tslib.utils.errors.*;
 
 /**
- * Panel displayes {@link IQNode} subtree starting fromo the given subtree root node.
+ * Panel displayes {@link IQNode} subtree starting from the given subtree root node.
  * <p>
  * Contains:
  * <ul>
  * <li>toolbar - content depends on the currently selected node;</li>
  * <li>filter pane - allows to filter tree content;</li>
  * <li>tree - contains given subtree root nodes childs, the root node is not visible;</li>
- * <li>bottom bar - contains ome suumary and selected node info.</li>
+ * <li>bottom bar - contains some summary and selected node info.</li>
  * </ul>
  *
  * @author hazard157

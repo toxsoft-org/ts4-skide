@@ -1,7 +1,7 @@
-package org.toxsoft.tool.sfv.gui.e4.main;
+package org.toxsoft.tool.sfv.gui.main;
 
 import static org.toxsoft.core.tslib.bricks.strio.IStrioHardConstants.*;
-import static org.toxsoft.tool.sfv.gui.e4.main.ITsResources.*;
+import static org.toxsoft.tool.sfv.gui.main.ITsResources.*;
 
 import org.toxsoft.core.tslib.bricks.events.change.*;
 import org.toxsoft.core.tslib.bricks.filebound.*;

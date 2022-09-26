@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: SkIDE Core
-Bundle-SymbolicName: org.toxsoft.skide.core
+Bundle-SymbolicName: org.toxsoft.skide.core;singleton:=true
 Bundle-Version: 3.0.0.qualifier
 Bundle-Activator: org.toxsoft.skide.core.Activator
 Bundle-Vendor: toxsoft.org
@@ -19,14 +19,15 @@ Require-Bundle: javax.annotation,
  org.toxsoft.core.tsgui.mws,
  org.toxsoft.core.txtproj.lib,
  org.toxsoft.uskat.core,
- org.toxsoft.uskat.backend.memtext
+ org.toxsoft.uskat.backend.memtext,
+ org.toxsoft.uskat.base.gui
 Bundle-RequiredExecutionEnvironment: JavaSE-17
 Automatic-Module-Name: org.toxsoft.skide.core
 Bundle-ActivationPolicy: lazy
 Export-Package: org.toxsoft.skide.core,
+ org.toxsoft.skide.core.e4.addons,
  org.toxsoft.skide.core.e4.handlers,
- org.toxsoft.skide.core.incub.rrs,
- org.toxsoft.skide.core.incub.strigr,
+ org.toxsoft.skide.core.glib,
  org.toxsoft.skide.core.main,
  org.toxsoft.skide.core.main.impl,
  org.toxsoft.skide.core.proj

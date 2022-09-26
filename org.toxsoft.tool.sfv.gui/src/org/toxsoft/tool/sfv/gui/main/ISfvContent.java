@@ -1,4 +1,4 @@
-package org.toxsoft.tool.sfv.gui.e4.main;
+package org.toxsoft.tool.sfv.gui.main;
 
 import org.toxsoft.core.tslib.bricks.events.change.*;
 import org.toxsoft.core.tslib.coll.*;

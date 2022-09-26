@@ -23,7 +23,7 @@ Automatic-Module-Name: org.toxsoft.tool.sfv.gui
 Bundle-ActivationPolicy: lazy
 Export-Package: org.toxsoft.tool.sfv.gui,
  org.toxsoft.tool.sfv.gui.e4.handlers,
- org.toxsoft.tool.sfv.gui.e4.main,
  org.toxsoft.tool.sfv.gui.e4.services,
  org.toxsoft.tool.sfv.gui.e4.uiparts,
- org.toxsoft.tool.sfv.gui.m5
+ org.toxsoft.tool.sfv.gui.m5,
+ org.toxsoft.tool.sfv.gui.main

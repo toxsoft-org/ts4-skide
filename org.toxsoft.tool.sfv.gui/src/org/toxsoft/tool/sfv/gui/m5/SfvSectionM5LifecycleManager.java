@@ -6,8 +6,8 @@ import org.toxsoft.core.tslib.bricks.validator.*;
 import org.toxsoft.core.tslib.coll.*;
 import org.toxsoft.core.tslib.coll.helpers.*;
 import org.toxsoft.core.tslib.utils.errors.*;
-import org.toxsoft.tool.sfv.gui.e4.main.*;
 import org.toxsoft.tool.sfv.gui.e4.services.*;
+import org.toxsoft.tool.sfv.gui.main.*;
 
 /**
  * M5 lifecycle manager for model {@link SfvSectionM5Model}.

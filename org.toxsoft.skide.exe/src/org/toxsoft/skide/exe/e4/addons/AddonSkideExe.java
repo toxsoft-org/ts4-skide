@@ -9,13 +9,10 @@ import org.eclipse.e4.ui.model.application.ui.basic.*;
 import org.eclipse.e4.ui.workbench.modeling.*;
 import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.widgets.*;
-import org.toxsoft.core.tsgui.bricks.quant.*;
 import org.toxsoft.core.tsgui.graphics.icons.impl.*;
 import org.toxsoft.core.tsgui.mws.*;
 import org.toxsoft.core.tsgui.mws.bases.*;
-import org.toxsoft.skide.core.*;
 import org.toxsoft.skide.exe.Activator;
-import org.toxsoft.uskat.base.gui.*;
 
 /**
  * Application addon.
@@ -30,12 +27,6 @@ public class AddonSkideExe
    */
   public AddonSkideExe() {
     super( Activator.PLUGIN_ID );
-  }
-
-  @Override
-  protected void doRegisterQuants( IQuantRegistrator aQuantRegistrator ) {
-    aQuantRegistrator.registerQuant( new QuantSkBaseGui() );
-    aQuantRegistrator.registerQuant( new QuantSkideCore() );
   }
 
   @Override

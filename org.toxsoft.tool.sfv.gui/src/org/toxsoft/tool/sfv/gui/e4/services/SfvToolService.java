@@ -5,7 +5,7 @@ import org.toxsoft.core.tslib.bricks.events.change.*;
 import org.toxsoft.core.tslib.bricks.filebound.*;
 import org.toxsoft.core.tslib.coll.helpers.*;
 import org.toxsoft.core.tslib.coll.notifier.basis.*;
-import org.toxsoft.tool.sfv.gui.e4.main.*;
+import org.toxsoft.tool.sfv.gui.main.*;
 
 /**
  * {@link ISfvToolService} implementation.

@@ -12,8 +12,8 @@ import org.toxsoft.core.tsgui.m5.model.impl.*;
 import org.toxsoft.core.tsgui.valed.controls.av.*;
 import org.toxsoft.core.tsgui.valed.controls.basic.*;
 import org.toxsoft.core.tslib.av.*;
-import org.toxsoft.tool.sfv.gui.e4.main.*;
 import org.toxsoft.tool.sfv.gui.e4.services.*;
+import org.toxsoft.tool.sfv.gui.main.*;
 
 /**
  * M5-model of {@link ISfvSection}.
