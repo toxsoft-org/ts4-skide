@@ -2,6 +2,7 @@ package org.toxsoft.skide.core;
 
 import org.eclipse.e4.core.contexts.*;
 import org.toxsoft.core.tsgui.graphics.icons.*;
+import org.toxsoft.core.tslib.bricks.strid.more.*;
 
 /**
  * Plugin constants.
@@ -12,6 +13,13 @@ import org.toxsoft.core.tsgui.graphics.icons.*;
 public interface ISkideCoreConstants {
 
   String SKIDE_ID = "skide"; //$NON-NLS-1$
+
+  // ------------------------------------------------------------------------------------
+  // SkIDE system
+  //
+
+  String  SKIDE_MAIN_SYSTEM_PDU_ID                 = SKIDE_ID + ".MainUSkatSystem";                  //$NON-NLS-1$
+  IdChain SKIDE_SKIDE_MAIN_SYSTEM_SUPPLIED_CONN_ID = new IdChain( SKIDE_ID, "MainUSkatSystemConn" ); //$NON-NLS-1$
 
   // ------------------------------------------------------------------------------------
   // E4
