@@ -15,8 +15,13 @@
     </elements>
   </fragments>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_g6yzAFO2Ee2tgqhAQ8Wrvg" featurename="children" parentElementId="org.toxsoft.mws.menu.main.perspectives">
-    <elements xsi:type="menu:HandledMenuItem" xmi:id="_qyG2YFO2Ee2tgqhAQ8Wrvg" elementId="org.toxsoft.skide.sded.handledmenuitem.persp_cled" label="%Persp_SkideClassEd" tooltip="%Persp_SkideClassEd_TT" type="Radio" command="_ekRScFO0Ee2tgqhAQ8Wrvg">
+    <elements xsi:type="menu:HandledMenuItem" xmi:id="_qyG2YFO2Ee2tgqhAQ8Wrvg" elementId="org.toxsoft.skide.sded.handledmenuitem.persp_cled" label="%Persp_SkideClassEd" iconURI="platform:/plugin/org.toxsoft.skide.sded/icons/is16x16/skide-class-edit.png" tooltip="%Persp_SkideClassEd_D" type="Radio" command="_ekRScFO0Ee2tgqhAQ8Wrvg">
       <parameters xmi:id="_I5lAQFO3Ee2tgqhAQ8Wrvg" elementId="org.toxsoft.skide.sded.parameter.0" name="org.toxsoft.mws.cmd.switch_persp.arg.perspId" value="org.toxsoft.skide.sded.persp.classes_editor"/>
+    </elements>
+  </fragments>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_jlcgcFUsEe2-J6s7iQoeMA" featurename="children" parentElementId="org.toxsoft.mws.toolbar.perspectives">
+    <elements xsi:type="menu:HandledToolItem" xmi:id="_xtkRsFUsEe2-J6s7iQoeMA" elementId="org.toxsoft.skide.sded.handledtoolitem.persp_cled" label="%Persp_SkideClassEd" iconURI="platform:/plugin/org.toxsoft.skide.sded/icons/is16x16/skide-class-edit.png" tooltip="%Persp_SkideClassEd_D" type="Radio" command="_ekRScFO0Ee2tgqhAQ8Wrvg">
+      <parameters xmi:id="_kYKhYFUtEe2-J6s7iQoeMA" elementId="org.toxsoft.skide.sded.parameter.1" name="org.toxsoft.mws.cmd.switch_persp.arg.perspId" value="org.toxsoft.skide.sded.persp.classes_editor"/>
     </elements>
   </fragments>
 </fragment:ModelFragments>

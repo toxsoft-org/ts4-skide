@@ -21,7 +21,8 @@ Require-Bundle: javax.annotation,
  org.toxsoft.uskat.core,
  org.toxsoft.uskat.backend.memtext,
  org.toxsoft.uskat.base.gui,
- org.toxsoft.skide.core;bundle-version="3.0.0"
+ org.toxsoft.skide.core,
+ org.toxsoft.uskat.s5
 Bundle-RequiredExecutionEnvironment: JavaSE-17
 Automatic-Module-Name: org.toxsoft.skide.sded
 Bundle-ActivationPolicy: lazy
