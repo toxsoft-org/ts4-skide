@@ -19,7 +19,7 @@ public interface ISkideCoreConstants {
   //
 
   String  SKIDE_MAIN_SYSTEM_PDU_ID                 = SKIDE_ID + ".MainUSkatSystem";                  //$NON-NLS-1$
-  IdChain SKIDE_SKIDE_MAIN_SYSTEM_SUPPLIED_CONN_ID = new IdChain( SKIDE_ID, "MainUSkatSystemConn" ); //$NON-NLS-1$
+  IdChain SKIDE_MAIN_SYSTEM_SUPPLIED_CONN_ID = new IdChain( SKIDE_ID, "MainUSkatSystemConn" ); //$NON-NLS-1$
 
   // ------------------------------------------------------------------------------------
   // E4

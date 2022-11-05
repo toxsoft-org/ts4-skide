@@ -59,7 +59,7 @@ public class AddonSkideCore
   @Override
   protected void initWin( IEclipseContext aWinContext ) {
     ISkideCoreConstants.init( aWinContext );
-    // open connection to the
+    // open connection to the project built-in system
     ITsProject skideProject = aWinContext.get( ITsProject.class );
     TsInternalErrorRtException.checkNull( skideProject );
     ITsContext args = new TsContext();
@@ -69,10 +69,10 @@ public class AddonSkideCore
     ISkConnectionSupplier connectionSupplier = aWinContext.get( ISkConnectionSupplier.class );
     TsInternalErrorRtException.checkNull( connectionSupplier );
     ITsGuiContext ctx = new TsGuiContext( aWinContext );
-    ISkConnection conn = connectionSupplier.createConnection( SKIDE_SKIDE_MAIN_SYSTEM_SUPPLIED_CONN_ID, ctx );
+    ISkConnection conn = connectionSupplier.createConnection( SKIDE_MAIN_SYSTEM_SUPPLIED_CONN_ID, ctx );
     try {
       conn.open( args );
-      connectionSupplier.setDefaultConnection( SKIDE_SKIDE_MAIN_SYSTEM_SUPPLIED_CONN_ID );
+      connectionSupplier.setDefaultConnection( SKIDE_MAIN_SYSTEM_SUPPLIED_CONN_ID );
 
       // DEBUG
       TsTestUtils.pl( "Main system connection opened" );
