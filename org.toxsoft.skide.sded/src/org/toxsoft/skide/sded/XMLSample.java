@@ -5,6 +5,7 @@ import java.text.*;
 
 import javax.xml.parsers.*;
 
+import org.jopendocument.dom.spreadsheet.*;
 import org.toxsoft.core.tslib.coll.*;
 import org.toxsoft.core.tslib.coll.impl.*;
 import org.w3c.dom.*;
@@ -228,7 +229,7 @@ public class XMLSample {
           // нод одного из тегов группы, читаем все что нужно
           Node nodeId = uaVariableNode.getAttributes().getNamedItem( "NodeId" );
           System.out.printf( "tag NodeId : %s\n", nodeId.getNodeValue() );
-          Node type = uaVariableNode.getAttributes().getNamedItem( "NodeId" );
+          Node type = uaVariableNode.getAttributes().getNamedItem( "DataType" );
           System.out.printf( "tag DataType : %s\n", type.getTextContent() );
           NodeList uaVariableNodeChildNodes = uaVariableNode.getChildNodes();
           int uaVariableChildNodesLength = uaVariableNodeChildNodes.getLength();
@@ -257,8 +258,34 @@ public class XMLSample {
     readDataXML();
   }
 
+  private static final int SHEET_COUNT = 2;
+
+  private static final int COLUMN_COUNT = 10;
+
+  private static final int ROW_COUNT       = 10000;
+  /**
+   * Номер закладки классов
+   */
+  private static final int CLASSES_TAB_NUM = 0;
+
+  /**
+   * Номер закладки объектов
+   */
+  private static final int OBJECTS_TAB_NUM = 1;
+
   public static void main( String[] args ) {
     new XMLSample();
+    // сохраняем в файл
+    // Создаем собственно таблицу куда будем писать
+    SpreadSheet spreadSheet = SpreadSheet.create( SHEET_COUNT, COLUMN_COUNT, ROW_COUNT );
+    // Две закладки: классы и объекты
+    Sheet classeSheet = spreadSheet.getSheet( CLASSES_TAB_NUM );
+    Sheet objectsSheet = spreadSheet.getSheet( OBJECTS_TAB_NUM );
+    classeSheet.setName( "Классы" );
+    objectsSheet.setName( "Объекты" );
+    // Записываем id таблицы и ее название
+    // classeSheet.setValueAt( aTedTimeTable.id(), STAGE_ID_COLUMN, TABLE_ID_ROW );
+
     System.exit( 0 );
   }
 }
