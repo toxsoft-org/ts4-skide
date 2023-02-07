@@ -8,9 +8,13 @@ import javax.xml.parsers.*;
 import org.jopendocument.dom.spreadsheet.*;
 import org.toxsoft.core.tslib.coll.*;
 import org.toxsoft.core.tslib.coll.impl.*;
+import org.toxsoft.core.tslib.utils.logs.impl.*;
 import org.w3c.dom.*;
 
 public class XMLSample {
+
+  // список функциональных блоков
+  private static IListEdit<FuncBlockOPC_UA> funcBlocks = new ElemArrayList<>();
 
   private final String FILE_post = "Compr2301.PLC_1.OPCUA_20230128-0123.xml";
 
@@ -34,7 +38,7 @@ public class XMLSample {
   static class FuncBlockOPC_UA
       extends BaseNodeOPC_UA {
 
-    IList<GroupOPC_UA> goups = new ElemArrayList<>();
+    IListEdit<GroupOPC_UA> groups = new ElemArrayList<>();
   }
 
   /**
@@ -45,7 +49,7 @@ public class XMLSample {
   static class GroupOPC_UA
       extends BaseNodeOPC_UA {
 
-    IList<TagOPC_UA> goups = new ElemArrayList<>();
+    IListEdit<TagOPC_UA> tags = new ElemArrayList<>();
   }
 
   /**
@@ -103,46 +107,6 @@ public class XMLSample {
       // вот здесь мы уже имеем распарсенный документ, теперь выбираем из него то что нам нужно
       // читаем список узлов верхнего уровня и ищем описания классов
       readClassNodes( docEle );
-      // NodeList nl = docEle.getChildNodes();
-      //
-      // int length = nl.getLength();
-      // for( int i = 0; i < length; i++ ) {
-      // if( nl.item( i ).getNodeType() == Node.ELEMENT_NODE ) {
-      // Element el = (Element)nl.item( i );
-      // System.out.println( el.getNodeName() );
-      // if( el.getNodeName().contains( "UAObject" ) ) {
-      // String name = el.getAttribute( "NodeId" );
-      // System.out.println( name );
-      // NodeList childs = el.getChildNodes();
-      // for( int j = 0; j < childs.getLength(); j++ ) {
-      // Node child = childs.item( j );
-      // System.out.printf( "node: %s text: %s \n", child.getNodeName(), child.getTextContent() );
-      // NamedNodeMap nm = child.getAttributes();
-      // if( nm != null ) {
-      // for( int k = 0; k < nm.getLength(); k++ ) {
-      // Node node = nm.item( k );
-      // System.out.printf( "attrName: %s attrVal: %s \n", node.getNodeName(), node.getTextContent() );
-      // }
-      // }
-      // }
-      // }
-      // }
-      // }
-      // NodeList nodeList = doc.getElementsByTagName( "row" );
-      //
-      // for( int s = 0; s < nodeList.getLength(); s++ ) {
-      // Node node = nodeList.item( s );
-      // if( node.getNodeType() == Node.ELEMENT_NODE ) {
-      // Element fstElmnt = (Element)node;
-      // NodeList fields = fstElmnt.getElementsByTagName( "field" );
-      // Post p = new Post();
-      // p.setForum( getValue( fields, 0 ) );
-      // p.setDate( sdf.parse( getValue( fields, 1 ) ) );
-      // p.setSubject( getValue( fields, 2 ) );
-      // p.setUsername( getValue( fields, 4 ) );
-      // posts.add( p );
-      // }
-      // }
     }
     catch( Exception e ) {
       e.printStackTrace();
@@ -164,22 +128,22 @@ public class XMLSample {
         for( int j = 0; j < uaObjectTypeChildNodesLength; j++ ) {
           Node uaObjectTypeChildNode = uaObjectTypeChildNodes.item( j );
           if( uaObjectTypeChildNode != null ) {
+            FuncBlockOPC_UA funcBlock = new FuncBlockOPC_UA();
+            funcBlocks.add( funcBlock );
             String childNodeName = uaObjectTypeChildNode.getNodeName();
             if( childNodeName.compareTo( "DisplayName" ) == 0 ) {
               String fbName = uaObjectTypeChildNode.getTextContent();
               System.out.printf( "function block name: %s\n", fbName );
-              if( fbName.compareTo( "AnalogInput" ) == 0 ) {
-                // читаем его группы
-                String nodeId = docNode.getAttributes().getNamedItem( "NodeId" ).getTextContent();
-                readGroupNodes( aDocElement, nodeId );
-              }
+              funcBlock.displayName = fbName;
             }
             if( childNodeName.compareTo( "Description" ) == 0 ) {
-              // for example
-              // System.out.printf( "attrName: %s attrVal: %s \n", uaObjectTypeChildNode.getNodeName(),
-              // uaObjectTypeChildNode.getTextContent() );
-              System.out.printf( "function block description: %s\n", uaObjectTypeChildNode.getTextContent() );
+              String fbDescription = uaObjectTypeChildNode.getTextContent();
+              System.out.printf( "function block description: %s\n", fbDescription );
+              funcBlock.description = fbDescription;
             }
+            // читаем его группы
+            String nodeId = docNode.getAttributes().getNamedItem( "NodeId" ).getTextContent();
+            readGroupNodes( aDocElement, nodeId, funcBlock );
           }
         }
       }
@@ -187,13 +151,15 @@ public class XMLSample {
   }
 
   @SuppressWarnings( "nls" )
-  private static void readGroupNodes( Element aDocElement, String aParentNodeId ) {
+  private static void readGroupNodes( Element aDocElement, String aParentNodeId, FuncBlockOPC_UA aFuncBlock ) {
     NodeList docNodes = aDocElement.getChildNodes();
     int docNodeslength = docNodes.getLength();
     for( int i = 0; i < docNodeslength; i++ ) {
       Node uaObjectNode = docNodes.item( i );
       String uaObjectNodeName = uaObjectNode.getNodeName();
       if( uaObjectNodeName.compareTo( "UAObject" ) == 0 ) {
+        GroupOPC_UA group = new GroupOPC_UA();
+        aFuncBlock.groups.add( group );
         String parentNodeId = uaObjectNode.getAttributes().getNamedItem( "ParentNodeId" ).getTextContent();
         if( parentNodeId.compareTo( aParentNodeId ) == 0 ) {
           // нод одной из его групп, читаем название
@@ -204,20 +170,24 @@ public class XMLSample {
             if( uaObjectChildNode != null ) {
               String childNodeName = uaObjectChildNode.getNodeName();
               if( childNodeName.compareTo( "DisplayName" ) == 0 ) {
-                System.out.printf( "group name: %s\n", uaObjectChildNode.getTextContent() );
+                String groupName = uaObjectChildNode.getTextContent();
+                System.out.printf( "group name: %s\n", groupName );
+                group.displayName = groupName;
+                // TODO нет такого нода в файле
+                group.description = groupName;
               }
             }
           }
           // читаем теги этой группы
           String groupNodeId = uaObjectNode.getAttributes().getNamedItem( "NodeId" ).getTextContent();
-          readTagNodes( aDocElement, groupNodeId );
+          readTagNodes( aDocElement, groupNodeId, group );
         }
       }
     }
   }
 
   @SuppressWarnings( "nls" )
-  private static void readTagNodes( Element aDocElement, String aParentNodeId ) {
+  private static void readTagNodes( Element aDocElement, String aParentNodeId, GroupOPC_UA aGroup ) {
     NodeList docNodes = aDocElement.getChildNodes();
     int docNodeslength = docNodes.getLength();
     for( int i = 0; i < docNodeslength; i++ ) {
@@ -226,11 +196,15 @@ public class XMLSample {
       if( uaVariableNodeName.compareTo( "UAVariable" ) == 0 ) {
         String parentNodeId = uaVariableNode.getAttributes().getNamedItem( "ParentNodeId" ).getTextContent();
         if( parentNodeId.compareTo( aParentNodeId ) == 0 ) {
+          TagOPC_UA tag = new TagOPC_UA();
+          aGroup.tags.add( tag );
           // нод одного из тегов группы, читаем все что нужно
           Node nodeId = uaVariableNode.getAttributes().getNamedItem( "NodeId" );
+          tag.nodeId = nodeId.getTextContent();
           System.out.printf( "tag NodeId : %s\n", nodeId.getNodeValue() );
           Node type = uaVariableNode.getAttributes().getNamedItem( "DataType" );
           System.out.printf( "tag DataType : %s\n", type.getTextContent() );
+          tag.dataType = type.getTextContent();
           NodeList uaVariableNodeChildNodes = uaVariableNode.getChildNodes();
           int uaVariableChildNodesLength = uaVariableNodeChildNodes.getLength();
           for( int j = 0; j < uaVariableChildNodesLength; j++ ) {
@@ -238,12 +212,16 @@ public class XMLSample {
             if( uaVariableChildNode != null ) {
               String childNodeName = uaVariableChildNode.getNodeName();
               if( childNodeName.compareTo( "DisplayName" ) == 0 ) {
-                System.out.printf( "tag DisplayName: %s\n", uaVariableChildNode.getTextContent() );
+                String displayName = uaVariableChildNode.getTextContent();
+                System.out.printf( "tag DisplayName: %s\n", displayName );
+                tag.displayName = displayName;
               }
               if( childNodeName.compareTo( "Description" ) == 0 ) {
                 Node locale = uaVariableChildNode.getAttributes().getNamedItem( "Locale" );
                 if( locale.getTextContent().compareTo( "ru-RU" ) == 0 ) {
+                  String description = uaVariableChildNode.getTextContent();
                   System.out.printf( "tag Description:  %s\n", uaVariableChildNode.getTextContent() );
+                  tag.description = description;
                 }
               }
             }
@@ -273,9 +251,23 @@ public class XMLSample {
    */
   private static final int OBJECTS_TAB_NUM = 1;
 
+  private static final int FUNC_BLOCK_COLUMN = 1;
+
+  private static final int GROUP_COLUMN = 2;
+
+  private static final int TAG_NAME_COLUMN = 3;
+
+  private static final int TAG_DESCR_COLUMN = 4;
+
+  private static final int TAG_NODE_ID_COLUMN = 5;
+
+  private static final int TAG_TYPE_COLUMN = 6;
+
   public static void main( String[] args ) {
     new XMLSample();
     // сохраняем в файл
+    File targetFile = new File( "tagsOPC_UA.ods" );
+
     // Создаем собственно таблицу куда будем писать
     SpreadSheet spreadSheet = SpreadSheet.create( SHEET_COUNT, COLUMN_COUNT, ROW_COUNT );
     // Две закладки: классы и объекты
@@ -283,9 +275,53 @@ public class XMLSample {
     Sheet objectsSheet = spreadSheet.getSheet( OBJECTS_TAB_NUM );
     classeSheet.setName( "Классы" );
     objectsSheet.setName( "Объекты" );
-    // Записываем id таблицы и ее название
-    // classeSheet.setValueAt( aTedTimeTable.id(), STAGE_ID_COLUMN, TABLE_ID_ROW );
+    // Записываем в файл то что считали
+    int currRow = 1;
+    for( FuncBlockOPC_UA funcBlock : funcBlocks ) {
+      if( funcBlock.displayName != null ) {
+        classeSheet.setValueAt( funcBlock.displayName, FUNC_BLOCK_COLUMN, currRow );
+        currRow += writeGroups( classeSheet, funcBlock, currRow );
+      }
+    }
+    // Сохраняем в файл
+    try {
+      spreadSheet.saveAs( targetFile );
+    }
+    catch( IOException ex ) {
+      LoggerUtils.errorLogger().error( ex );
+    }
 
     System.exit( 0 );
+  }
+
+  private static int writeGroups( Sheet aClasseSheet, FuncBlockOPC_UA aFuncBlock, int aCurrRow ) {
+    int retVal = 0;
+    int currRow = aCurrRow;
+    for( GroupOPC_UA group : aFuncBlock.groups ) {
+      if( !group.tags.isEmpty() ) {
+        aClasseSheet.setValueAt( group.displayName, GROUP_COLUMN, currRow );
+        int rowQtty = writeTags( aClasseSheet, group, currRow, aFuncBlock.displayName );
+        currRow += rowQtty;
+        retVal += rowQtty;
+        aClasseSheet.setValueAt( aFuncBlock.displayName, FUNC_BLOCK_COLUMN, currRow );
+      }
+    }
+    return retVal;
+  }
+
+  private static int writeTags( Sheet aClasseSheet, GroupOPC_UA aGroup, int aCurrRow, String aFbDisplayName ) {
+    int retVal = 0;
+    int currRow = aCurrRow;
+    for( TagOPC_UA tag : aGroup.tags ) {
+      aClasseSheet.setValueAt( tag.displayName, TAG_NAME_COLUMN, currRow );
+      aClasseSheet.setValueAt( tag.description, TAG_DESCR_COLUMN, currRow );
+      aClasseSheet.setValueAt( tag.nodeId, TAG_NODE_ID_COLUMN, currRow );
+      aClasseSheet.setValueAt( tag.dataType, TAG_TYPE_COLUMN, currRow );
+      retVal++;
+      currRow++;
+      aClasseSheet.setValueAt( aGroup.displayName, GROUP_COLUMN, currRow );
+      aClasseSheet.setValueAt( aFbDisplayName, FUNC_BLOCK_COLUMN, currRow );
+    }
+    return retVal;
   }
 }
