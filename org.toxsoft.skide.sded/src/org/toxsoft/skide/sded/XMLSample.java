@@ -15,6 +15,8 @@ public class XMLSample {
 
   // список функциональных блоков
   private static IListEdit<FuncBlockOPC_UA> funcBlocks = new ElemArrayList<>();
+  // список объектов
+  private static IListEdit<ObjectOPC_UA> uaObjects = new ElemArrayList<>();
 
   private final String FILE_post = "Compr2301.PLC_1.OPCUA_20230128-0123.xml";
 
@@ -39,6 +41,10 @@ public class XMLSample {
       extends BaseNodeOPC_UA {
 
     IListEdit<GroupOPC_UA> groups = new ElemArrayList<>();
+
+    FuncBlockOPC_UA( String aDisplayName ) {
+      displayName = aDisplayName;
+    }
   }
 
   /**
@@ -61,6 +67,23 @@ public class XMLSample {
       extends BaseNodeOPC_UA {
 
     String dataType;
+  }
+
+  /**
+   * класс объектов сервера OPC UA
+   *
+   * @author dima
+   */
+  static class ObjectOPC_UA
+      extends BaseNodeOPC_UA {
+
+    IListEdit<GroupOPC_UA> groups = new ElemArrayList<>();
+    String                 className;
+
+    ObjectOPC_UA( String aClassName, String aObjName ) {
+      className = aClassName;
+      displayName = aObjName;
+    }
   }
 
   private boolean fileExists( final String path ) {
@@ -107,6 +130,7 @@ public class XMLSample {
       // вот здесь мы уже имеем распарсенный документ, теперь выбираем из него то что нам нужно
       // читаем список узлов верхнего уровня и ищем описания классов
       readClassNodes( docEle );
+      readObjectNodes( docEle );
     }
     catch( Exception e ) {
       e.printStackTrace();
@@ -127,23 +151,26 @@ public class XMLSample {
         int uaObjectTypeChildNodesLength = uaObjectTypeChildNodes.getLength();
         for( int j = 0; j < uaObjectTypeChildNodesLength; j++ ) {
           Node uaObjectTypeChildNode = uaObjectTypeChildNodes.item( j );
+          FuncBlockOPC_UA funcBlock = null;
           if( uaObjectTypeChildNode != null ) {
-            FuncBlockOPC_UA funcBlock = new FuncBlockOPC_UA();
-            funcBlocks.add( funcBlock );
             String childNodeName = uaObjectTypeChildNode.getNodeName();
             if( childNodeName.compareTo( "DisplayName" ) == 0 ) {
               String fbName = uaObjectTypeChildNode.getTextContent();
               System.out.printf( "function block name: %s\n", fbName );
-              funcBlock.displayName = fbName;
+              funcBlock = new FuncBlockOPC_UA( fbName );
+              funcBlocks.add( funcBlock );
+              funcBlock.nodeId = docNode.getAttributes().getNamedItem( "NodeId" ).getTextContent();
             }
-            if( childNodeName.compareTo( "Description" ) == 0 ) {
-              String fbDescription = uaObjectTypeChildNode.getTextContent();
-              System.out.printf( "function block description: %s\n", fbDescription );
-              funcBlock.description = fbDescription;
-            }
+            // if( childNodeName.compareTo( "Description" ) == 0 ) {
+            // String fbDescription = uaObjectTypeChildNode.getTextContent();
+            // System.out.printf( "function block description: %s\n", fbDescription );
+            // funcBlock.description = fbDescription;
+            // }
             // читаем его группы
-            String nodeId = docNode.getAttributes().getNamedItem( "NodeId" ).getTextContent();
-            readGroupNodes( aDocElement, nodeId, funcBlock );
+            if( funcBlock != null ) {
+              String nodeId = docNode.getAttributes().getNamedItem( "NodeId" ).getTextContent();
+              readGroupNodes( aDocElement, nodeId, funcBlock );
+            }
           }
         }
       }
@@ -184,6 +211,129 @@ public class XMLSample {
         }
       }
     }
+  }
+
+  static String readDislayName( Node uaObjectNode ) {
+    NodeList uaObjectNodeChildNodes = uaObjectNode.getChildNodes();
+    int uaObjectChildNodesLength = uaObjectNodeChildNodes.getLength();
+    for( int j = 0; j < uaObjectChildNodesLength; j++ ) {
+      Node uaObjectChildNode = uaObjectNodeChildNodes.item( j );
+      if( uaObjectChildNode != null ) {
+        String childNodeName = uaObjectChildNode.getNodeName();
+        if( childNodeName.compareTo( "DisplayName" ) == 0 ) {
+          return uaObjectChildNode.getTextContent();
+        }
+      }
+    }
+    return null;
+  }
+
+  @SuppressWarnings( "nls" )
+  private static void readObjectNodes( Element aDocElement ) {
+    NodeList docNodes = aDocElement.getChildNodes();
+    int docNodeslength = docNodes.getLength();
+    for( int i = 0; i < docNodeslength; i++ ) {
+      Node uaObjectNode = docNodes.item( i );
+      String uaObjectNodeName = uaObjectNode.getNodeName();
+      if( uaObjectNodeName.compareTo( "UAObject" ) == 0 ) {
+        // ищем у него child
+        NodeList uaObjectNodeChildNodes = uaObjectNode.getChildNodes();
+        int uaObjectChildNodesLength = uaObjectNodeChildNodes.getLength();
+        for( int j = 0; j < uaObjectChildNodesLength; j++ ) {
+          Node uaObjectChildNode = uaObjectNodeChildNodes.item( j );
+          if( uaObjectChildNode != null ) {
+            String childNodeName = uaObjectChildNode.getNodeName();
+            if( childNodeName.compareTo( "References" ) == 0 ) {
+              // нашли описание связей, ищем в его детях Reference с атрибутом ReferenceType="HasTypeDefinition"
+              NodeList referenciesdNodes = uaObjectChildNode.getChildNodes();
+              int referenciesLength = referenciesdNodes.getLength();
+              for( int k = 0; k < referenciesLength; k++ ) {
+                Node referenceNode = referenciesdNodes.item( k );
+                if( referenceNode != null ) {
+                  String referenceNodeName = referenceNode.getNodeName();
+                  if( referenceNodeName.compareTo( "Reference" ) == 0 ) {
+                    // читаем его атрибут ReferenceType="HasTypeDefinition"
+                    Node referenceTypeNode = referenceNode.getAttributes().getNamedItem( "ReferenceType" );
+                    if( referenceTypeNode != null ) {
+                      String referenceTypeValue = referenceTypeNode.getTextContent();
+                      if( referenceTypeValue.compareTo( "HasTypeDefinition" ) == 0 ) {
+                        // запоминаем NodeId функционального блока
+                        String fbNodeId = referenceNode.getTextContent();
+                        System.out.printf( "ReferenceType: %s \n", fbNodeId );
+                        // ищем его класс
+                        FuncBlockOPC_UA fb = findFuncBlock( fbNodeId );
+                        if( fb != null ) {
+                          System.out.printf( "FuncBlockOPC_UA: %s \n", fb.displayName );
+                          // создаем новый объект
+                          String objName = readDislayName( uaObjectNode );
+                          ObjectOPC_UA uaObject = new ObjectOPC_UA( fb.displayName, objName );
+                          // запоминаем
+                          uaObjects.add( uaObject );
+                          // читаем его группы
+                          String nodeId = uaObjectNode.getAttributes().getNamedItem( "NodeId" ).getTextContent();
+                          readObjectGroupNodes( aDocElement, nodeId, uaObject );
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @SuppressWarnings( "nls" )
+  private static void readObjectGroupNodes( Element aDocElement, String aParentNodeId, ObjectOPC_UA aObjectOPC_UA ) {
+    NodeList docNodes = aDocElement.getChildNodes();
+    int docNodeslength = docNodes.getLength();
+    for( int i = 0; i < docNodeslength; i++ ) {
+      Node uaObjectNode = docNodes.item( i );
+      String uaObjectNodeName = uaObjectNode.getNodeName();
+      if( uaObjectNodeName.compareTo( "UAObject" ) == 0 ) {
+        GroupOPC_UA group = new GroupOPC_UA();
+        aObjectOPC_UA.groups.add( group );
+        String parentNodeId = uaObjectNode.getAttributes().getNamedItem( "ParentNodeId" ).getTextContent();
+        if( parentNodeId.compareTo( aParentNodeId ) == 0 ) {
+          // нод одной из его групп, читаем название
+          NodeList uaObjectNodeChildNodes = uaObjectNode.getChildNodes();
+          int uaObjectChildNodesLength = uaObjectNodeChildNodes.getLength();
+          for( int j = 0; j < uaObjectChildNodesLength; j++ ) {
+            Node uaObjectChildNode = uaObjectNodeChildNodes.item( j );
+            if( uaObjectChildNode != null ) {
+              String childNodeName = uaObjectChildNode.getNodeName();
+              if( childNodeName.compareTo( "DisplayName" ) == 0 ) {
+                String groupName = uaObjectChildNode.getTextContent();
+                System.out.printf( "group name: %s\n", groupName );
+                group.displayName = groupName;
+                // TODO нет такого нода в файле
+                group.description = groupName;
+              }
+            }
+          }
+          // читаем теги этой группы
+          String groupNodeId = uaObjectNode.getAttributes().getNamedItem( "NodeId" ).getTextContent();
+          readTagNodes( aDocElement, groupNodeId, group );
+        }
+      }
+    }
+  }
+
+  /**
+   * Ищет функциональный блок с заданным NodeId
+   *
+   * @param aFbNodeId NodeId
+   * @return найденый {@link FuncBlockOPC_UA} или null
+   */
+  private static FuncBlockOPC_UA findFuncBlock( String aFbNodeId ) {
+    for( FuncBlockOPC_UA fb : funcBlocks ) {
+      if( fb.nodeId.compareTo( aFbNodeId ) == 0 ) {
+        return fb;
+      }
+    }
+    return null;
   }
 
   @SuppressWarnings( "nls" )
@@ -283,6 +433,13 @@ public class XMLSample {
         currRow += writeGroups( classeSheet, funcBlock, currRow );
       }
     }
+    currRow = 1;
+    for( ObjectOPC_UA uaObj : uaObjects ) {
+      if( uaObj.displayName != null ) {
+        objectsSheet.setValueAt( uaObj.className, FUNC_BLOCK_COLUMN, currRow );
+        currRow += writeObjGroups( objectsSheet, uaObj, currRow );
+      }
+    }
     // Сохраняем в файл
     try {
       spreadSheet.saveAs( targetFile );
@@ -292,6 +449,21 @@ public class XMLSample {
     }
 
     System.exit( 0 );
+  }
+
+  private static int writeObjGroups( Sheet aObjectsSheet, ObjectOPC_UA aUaObj, int aCurrRow ) {
+    int retVal = 0;
+    int currRow = aCurrRow;
+    for( GroupOPC_UA group : aUaObj.groups ) {
+      if( !group.tags.isEmpty() ) {
+        aObjectsSheet.setValueAt( aUaObj.displayName, GROUP_COLUMN, currRow );
+        int rowQtty = writeObjTags( aObjectsSheet, group, currRow, aUaObj );
+        currRow += rowQtty;
+        retVal += rowQtty;
+        aObjectsSheet.setValueAt( aUaObj.className, FUNC_BLOCK_COLUMN, currRow );
+      }
+    }
+    return retVal;
   }
 
   private static int writeGroups( Sheet aClasseSheet, FuncBlockOPC_UA aFuncBlock, int aCurrRow ) {
@@ -309,19 +481,36 @@ public class XMLSample {
     return retVal;
   }
 
-  private static int writeTags( Sheet aClasseSheet, GroupOPC_UA aGroup, int aCurrRow, String aFbDisplayName ) {
+  private static int writeTags( Sheet aSheet, GroupOPC_UA aGroup, int aCurrRow, String aFbDisplayName ) {
     int retVal = 0;
     int currRow = aCurrRow;
     for( TagOPC_UA tag : aGroup.tags ) {
-      aClasseSheet.setValueAt( tag.displayName, TAG_NAME_COLUMN, currRow );
-      aClasseSheet.setValueAt( tag.description, TAG_DESCR_COLUMN, currRow );
-      aClasseSheet.setValueAt( tag.nodeId, TAG_NODE_ID_COLUMN, currRow );
-      aClasseSheet.setValueAt( tag.dataType, TAG_TYPE_COLUMN, currRow );
+      aSheet.setValueAt( tag.displayName, TAG_NAME_COLUMN, currRow );
+      aSheet.setValueAt( tag.description, TAG_DESCR_COLUMN, currRow );
+      aSheet.setValueAt( tag.nodeId, TAG_NODE_ID_COLUMN, currRow );
+      aSheet.setValueAt( tag.dataType, TAG_TYPE_COLUMN, currRow );
       retVal++;
       currRow++;
-      aClasseSheet.setValueAt( aGroup.displayName, GROUP_COLUMN, currRow );
-      aClasseSheet.setValueAt( aFbDisplayName, FUNC_BLOCK_COLUMN, currRow );
+      aSheet.setValueAt( aGroup.displayName, GROUP_COLUMN, currRow );
+      aSheet.setValueAt( aFbDisplayName, FUNC_BLOCK_COLUMN, currRow );
     }
     return retVal;
   }
+
+  private static int writeObjTags( Sheet aSheet, GroupOPC_UA aGroup, int aCurrRow, ObjectOPC_UA aUaObj ) {
+    int retVal = 0;
+    int currRow = aCurrRow;
+    for( TagOPC_UA tag : aGroup.tags ) {
+      aSheet.setValueAt( tag.displayName, TAG_NAME_COLUMN, currRow );
+      aSheet.setValueAt( tag.description, TAG_DESCR_COLUMN, currRow );
+      aSheet.setValueAt( tag.nodeId, TAG_NODE_ID_COLUMN, currRow );
+      aSheet.setValueAt( tag.dataType, TAG_TYPE_COLUMN, currRow );
+      retVal++;
+      currRow++;
+      aSheet.setValueAt( aUaObj.displayName, GROUP_COLUMN, currRow );
+      aSheet.setValueAt( aUaObj.className, FUNC_BLOCK_COLUMN, currRow );
+    }
+    return retVal;
+  }
+
 }
