@@ -1,7 +1,6 @@
 package org.toxsoft.skide.sded;
 
 import java.io.*;
-import java.text.*;
 
 import javax.xml.parsers.*;
 
@@ -11,14 +10,21 @@ import org.toxsoft.core.tslib.coll.impl.*;
 import org.toxsoft.core.tslib.utils.logs.impl.*;
 import org.w3c.dom.*;
 
-public class XMLSample {
+/**
+ * Утилита для конвертации описания тегов OPC UA из XML в файл формата ODS
+ *
+ * @author dima
+ */
+public class XML2ODSConvertorOPC_UA {
 
+  // список глобальных блоков
+  private static IListEdit<DataBlocksGlobalOPC_UA> globalDataBlocks = new ElemArrayList<>();
   // список функциональных блоков
   private static IListEdit<FuncBlockOPC_UA> funcBlocks = new ElemArrayList<>();
   // список объектов
   private static IListEdit<ObjectOPC_UA> uaObjects = new ElemArrayList<>();
 
-  private final String FILE_post = "Compr2301.PLC_1.OPCUA_20230128-0123.xml";
+  private final String sourceXML = "Compr2301.PLC_1.OPCUA_20230209-1058.xml";
 
   /**
    * базовый класс всех узлов сервера OPC UA
@@ -30,6 +36,21 @@ public class XMLSample {
     String nodeId;
     String displayName;
     String description;
+  }
+
+  /**
+   * класс узлов блоков глобальных данных сервера OPC UA
+   *
+   * @author dima
+   */
+  static class DataBlocksGlobalOPC_UA
+      extends BaseNodeOPC_UA {
+
+    IListEdit<TagOPC_UA> tags = new ElemArrayList<>();
+
+    DataBlocksGlobalOPC_UA( String aDisplayName ) {
+      displayName = aDisplayName;
+    }
   }
 
   /**
@@ -87,7 +108,7 @@ public class XMLSample {
   }
 
   private boolean fileExists( final String path ) {
-    File file = new File( FILE_post );
+    File file = new File( sourceXML );
     boolean exists = true;
     if( !file.exists() ) {
       exists = false;
@@ -96,33 +117,25 @@ public class XMLSample {
     return exists;
   }
 
-  private String getValue( NodeList fields, int index ) {
-    NodeList list = fields.item( index ).getChildNodes();
-    if( list.getLength() > 0 ) {
-      return list.item( 0 ).getNodeValue();
-    }
-    else {
-      return "";
-    }
-  }
-
-  @SuppressWarnings( { "null", "nls" } )
+  @SuppressWarnings( { "null" } )
   private void readDataXML() {
 
-    SimpleDateFormat sdf = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );
     try {
       DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
       DocumentBuilder db = dbf.newDocumentBuilder();
       Document doc = null;
 
       FileInputStream fis = null;
-      if( fileExists( FILE_post ) ) {
+      if( fileExists( sourceXML ) ) {
         try {
-          fis = new FileInputStream( FILE_post );
+          fis = new FileInputStream( sourceXML );
           doc = db.parse( fis );
         }
         catch( FileNotFoundException e ) {
           e.printStackTrace();
+        }
+        finally {
+          fis.close();
         }
       }
       // doc.getDocumentElement().normalize();
@@ -137,44 +150,113 @@ public class XMLSample {
     }
   }
 
-  @SuppressWarnings( "nls" )
   private static void readClassNodes( Element aDocElement ) {
     NodeList docNodes = aDocElement.getChildNodes();
     int docNodeslength = docNodes.getLength();
     for( int i = 0; i < docNodeslength; i++ ) {
       Node docNode = docNodes.item( i );
-      String docNodeName = docNode.getNodeName();
-      if( docNodeName.compareTo( "UAObjectType" ) == 0 ) {
-        // System.out.printf( "NodeId: %s \n", docNode.getAttributes().getNamedItem( "NodeId" ).getTextContent() );
-        // читаем его ребенка DisplayName
-        NodeList uaObjectTypeChildNodes = docNode.getChildNodes();
-        int uaObjectTypeChildNodesLength = uaObjectTypeChildNodes.getLength();
-        for( int j = 0; j < uaObjectTypeChildNodesLength; j++ ) {
-          Node uaObjectTypeChildNode = uaObjectTypeChildNodes.item( j );
-          FuncBlockOPC_UA funcBlock = null;
-          if( uaObjectTypeChildNode != null ) {
-            String childNodeName = uaObjectTypeChildNode.getNodeName();
-            if( childNodeName.compareTo( "DisplayName" ) == 0 ) {
-              String fbName = uaObjectTypeChildNode.getTextContent();
-              System.out.printf( "function block name: %s\n", fbName );
-              funcBlock = new FuncBlockOPC_UA( fbName );
-              funcBlocks.add( funcBlock );
-              funcBlock.nodeId = docNode.getAttributes().getNamedItem( "NodeId" ).getTextContent();
-            }
-            // if( childNodeName.compareTo( "Description" ) == 0 ) {
-            // String fbDescription = uaObjectTypeChildNode.getTextContent();
-            // System.out.printf( "function block description: %s\n", fbDescription );
-            // funcBlock.description = fbDescription;
-            // }
-            // читаем его группы
-            if( funcBlock != null ) {
-              String nodeId = docNode.getAttributes().getNamedItem( "NodeId" ).getTextContent();
-              readGroupNodes( aDocElement, nodeId, funcBlock );
-            }
+      if( isFuncBlockDefinition( docNode ) ) {
+        readFuncBlock( aDocElement, docNode );
+        continue;
+      }
+      if( isDataBlockGlobal( docNode ) ) {
+        readGlobalBlock( aDocElement, docNode );
+        continue;
+      }
+    }
+  }
+
+  @SuppressWarnings( "nls" )
+  private static void readGlobalBlock( Element aDocElement, Node docNode ) {
+    // читаем его ребенка DisplayName
+    NodeList uaObjectTypeChildNodes = docNode.getChildNodes();
+    int uaObjectTypeChildNodesLength = uaObjectTypeChildNodes.getLength();
+    for( int j = 0; j < uaObjectTypeChildNodesLength; j++ ) {
+      Node uaObjectTypeChildNode = uaObjectTypeChildNodes.item( j );
+      DataBlocksGlobalOPC_UA dataBlocksGlobal = null;
+      if( uaObjectTypeChildNode != null ) {
+        String childNodeName = uaObjectTypeChildNode.getNodeName();
+        if( childNodeName.compareTo( "DisplayName" ) == 0 ) {
+          String fbName = uaObjectTypeChildNode.getTextContent();
+          System.out.printf( "global block name: %s\n", fbName );
+          if( fbName.compareTo( "OS" ) == 0 ) {
+            System.out.printf( "!!!" );
           }
+          dataBlocksGlobal = new DataBlocksGlobalOPC_UA( fbName );
+          globalDataBlocks.add( dataBlocksGlobal );
+          dataBlocksGlobal.nodeId = docNode.getAttributes().getNamedItem( "NodeId" ).getTextContent();
+        }
+        // читаем его теги
+        if( dataBlocksGlobal != null ) {
+          dataBlocksGlobal.tags.addAll( readTagNodes( aDocElement, dataBlocksGlobal.nodeId ) );
         }
       }
     }
+  }
+
+  @SuppressWarnings( "nls" )
+  private static void readFuncBlock( Element aDocElement, Node docNode ) {
+    // читаем его ребенка DisplayName
+    NodeList uaObjectTypeChildNodes = docNode.getChildNodes();
+    int uaObjectTypeChildNodesLength = uaObjectTypeChildNodes.getLength();
+    for( int j = 0; j < uaObjectTypeChildNodesLength; j++ ) {
+      Node uaObjectTypeChildNode = uaObjectTypeChildNodes.item( j );
+      FuncBlockOPC_UA funcBlock = null;
+      if( uaObjectTypeChildNode != null ) {
+        String childNodeName = uaObjectTypeChildNode.getNodeName();
+        if( childNodeName.compareTo( "DisplayName" ) == 0 ) {
+          String fbName = uaObjectTypeChildNode.getTextContent();
+          System.out.printf( "function block name: %s\n", fbName );
+          funcBlock = new FuncBlockOPC_UA( fbName );
+          funcBlocks.add( funcBlock );
+          funcBlock.nodeId = docNode.getAttributes().getNamedItem( "NodeId" ).getTextContent();
+        }
+        // читаем его группы
+        if( funcBlock != null ) {
+          String nodeId = docNode.getAttributes().getNamedItem( "NodeId" ).getTextContent();
+          readGroupNodes( aDocElement, nodeId, funcBlock );
+        }
+      }
+    }
+  }
+
+  /**
+   * Опредяет что тут описание функционального блока
+   *
+   * @param aDocNode узел
+   * @return true - описание функц. блока
+   */
+  @SuppressWarnings( "nls" )
+  private static boolean isFuncBlockDefinition( Node aDocNode ) {
+    boolean retVal = false;
+    String docNodeName = aDocNode.getNodeName();
+    // если узел UAObjectType, то это 100% func block
+    if( docNodeName.compareTo( "UAObjectType" ) == 0 ) {
+      retVal = true;
+    }
+    return retVal;
+  }
+
+  /**
+   * Опредяет что тут описание глобального глобального блока
+   *
+   * @param aDocNode узел
+   * @return true - описание функц. блока
+   */
+  private static boolean isDataBlockGlobal( Node aDocNode ) {
+    boolean retVal = false;
+    // если узла есть attr ParentNodeId и ParentNodeId="ns=3;s=DataBlocksGlobal"
+    NamedNodeMap nodeAttrMap = aDocNode.getAttributes();
+    if( nodeAttrMap != null ) {
+      Node parentNodeAttr = nodeAttrMap.getNamedItem( "ParentNodeId" );
+      if( parentNodeAttr != null ) {
+        String parentNodeId = parentNodeAttr.getTextContent();
+        if( parentNodeId.compareTo( "ns=3;s=DataBlocksGlobal" ) == 0 ) {
+          retVal = true;
+        }
+      }
+    }
+    return retVal;
   }
 
   @SuppressWarnings( "nls" )
@@ -207,7 +289,7 @@ public class XMLSample {
           }
           // читаем теги этой группы
           String groupNodeId = uaObjectNode.getAttributes().getNamedItem( "NodeId" ).getTextContent();
-          readTagNodes( aDocElement, groupNodeId, group );
+          group.tags.addAll( readTagNodes( aDocElement, groupNodeId ) );
         }
       }
     }
@@ -315,7 +397,7 @@ public class XMLSample {
           }
           // читаем теги этой группы
           String groupNodeId = uaObjectNode.getAttributes().getNamedItem( "NodeId" ).getTextContent();
-          readTagNodes( aDocElement, groupNodeId, group );
+          group.tags.addAll( readTagNodes( aDocElement, groupNodeId ) );
         }
       }
     }
@@ -337,7 +419,8 @@ public class XMLSample {
   }
 
   @SuppressWarnings( "nls" )
-  private static void readTagNodes( Element aDocElement, String aParentNodeId, GroupOPC_UA aGroup ) {
+  private static IList<TagOPC_UA> readTagNodes( Element aDocElement, String aParentNodeId ) {
+    IListEdit<TagOPC_UA> retVal = new ElemArrayList<>();
     NodeList docNodes = aDocElement.getChildNodes();
     int docNodeslength = docNodes.getLength();
     for( int i = 0; i < docNodeslength; i++ ) {
@@ -347,7 +430,8 @@ public class XMLSample {
         String parentNodeId = uaVariableNode.getAttributes().getNamedItem( "ParentNodeId" ).getTextContent();
         if( parentNodeId.compareTo( aParentNodeId ) == 0 ) {
           TagOPC_UA tag = new TagOPC_UA();
-          aGroup.tags.add( tag );
+          // aGroup.tags.add( tag );
+          retVal.add( tag );
           // нод одного из тегов группы, читаем все что нужно
           Node nodeId = uaVariableNode.getAttributes().getNamedItem( "NodeId" );
           tag.nodeId = nodeId.getTextContent();
@@ -379,14 +463,15 @@ public class XMLSample {
         }
       }
     }
+    return retVal;
   }
 
-  public XMLSample() {
+  public XML2ODSConvertorOPC_UA() {
     // Чтение XML-файла
     readDataXML();
   }
 
-  private static final int SHEET_COUNT = 2;
+  private static final int SHEET_COUNT = 3;
 
   private static final int COLUMN_COUNT = 10;
 
@@ -401,20 +486,52 @@ public class XMLSample {
    */
   private static final int OBJECTS_TAB_NUM = 1;
 
-  private static final int FUNC_BLOCK_COLUMN = 1;
+  /**
+   * Номер закладки для Сереги
+   */
+  private static final int FOR_SERG_TAB_NUM = 2;
 
-  private static final int GROUP_COLUMN = 2;
+  private static final int FUNC_BLOCK_COLUMN = 2;
 
-  private static final int TAG_NAME_COLUMN = 3;
+  private static final int GROUP_COLUMN = 3;
 
-  private static final int TAG_DESCR_COLUMN = 4;
+  private static final int TAG_NAME_COLUMN = 4;
 
-  private static final int TAG_NODE_ID_COLUMN = 5;
+  private static final int TAG_DESCR_COLUMN = 5;
 
-  private static final int TAG_TYPE_COLUMN = 6;
+  private static final int TAG_NODE_ID_COLUMN = 6;
+
+  private static final int TAG_TYPE_COLUMN = 7;
+
+  // public static class OPC_UA_FullPath {
+  //
+  // String namespace;
+  // String nodeId;
+  // }
+  //
+  // public static OPC_UA_FullPath parseFullPath( String aString ) {
+  // OPC_UA_FullPath retVal = new OPC_UA_FullPath();
+  // Pattern p = Pattern.compile( "ns=([\\d]+);s=([a-z.\"_A-Z0-9]+)" );
+  // Matcher n = p.matcher( aString );
+  // if( n.find() ) {
+  // retVal.namespace = n.group( 1 );
+  // System.out.printf( "namespace = %s\n", retVal.namespace ); //
+  // retVal.nodeId = n.group( 2 );
+  // System.out.printf( "nodeId = %s\n", retVal.nodeId ); //
+  // }
+  // return retVal;
+  // }
 
   public static void main( String[] args ) {
-    new XMLSample();
+    // parseFullPath( "ns=3;s=\"ST5\".\"PV\"" );
+    // parseFullPath( "ns=3;s=\"Clock_0-5Hz\"" );
+    // parseFullPath( "ns=3;s=\"P10_InletAirConsumption\"" );
+    // parseFullPath( "ns=3;s=\"reserv73\"" );
+    // parseFullPath( "ns=3;s=\"PPK_Start2Close\"" );
+    // parseFullPath( "ns=3;s=\"AiTemp\".\"_PV\"" );
+    // parseFullPath( "ns=3;s=\"DB_PID_DZ\".I_ITL_ON" );
+
+    new XML2ODSConvertorOPC_UA();
     // сохраняем в файл
     File targetFile = new File( "tagsOPC_UA.ods" );
 
@@ -423,21 +540,68 @@ public class XMLSample {
     // Две закладки: классы и объекты
     Sheet classeSheet = spreadSheet.getSheet( CLASSES_TAB_NUM );
     Sheet objectsSheet = spreadSheet.getSheet( OBJECTS_TAB_NUM );
+    Sheet forSerg1Sheet = spreadSheet.getSheet( FOR_SERG_TAB_NUM );
     classeSheet.setName( "Классы" );
     objectsSheet.setName( "Объекты" );
+    forSerg1Sheet.setName( "Для Сергея" );
     // Записываем в файл то что считали
-    int currRow = 1;
-    for( FuncBlockOPC_UA funcBlock : funcBlocks ) {
-      if( funcBlock.displayName != null ) {
-        classeSheet.setValueAt( funcBlock.displayName, FUNC_BLOCK_COLUMN, currRow );
-        currRow += writeGroups( classeSheet, funcBlock, currRow );
+    // заголовки столбцов для закладки описания классов
+    classeSheet.setValueAt( "FB_id", FUNC_BLOCK_COLUMN, 0 );
+    classeSheet.setValueAt( "tag name", TAG_NAME_COLUMN, 0 );
+    classeSheet.setValueAt( "tag description", TAG_DESCR_COLUMN, 0 );
+    classeSheet.setValueAt( "full node path", TAG_NODE_ID_COLUMN, 0 );
+    classeSheet.setValueAt( "tag type", TAG_TYPE_COLUMN, 0 );
+    // заголовки столбцов для закладки описания классов
+    objectsSheet.setValueAt( "FB_id", FUNC_BLOCK_COLUMN, 0 );
+    objectsSheet.setValueAt( "dataBlockId", 3, 0 );
+    objectsSheet.setValueAt( "tag name", 4, 0 );
+    objectsSheet.setValueAt( "tag description", 5, 0 );
+    objectsSheet.setValueAt( "full node path", 6, 0 );
+    objectsSheet.setValueAt( "tag type", 7, 0 );
+
+    int classesSheetCurrRow = 1;
+    for( DataBlocksGlobalOPC_UA globalDataBlock : globalDataBlocks ) {
+      if( globalDataBlock.displayName != null ) {
+        classeSheet.setValueAt( globalDataBlock.displayName, FUNC_BLOCK_COLUMN, classesSheetCurrRow );
+        classesSheetCurrRow +=
+            writeTags( classeSheet, globalDataBlock.tags, classesSheetCurrRow, globalDataBlock.displayName, "" );
       }
     }
-    currRow = 1;
+    for( FuncBlockOPC_UA funcBlock : funcBlocks ) {
+      if( funcBlock.displayName != null ) {
+        classeSheet.setValueAt( funcBlock.displayName, FUNC_BLOCK_COLUMN, classesSheetCurrRow );
+        classesSheetCurrRow += writeGroups( classeSheet, funcBlock, classesSheetCurrRow );
+      }
+    }
+    int objsSheetCurrRow = 1;
+    for( DataBlocksGlobalOPC_UA uaBlocksGlobalOPC_UA : globalDataBlocks ) {
+      if( uaBlocksGlobalOPC_UA.displayName != null ) {
+        objectsSheet.setValueAt( uaBlocksGlobalOPC_UA.displayName, FUNC_BLOCK_COLUMN, objsSheetCurrRow );
+        // у глобальных блоков название блока совпадает с название объекта
+        objectsSheet.setValueAt( uaBlocksGlobalOPC_UA.displayName, FUNC_BLOCK_COLUMN + 1, objsSheetCurrRow );
+        objsSheetCurrRow += writeGlobalBlock( objectsSheet, uaBlocksGlobalOPC_UA, objsSheetCurrRow );
+      }
+    }
     for( ObjectOPC_UA uaObj : uaObjects ) {
       if( uaObj.displayName != null ) {
-        objectsSheet.setValueAt( uaObj.className, FUNC_BLOCK_COLUMN, currRow );
-        currRow += writeObjGroups( objectsSheet, uaObj, currRow );
+        objectsSheet.setValueAt( uaObj.className, FUNC_BLOCK_COLUMN, objsSheetCurrRow );
+        objsSheetCurrRow += writeObjGroups( objectsSheet, uaObj, objsSheetCurrRow );
+      }
+    }
+    int forSergSheetCurrRow = 1;
+    for( DataBlocksGlobalOPC_UA uaBlocksGlobalOPC_UA : globalDataBlocks ) {
+      if( uaBlocksGlobalOPC_UA.displayName != null ) {
+        forSerg1Sheet.setValueAt( uaBlocksGlobalOPC_UA.displayName, FUNC_BLOCK_COLUMN, forSergSheetCurrRow );
+        // у глобальных блоков название блока совпадает с название объекта
+        forSerg1Sheet.setValueAt( uaBlocksGlobalOPC_UA.displayName, FUNC_BLOCK_COLUMN + 1, forSergSheetCurrRow );
+        forSergSheetCurrRow++;
+      }
+    }
+    for( ObjectOPC_UA uaObj : uaObjects ) {
+      if( uaObj.displayName != null ) {
+        forSerg1Sheet.setValueAt( uaObj.className, FUNC_BLOCK_COLUMN, forSergSheetCurrRow );
+        forSerg1Sheet.setValueAt( uaObj.displayName, FUNC_BLOCK_COLUMN + 1, forSergSheetCurrRow );
+        forSergSheetCurrRow++;
       }
     }
     // Сохраняем в файл
@@ -466,13 +630,27 @@ public class XMLSample {
     return retVal;
   }
 
+  private static int writeGlobalBlock( Sheet aClasseSheet, DataBlocksGlobalOPC_UA aBlockGlobal, int aCurrRow ) {
+    int retVal = 0;
+    int currRow = aCurrRow;
+    if( !aBlockGlobal.tags.isEmpty() ) {
+      aClasseSheet.setValueAt( aBlockGlobal.displayName, GROUP_COLUMN, currRow );
+      int rowQtty =
+          writeTags( aClasseSheet, aBlockGlobal.tags, currRow, aBlockGlobal.displayName, aBlockGlobal.displayName );
+      currRow += rowQtty;
+      retVal += rowQtty;
+      aClasseSheet.setValueAt( aBlockGlobal.displayName, FUNC_BLOCK_COLUMN, currRow );
+    }
+    return retVal;
+  }
+
   private static int writeGroups( Sheet aClasseSheet, FuncBlockOPC_UA aFuncBlock, int aCurrRow ) {
     int retVal = 0;
     int currRow = aCurrRow;
     for( GroupOPC_UA group : aFuncBlock.groups ) {
       if( !group.tags.isEmpty() ) {
         aClasseSheet.setValueAt( group.displayName, GROUP_COLUMN, currRow );
-        int rowQtty = writeTags( aClasseSheet, group, currRow, aFuncBlock.displayName );
+        int rowQtty = writeTags( aClasseSheet, group.tags, currRow, aFuncBlock.displayName, group.displayName );
         currRow += rowQtty;
         retVal += rowQtty;
         aClasseSheet.setValueAt( aFuncBlock.displayName, FUNC_BLOCK_COLUMN, currRow );
@@ -481,18 +659,19 @@ public class XMLSample {
     return retVal;
   }
 
-  private static int writeTags( Sheet aSheet, GroupOPC_UA aGroup, int aCurrRow, String aFbDisplayName ) {
+  private static int writeTags( Sheet aSheet, IList<TagOPC_UA> aTags, int aCurrRow, String aFbDisplayName,
+      String aGroupDisplayName ) {
     int retVal = 0;
     int currRow = aCurrRow;
-    for( TagOPC_UA tag : aGroup.tags ) {
+    for( TagOPC_UA tag : aTags ) {
       aSheet.setValueAt( tag.displayName, TAG_NAME_COLUMN, currRow );
       aSheet.setValueAt( tag.description, TAG_DESCR_COLUMN, currRow );
       aSheet.setValueAt( tag.nodeId, TAG_NODE_ID_COLUMN, currRow );
       aSheet.setValueAt( tag.dataType, TAG_TYPE_COLUMN, currRow );
       retVal++;
       currRow++;
-      aSheet.setValueAt( aGroup.displayName, GROUP_COLUMN, currRow );
       aSheet.setValueAt( aFbDisplayName, FUNC_BLOCK_COLUMN, currRow );
+      aSheet.setValueAt( aGroupDisplayName, GROUP_COLUMN, currRow );
     }
     return retVal;
   }
