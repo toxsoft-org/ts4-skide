@@ -24,7 +24,7 @@ public class XML2ODSConvertorOPC_UA {
   // список объектов
   private static IListEdit<ObjectOPC_UA> uaObjects = new ElemArrayList<>();
 
-  private final String sourceXML = "Compr2301.PLC_1.OPCUA_20230209-1058.xml";
+  private final String sourceXML = "Compr2301.PLC_1.OPCUA_20230215-1523.xml";
 
   /**
    * базовый класс всех узлов сервера OPC UA
@@ -551,7 +551,7 @@ public class XML2ODSConvertorOPC_UA {
     classeSheet.setValueAt( "tag description", TAG_DESCR_COLUMN, 0 );
     classeSheet.setValueAt( "full node path", TAG_NODE_ID_COLUMN, 0 );
     classeSheet.setValueAt( "tag type", TAG_TYPE_COLUMN, 0 );
-    // заголовки столбцов для закладки описания классов
+    // заголовки столбцов для закладки описания объектов
     objectsSheet.setValueAt( "FB_id", FUNC_BLOCK_COLUMN, 0 );
     objectsSheet.setValueAt( "dataBlockId", 3, 0 );
     objectsSheet.setValueAt( "tag name", 4, 0 );
@@ -559,7 +559,7 @@ public class XML2ODSConvertorOPC_UA {
     objectsSheet.setValueAt( "full node path", 6, 0 );
     objectsSheet.setValueAt( "tag type", 7, 0 );
 
-    int classesSheetCurrRow = 1;
+    int classesSheetCurrRow = 2;
     for( DataBlocksGlobalOPC_UA globalDataBlock : globalDataBlocks ) {
       if( globalDataBlock.displayName != null ) {
         classeSheet.setValueAt( globalDataBlock.displayName, FUNC_BLOCK_COLUMN, classesSheetCurrRow );
@@ -569,7 +569,7 @@ public class XML2ODSConvertorOPC_UA {
     }
     for( FuncBlockOPC_UA funcBlock : funcBlocks ) {
       if( funcBlock.displayName != null ) {
-        classeSheet.setValueAt( funcBlock.displayName, FUNC_BLOCK_COLUMN, classesSheetCurrRow );
+        // classeSheet.setValueAt( funcBlock.displayName, FUNC_BLOCK_COLUMN, classesSheetCurrRow );
         classesSheetCurrRow += writeGroups( classeSheet, funcBlock, classesSheetCurrRow );
       }
     }
@@ -584,8 +584,12 @@ public class XML2ODSConvertorOPC_UA {
     }
     for( ObjectOPC_UA uaObj : uaObjects ) {
       if( uaObj.displayName != null ) {
-        objectsSheet.setValueAt( uaObj.className, FUNC_BLOCK_COLUMN, objsSheetCurrRow );
-        objsSheetCurrRow += writeObjGroups( objectsSheet, uaObj, objsSheetCurrRow );
+        // objectsSheet.setValueAt( uaObj.className, FUNC_BLOCK_COLUMN, objsSheetCurrRow );
+        int rowQtty = writeObjGroups( objectsSheet, uaObj, objsSheetCurrRow );
+        objsSheetCurrRow += rowQtty;
+        // if( rowQtty == 0 ) {
+        // objectsSheet.setValueAt( "", FUNC_BLOCK_COLUMN, objsSheetCurrRow );
+        // }
       }
     }
     int forSergSheetCurrRow = 1;
@@ -620,11 +624,11 @@ public class XML2ODSConvertorOPC_UA {
     int currRow = aCurrRow;
     for( GroupOPC_UA group : aUaObj.groups ) {
       if( !group.tags.isEmpty() ) {
-        aObjectsSheet.setValueAt( aUaObj.displayName, GROUP_COLUMN, currRow );
+        // aObjectsSheet.setValueAt( aUaObj.displayName, GROUP_COLUMN, currRow );
         int rowQtty = writeObjTags( aObjectsSheet, group, currRow, aUaObj );
         currRow += rowQtty;
         retVal += rowQtty;
-        aObjectsSheet.setValueAt( aUaObj.className, FUNC_BLOCK_COLUMN, currRow );
+        // aObjectsSheet.setValueAt( aUaObj.className, FUNC_BLOCK_COLUMN, currRow );
       }
     }
     return retVal;
@@ -649,11 +653,11 @@ public class XML2ODSConvertorOPC_UA {
     int currRow = aCurrRow;
     for( GroupOPC_UA group : aFuncBlock.groups ) {
       if( !group.tags.isEmpty() ) {
-        aClasseSheet.setValueAt( group.displayName, GROUP_COLUMN, currRow );
+        // aClasseSheet.setValueAt( group.displayName, GROUP_COLUMN, currRow );
         int rowQtty = writeTags( aClasseSheet, group.tags, currRow, aFuncBlock.displayName, group.displayName );
         currRow += rowQtty;
         retVal += rowQtty;
-        aClasseSheet.setValueAt( aFuncBlock.displayName, FUNC_BLOCK_COLUMN, currRow );
+        // aClasseSheet.setValueAt( aFuncBlock.displayName, FUNC_BLOCK_COLUMN, currRow );
       }
     }
     return retVal;
@@ -664,14 +668,14 @@ public class XML2ODSConvertorOPC_UA {
     int retVal = 0;
     int currRow = aCurrRow;
     for( TagOPC_UA tag : aTags ) {
+      aSheet.setValueAt( aFbDisplayName, FUNC_BLOCK_COLUMN, currRow );
+      aSheet.setValueAt( aGroupDisplayName, GROUP_COLUMN, currRow );
       aSheet.setValueAt( tag.displayName, TAG_NAME_COLUMN, currRow );
       aSheet.setValueAt( tag.description, TAG_DESCR_COLUMN, currRow );
       aSheet.setValueAt( tag.nodeId, TAG_NODE_ID_COLUMN, currRow );
       aSheet.setValueAt( tag.dataType, TAG_TYPE_COLUMN, currRow );
       retVal++;
       currRow++;
-      aSheet.setValueAt( aFbDisplayName, FUNC_BLOCK_COLUMN, currRow );
-      aSheet.setValueAt( aGroupDisplayName, GROUP_COLUMN, currRow );
     }
     return retVal;
   }
@@ -680,14 +684,14 @@ public class XML2ODSConvertorOPC_UA {
     int retVal = 0;
     int currRow = aCurrRow;
     for( TagOPC_UA tag : aGroup.tags ) {
+      aSheet.setValueAt( aUaObj.displayName, GROUP_COLUMN, currRow );
+      aSheet.setValueAt( aUaObj.className, FUNC_BLOCK_COLUMN, currRow );
       aSheet.setValueAt( tag.displayName, TAG_NAME_COLUMN, currRow );
       aSheet.setValueAt( tag.description, TAG_DESCR_COLUMN, currRow );
       aSheet.setValueAt( tag.nodeId, TAG_NODE_ID_COLUMN, currRow );
       aSheet.setValueAt( tag.dataType, TAG_TYPE_COLUMN, currRow );
       retVal++;
       currRow++;
-      aSheet.setValueAt( aUaObj.displayName, GROUP_COLUMN, currRow );
-      aSheet.setValueAt( aUaObj.className, FUNC_BLOCK_COLUMN, currRow );
     }
     return retVal;
   }
