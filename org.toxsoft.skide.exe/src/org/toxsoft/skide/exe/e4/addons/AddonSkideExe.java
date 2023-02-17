@@ -31,19 +31,28 @@ public class AddonSkideExe
 
   @Override
   protected void initApp( IEclipseContext aAppContext ) {
-    // задаем значок окна и приложения
+    // set application and window icon
     MApplication app = aAppContext.get( MApplication.class );
     EModelService modelService = aAppContext.get( EModelService.class );
     MTrimmedWindow mainWindow = (MTrimmedWindow)modelService.find( IMwsCoreConstants.MWSID_WINDOW_MAIN, app );
     mainWindow.setIconURI( TsIconManagerUtils.makeStdIconUriString( org.toxsoft.skide.core.Activator.PLUGIN_ID,
         ICONID_APP_ICON, IS_48X48 ) );
-    // начальные размеры окна
+    // // initial size of the window BIG
+    // Display display = aAppContext.get( Display.class );
+    // Rectangle dBounds = display.getBounds();
+    // mainWindow.setX( dBounds.x + 8 );
+    // mainWindow.setY( 0 );
+    // mainWindow.setWidth( dBounds.width - 4 * 8 );
+    // mainWindow.setHeight( dBounds.height );
+    // initial size of the window SMALL for DEBUG
     Display display = aAppContext.get( Display.class );
     Rectangle dBounds = display.getBounds();
-    mainWindow.setX( dBounds.x + 8 );
-    mainWindow.setY( 0 );
-    mainWindow.setWidth( dBounds.width - 4 * 8 );
-    mainWindow.setHeight( dBounds.height );
+    int dx = dBounds.width / 8;
+    int dy = dBounds.height / 8;
+    mainWindow.setX( 4 * dx );
+    mainWindow.setY( 2 * dy );
+    mainWindow.setWidth( 3 * dx );
+    mainWindow.setHeight( 5 * dy );
   }
 
   @Override

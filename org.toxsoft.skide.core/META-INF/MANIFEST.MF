@@ -16,18 +16,19 @@ Require-Bundle: javax.annotation,
  org.toxsoft.core.tslib,
  org.toxsoft.core.singlesrc.rcp,
  org.toxsoft.core.tsgui,
+ org.toxsoft.core.tsgui.rcp,
  org.toxsoft.core.tsgui.mws,
  org.toxsoft.core.txtproj.lib,
+ org.toxsoft.core.txtproj.gui,
  org.toxsoft.uskat.core,
- org.toxsoft.uskat.backend.memtext,
- org.toxsoft.uskat.base.gui
+ org.toxsoft.uskat.base.gui,
+ org.toxsoft.uskat.users.gui,
+ org.toxsoft.uskat.backend.memtext
 Bundle-RequiredExecutionEnvironment: JavaSE-17
 Automatic-Module-Name: org.toxsoft.skide.core
 Bundle-ActivationPolicy: lazy
 Export-Package: org.toxsoft.skide.core,
  org.toxsoft.skide.core.e4.addons,
  org.toxsoft.skide.core.e4.handlers,
- org.toxsoft.skide.core.glib,
- org.toxsoft.skide.core.main,
- org.toxsoft.skide.core.main.impl,
- org.toxsoft.skide.core.proj
+ org.toxsoft.skide.core.main
+

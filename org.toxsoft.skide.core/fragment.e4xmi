@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ASCII"?>
-<fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmi:id="_ZGGmIDjEEe27EIdDq6UBww">
-  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_0dHakDjEEe27EIdDq6UBww" featurename="addons" parentElementId="org.toxsoft.mws.app.main">
-    <elements xsi:type="application:Addon" xmi:id="_1nLZ8DjEEe27EIdDq6UBww" elementId="org.toxsoft.skide.core.addon.0" contributionURI="bundleclass://org.toxsoft.skide.core/org.toxsoft.skide.core.e4.addons.AddonSkideCore"/>
+<fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmi:id="_ucaT0Kj7Ee2tqO2sk4htsg">
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_4rdhwKj7Ee2tqO2sk4htsg" featurename="addons" parentElementId="org.toxsoft.mws.app.main">
+    <elements xsi:type="application:Addon" xmi:id="_56Nz4Kj7Ee2tqO2sk4htsg" elementId="org.toxsoft.skide.core.addon.0" contributionURI="bundleclass://org.toxsoft.skide.core/org.toxsoft.skide.core.e4.addons.AddonSkideCore"/>
   </fragments>
 </fragment:ModelFragments>
