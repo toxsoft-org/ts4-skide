@@ -9,7 +9,7 @@ import org.toxsoft.tool.sfv.gui.m5.*;
 /**
  * The library quant.
  *
- * @author goga
+ * @author hazard157
  */
 public class QuantToolSfvGui
     extends AbstractQuant {
