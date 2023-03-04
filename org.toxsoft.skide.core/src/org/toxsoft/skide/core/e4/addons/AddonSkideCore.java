@@ -1,13 +1,16 @@
 package org.toxsoft.skide.core.e4.addons;
 
 import org.eclipse.e4.core.contexts.*;
+import org.toxsoft.core.tsgui.bricks.ctx.impl.*;
 import org.toxsoft.core.tsgui.bricks.quant.*;
 import org.toxsoft.core.tsgui.m5.*;
 import org.toxsoft.core.tsgui.mws.bases.*;
+import org.toxsoft.core.tsgui.valed.impl.*;
 import org.toxsoft.skide.core.*;
 import org.toxsoft.skide.core.Activator;
-import org.toxsoft.skide.core.main.*;
+import org.toxsoft.skide.core.env.*;
 import org.toxsoft.uskat.base.gui.*;
+import org.toxsoft.uskat.base.gui.conn.cfg.m5.*;
 import org.toxsoft.uskat.users.gui.*;
 
 /**
@@ -44,6 +47,12 @@ public class AddonSkideCore
   @Override
   protected void initWin( IEclipseContext aWinContext ) {
     ISkideCoreConstants.init( aWinContext );
+    //
+    SkideEnvironment skideEnv = (SkideEnvironment)aWinContext.get( ISkideEnvironment.class );
+    skideEnv.initWin( new TsGuiContext( aWinContext ) );
+    //
+    ValedControlFactoriesRegistry vcfRegistry = aWinContext.get( ValedControlFactoriesRegistry.class );
+    vcfRegistry.registerFactory( ValedProviderIdCombo.FACTORY );
     //
     IM5Domain m5 = aWinContext.get( IM5Domain.class );
     m5.addModel( new SkidePluginM5Model() );

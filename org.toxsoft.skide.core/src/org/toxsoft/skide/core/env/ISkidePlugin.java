@@ -1,4 +1,4 @@
-package org.toxsoft.skide.core.main;
+package org.toxsoft.skide.core.env;
 
 import org.toxsoft.core.tslib.bricks.strid.*;
 
@@ -10,6 +10,11 @@ import org.toxsoft.core.tslib.bricks.strid.*;
 public sealed interface ISkidePlugin
     extends IStridable permits AbstractSkidePlugin {
 
-  // nop
+  /**
+   * Returns the plugin contribution to the project tree.
+   *
+   * @return {@link ISkideProjectTreeContribution} - plugin for project tree
+   */
+  ISkideProjectTreeContribution projTreeContribution();
 
 }

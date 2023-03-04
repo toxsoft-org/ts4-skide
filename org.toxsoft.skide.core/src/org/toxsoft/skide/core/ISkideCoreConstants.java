@@ -25,11 +25,17 @@ public interface ISkideCoreConstants {
 
   String CATEGID_SKIDE_GENERAL = "org.toxsoft.skide.category.skide_general"; //$NON-NLS-1$
 
+  String CMDID_EDIT_PROJPROPS      = "org.toxsoft.skide.cmd.edit_proj_props";     //$NON-NLS-1$
+  String CMDID_MAIN_CONN_LOCAL     = "org.toxsoft.skide.cmd.main_conn.local";     //$NON-NLS-1$
+  String CMDID_MAIN_CONN_SELECT    = "org.toxsoft.skide.cmd.main_conn.select";    //$NON-NLS-1$
+  String CMDID_MAIN_CONN_CONFIGURE = "org.toxsoft.skide.cmd.main_conn.configure"; //$NON-NLS-1$
+
   // ------------------------------------------------------------------------------------
   // Icons
 
-  String PREFIX_OF_ICON_FIELD_NAME = "ICONID_";  //$NON-NLS-1$
-  String ICONID_APP_ICON           = "app-icon"; //$NON-NLS-1$
+  String PREFIX_OF_ICON_FIELD_NAME = "ICONID_";          //$NON-NLS-1$
+  String ICONID_APP_ICON           = "app-icon";         //$NON-NLS-1$
+  String ICONID_SKIDE_LOCAL_CONN   = "skide-local-conn"; //$NON-NLS-1$
 
   /**
    * Constants registration.

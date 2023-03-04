@@ -8,6 +8,11 @@
             uri="fragment.e4xmi"
             apply="always">
       </fragment>
+      <processor
+            apply="always"
+            beforefragment="false"
+            class="org.toxsoft.skide.exe.e4.processors.ProcessorSkideGuiTuner">
+      </processor>
    </extension>
 
    <extension

@@ -1,4 +1,4 @@
-package org.toxsoft.skide.core.main;
+package org.toxsoft.skide.core.env;
 
 import org.toxsoft.core.tslib.bricks.strid.coll.*;
 import org.toxsoft.core.tslib.bricks.strid.coll.impl.*;
@@ -17,7 +17,7 @@ public final class SkidePluginsRegistrator
   /**
    * Constructor.
    */
-  public SkidePluginsRegistrator() {
+  SkidePluginsRegistrator() {
     // nop
   }
 

@@ -1,5 +1,6 @@
-package org.toxsoft.skide.core.main;
+package org.toxsoft.skide.core.env;
 
+import org.toxsoft.core.tsgui.bricks.ctx.*;
 import org.toxsoft.core.tslib.av.opset.*;
 import org.toxsoft.core.tslib.bricks.strid.impl.*;
 import org.toxsoft.core.tslib.utils.errors.*;
@@ -12,8 +13,11 @@ import org.toxsoft.core.txtproj.lib.workroom.*;
  */
 public non-sealed abstract class AbstractSkidePlugin
     extends StridableParameterized
-    implements ISkidePlugin {
+    implements ISkidePlugin, ITsGuiContextable {
 
+  private final SkideProjectTreeContribution ptContribution = new SkideProjectTreeContribution();
+
+  private ITsGuiContext      tsContext = null;
   private ITsWorkroomStorage wrStorage = null;
 
   /**
@@ -37,10 +41,12 @@ public non-sealed abstract class AbstractSkidePlugin
    * <p>
    * Method is not intended to be called by users. It is called internally by the SkIDE core.
    *
+   * @param aContext {@link ITsGuiContext} - the context
    * @param aStorage {@link ITsWorkroomStorage} - storage for this plugin
    */
-  final public void initialize( ITsWorkroomStorage aStorage ) {
-    TsNullArgumentRtException.checkNull( aStorage );
+  final public void initialize( ITsGuiContext aContext, ITsWorkroomStorage aStorage ) {
+    TsNullArgumentRtException.checkNulls( aContext, aStorage );
+    tsContext = aContext;
     wrStorage = aStorage;
     doInit();
   }
@@ -59,8 +65,23 @@ public non-sealed abstract class AbstractSkidePlugin
   }
 
   // ------------------------------------------------------------------------------------
+  // ITsGuiContextable
+  //
+
+  @Override
+  public ITsGuiContext tsContext() {
+    TsIllegalStateRtException.checkNull( tsContext );
+    return tsContext;
+  }
+
+  // ------------------------------------------------------------------------------------
   // ISkidePlugin
   //
+
+  @Override
+  public SkideProjectTreeContribution projTreeContribution() {
+    return ptContribution;
+  }
 
   // ------------------------------------------------------------------------------------
   // to implement
@@ -69,7 +90,7 @@ public non-sealed abstract class AbstractSkidePlugin
   /**
    * Subclass must initialize the plugin if necessary.
    * <p>
-   * {@link #wrStorage} already returns the valid storage.
+   * {@link #tsContext()} and {@link #wrStorage()} already returns the valid values.
    */
   protected abstract void doInit();
 

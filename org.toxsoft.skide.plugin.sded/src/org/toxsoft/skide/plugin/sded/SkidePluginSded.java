@@ -4,7 +4,7 @@ import static org.toxsoft.core.tslib.av.metainfo.IAvMetaConstants.*;
 import static org.toxsoft.skide.plugin.sded.ISkResources.*;
 
 import org.toxsoft.core.tslib.av.opset.impl.*;
-import org.toxsoft.skide.core.main.*;
+import org.toxsoft.skide.core.env.*;
 import org.toxsoft.uskat.sded.gui.*;
 
 /**
@@ -12,15 +12,19 @@ import org.toxsoft.uskat.sded.gui.*;
  *
  * @author hazard157
  */
-public class SkidePlugin
+public class SkidePluginSded
     extends AbstractSkidePlugin {
+
+  // FIXME contribute Sysdescr to the main connection project tree node
+
+  // FIXME contribute ObjectsService to the main connection project tree node
 
   /**
    * Singleton instance.
    */
-  public static final ISkidePlugin INSTANCE = new SkidePlugin();
+  public static final ISkidePlugin INSTANCE = new SkidePluginSded();
 
-  private SkidePlugin() {
+  private SkidePluginSded() {
     super( Activator.PLUGIN_ID, OptionSetUtils.createOpSet( //
         TSID_NAME, STR_N_SKIDE_PLUGIN, //
         TSID_DESCRIPTION, STR_D_SKIDE_PLUGIN, //

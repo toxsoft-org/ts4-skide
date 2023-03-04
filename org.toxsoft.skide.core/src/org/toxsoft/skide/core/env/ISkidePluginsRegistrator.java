@@ -1,14 +1,11 @@
 
-package org.toxsoft.skide.core.main;
+package org.toxsoft.skide.core.env;
 
 import org.toxsoft.core.tslib.bricks.strid.coll.*;
 import org.toxsoft.core.tslib.utils.errors.*;
 
 /**
  * Access point to the SkIDE API.
- * <p>
- * Reference to the implementation must be in the application context. Moreover, the fact that reference is in context
- * tells the plug-in that some it is running inside SkIDE, not another application.
  *
  * @author hazard157
  */

@@ -1,4 +1,4 @@
-package org.toxsoft.skide.core.main;
+package org.toxsoft.skide.core.env;
 
 import static org.toxsoft.skide.core.ISkideCoreConstants.*;
 
