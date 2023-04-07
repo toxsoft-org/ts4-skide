@@ -6,12 +6,12 @@ import org.toxsoft.core.tsgui.bricks.quant.*;
 import org.toxsoft.core.tsgui.m5.*;
 import org.toxsoft.core.tsgui.mws.bases.*;
 import org.toxsoft.core.tsgui.valed.impl.*;
+import org.toxsoft.skf.users.gui.*;
 import org.toxsoft.skide.core.*;
 import org.toxsoft.skide.core.Activator;
 import org.toxsoft.skide.core.env.*;
-import org.toxsoft.uskat.base.gui.*;
-import org.toxsoft.uskat.base.gui.conn.cfg.m5.*;
-import org.toxsoft.uskat.users.gui.*;
+import org.toxsoft.uskat.core.gui.*;
+import org.toxsoft.uskat.core.gui.conn.cfg.m5.*;
 
 /**
  * Plugin addon.

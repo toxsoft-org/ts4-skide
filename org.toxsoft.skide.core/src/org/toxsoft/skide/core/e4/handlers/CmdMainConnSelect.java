@@ -2,7 +2,7 @@ package org.toxsoft.skide.core.e4.handlers;
 
 import static org.toxsoft.core.tslib.av.impl.AvUtils.*;
 import static org.toxsoft.skide.core.e4.handlers.ISkResources.*;
-import static org.toxsoft.uskat.base.gui.conn.cfg.m5.IConnectionConfigM5Constants.*;
+import static org.toxsoft.uskat.core.gui.conn.cfg.m5.IConnectionConfigM5Constants.*;
 
 import org.eclipse.e4.core.contexts.*;
 import org.eclipse.e4.core.di.annotations.*;
@@ -14,7 +14,7 @@ import org.toxsoft.core.tsgui.m5.*;
 import org.toxsoft.core.tsgui.m5.gui.*;
 import org.toxsoft.core.tsgui.m5.gui.mpc.*;
 import org.toxsoft.core.tsgui.m5.model.*;
-import org.toxsoft.uskat.base.gui.conn.cfg.*;
+import org.toxsoft.uskat.core.gui.conn.cfg.*;
 
 /**
  * Command: Select configuration to establish the main connection.

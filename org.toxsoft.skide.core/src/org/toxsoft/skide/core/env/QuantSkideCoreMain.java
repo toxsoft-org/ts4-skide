@@ -37,8 +37,8 @@ import org.toxsoft.core.tslib.utils.progargs.*;
 import org.toxsoft.core.txtproj.lib.storage.*;
 import org.toxsoft.core.txtproj.lib.workroom.*;
 import org.toxsoft.uskat.backend.memtext.*;
-import org.toxsoft.uskat.base.gui.conn.*;
-import org.toxsoft.uskat.base.gui.conn.cfg.*;
+import org.toxsoft.uskat.core.gui.conn.*;
+import org.toxsoft.uskat.core.gui.conn.cfg.*;
 import org.toxsoft.uskat.s5.client.remote.*;
 
 /**
@@ -208,7 +208,7 @@ public class QuantSkideCoreMain
     // add validator to manage fixed connections
     ccs.svs().addValidator( CCSV_VALIDATOR );
     // add fixed connection to the local system storage
-    File localSkFile = new File( skideWorkroom.wsDir(), WORKROOM_FILE_SKIDE_SYSTEM );
+    File localSkFile = new File( skideWorkroom.wrDir(), WORKROOM_FILE_SKIDE_SYSTEM );
     IConnectionConfig localCfg = new ConnectionConfig( SKIDE_LOCAL_CONN_ID, //
         MtbBackendToFile.PROVIDER.getMetaInfo().id(), //
         OptionSetUtils.createOpSet( //
