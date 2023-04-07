@@ -52,6 +52,11 @@ public class QuantSkideCoreMain
     extends AbstractQuant {
 
   /**
+   * Do NOT store SkIDE built-in connection in IConnectionConfigService.<br>
+   * Remove IConnectionConfigService validator of FIXED connection<br>
+   */
+
+  /**
    * The command line option to specify the workroom directory.
    */
   public static final String CMD_LINE_ARG_WORKROOM = "skide-workroom"; //$NON-NLS-1$
@@ -207,20 +212,22 @@ public class QuantSkideCoreMain
     ccs.registerPovider( new ConnectionConfigProvider( new S5RemoteBackendProvider(), IOptionSet.NULL ) );
     // add validator to manage fixed connections
     ccs.svs().addValidator( CCSV_VALIDATOR );
-    // add fixed connection to the local system storage
-    File localSkFile = new File( skideWorkroom.wsDir(), WORKROOM_FILE_SKIDE_SYSTEM );
-    IConnectionConfig localCfg = new ConnectionConfig( SKIDE_LOCAL_CONN_ID, //
-        MtbBackendToFile.PROVIDER.getMetaInfo().id(), //
-        OptionSetUtils.createOpSet( //
-            TSID_NAME, STR_N_LOCAL_CONN, //
-            TSID_DESCRIPTION, STR_D_LOCAL_CONN, //
-            TSID_ICON_ID, ICONID_SKIDE_LOCAL_CONN, //
-            OPDEF_FIXED_CONNECTION, AV_TRUE //
-        ), //
-        OptionSetUtils.createOpSet( //
-            OPDEF_FILE_PATH, avStr( localSkFile.getAbsolutePath() ) //
-        ) );
-    ccs.defineConfig( localCfg );
+    // add fixed connection to the local system storage on first run
+    if( !ccs.listConfigs().hasKey( SKIDE_LOCAL_CONN_ID ) ) {
+      File localSkFile = new File( skideWorkroom.wrDir(), WORKROOM_FILE_SKIDE_SYSTEM );
+      IConnectionConfig localCfg = new ConnectionConfig( SKIDE_LOCAL_CONN_ID, //
+          MtbBackendToFile.PROVIDER.getMetaInfo().id(), //
+          OptionSetUtils.createOpSet( //
+              TSID_NAME, STR_N_LOCAL_CONN, //
+              TSID_DESCRIPTION, STR_D_LOCAL_CONN, //
+              TSID_ICON_ID, ICONID_SKIDE_LOCAL_CONN, //
+              OPDEF_FIXED_CONNECTION, AV_TRUE //
+          ), //
+          OptionSetUtils.createOpSet( //
+              OPDEF_FILE_PATH, avStr( localSkFile.getAbsolutePath() ) //
+          ) );
+      ccs.defineConfig( localCfg );
+    }
   }
 
   /**

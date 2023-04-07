@@ -30,7 +30,7 @@ public class AddonSkideCoreWindowsTitle
 
   private void updateWindowTitle( IEclipseContext aWinContext ) {
     ITsWorkroom workroom = aWinContext.get( ITsWorkroom.class );
-    String wrName = workroom.wsDir().getName();
+    String wrName = workroom.wrDir().getName();
     ISkideEnvironment skideEnv = aWinContext.get( ISkideEnvironment.class );
     String projName = skideEnv.projectProperties().name();
     IMwsOsgiService mwsService = getOsgiService( IMwsOsgiService.class );
