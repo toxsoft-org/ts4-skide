@@ -5,8 +5,6 @@ Bundle-SymbolicName: org.toxsoft.skide.exe;singleton:=true
 Bundle-Version: 3.0.0.qualifier
 Bundle-Activator: org.toxsoft.skide.exe.Activator
 Bundle-Vendor: toxsoft.org
-Export-Package: org.toxsoft.skide.exe,
- org.toxsoft.skide.exe.e4.addons
 Require-Bundle: javax.annotation,
  javax.inject,
  org.eclipse.core.runtime,
@@ -27,3 +25,6 @@ Require-Bundle: javax.annotation,
 Bundle-RequiredExecutionEnvironment: JavaSE-17
 Automatic-Module-Name: org.toxsoft.skide.exe
 Bundle-ActivationPolicy: lazy
+Export-Package: org.toxsoft.skide.exe,
+ org.toxsoft.skide.exe.e4.addons,
+ org.toxsoft.skide.exe.e4.processors

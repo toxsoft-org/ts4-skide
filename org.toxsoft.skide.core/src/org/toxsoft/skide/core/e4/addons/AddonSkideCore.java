@@ -10,6 +10,7 @@ import org.toxsoft.skf.users.gui.*;
 import org.toxsoft.skide.core.*;
 import org.toxsoft.skide.core.Activator;
 import org.toxsoft.skide.core.env.*;
+import org.toxsoft.skide.core.incub.*;
 import org.toxsoft.uskat.core.gui.*;
 import org.toxsoft.uskat.core.gui.conn.cfg.m5.*;
 
@@ -37,6 +38,7 @@ public class AddonSkideCore
     aQuantRegistrator.registerQuant( new QuantSkBaseGui() );
     aQuantRegistrator.registerQuant( new QuantSkUsersGui() );
     aQuantRegistrator.registerQuant( new QuantSkideCoreMain() );
+    aQuantRegistrator.registerQuant( new QuantIncub() );
   }
 
   @Override

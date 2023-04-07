@@ -52,6 +52,11 @@ public class QuantSkideCoreMain
     extends AbstractQuant {
 
   /**
+   * Do NOT store SkIDE built-in connection in IConnectionConfigService.<br>
+   * Remove IConnectionConfigService validator of FIXED connection<br>
+   */
+
+  /**
    * The command line option to specify the workroom directory.
    */
   public static final String CMD_LINE_ARG_WORKROOM = "skide-workroom"; //$NON-NLS-1$
