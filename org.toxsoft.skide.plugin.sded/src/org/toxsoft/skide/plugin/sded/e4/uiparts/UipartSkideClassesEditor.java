@@ -1,10 +1,10 @@
 package org.toxsoft.skide.plugin.sded.e4.uiparts;
 
 import org.toxsoft.core.tsgui.widgets.*;
-import org.toxsoft.uskat.base.gui.conn.*;
-import org.toxsoft.uskat.base.gui.e4.uiparts.*;
 import org.toxsoft.uskat.core.connection.*;
-import org.toxsoft.uskat.sded.gui.glib.*;
+import org.toxsoft.uskat.core.gui.conn.*;
+import org.toxsoft.uskat.core.gui.e4.uiparts.*;
+import org.toxsoft.uskat.core.gui.glib.*;
 
 /**
  * Classes editor.

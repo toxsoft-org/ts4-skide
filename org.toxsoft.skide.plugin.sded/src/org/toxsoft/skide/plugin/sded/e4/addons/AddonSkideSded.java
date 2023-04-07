@@ -5,8 +5,8 @@ import org.toxsoft.core.tsgui.bricks.quant.*;
 import org.toxsoft.core.tsgui.mws.bases.*;
 import org.toxsoft.skide.core.env.*;
 import org.toxsoft.skide.plugin.sded.*;
-import org.toxsoft.uskat.sded.gui.*;
-import org.toxsoft.uskat.sded.gui.Activator;
+import org.toxsoft.skide.plugin.sded.Activator;
+import org.toxsoft.uskat.core.gui.*;
 
 /**
  * Plugin addon.
@@ -25,7 +25,7 @@ public class AddonSkideSded
 
   @Override
   protected void doRegisterQuants( IQuantRegistrator aQuantRegistrator ) {
-    aQuantRegistrator.registerQuant( new QuantSkSdedGui() );
+    aQuantRegistrator.registerQuant( new QuantSkBaseGui() );
   }
 
   @Override

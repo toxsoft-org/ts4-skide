@@ -5,7 +5,7 @@ import static org.toxsoft.skide.plugin.sded.ISkResources.*;
 
 import org.toxsoft.core.tslib.av.opset.impl.*;
 import org.toxsoft.skide.core.env.*;
-import org.toxsoft.uskat.sded.gui.*;
+import org.toxsoft.uskat.core.gui.*;
 
 /**
  * {@link ISkidePlugin} implementation to register SDED in SkIDE.
@@ -28,7 +28,7 @@ public class SkidePluginSded
     super( Activator.PLUGIN_ID, OptionSetUtils.createOpSet( //
         TSID_NAME, STR_N_SKIDE_PLUGIN, //
         TSID_DESCRIPTION, STR_D_SKIDE_PLUGIN, //
-        TSID_ICON_ID, ISkSdedGuiConstants.ICONID_SDED_CLASSES_LIST //
+        TSID_ICON_ID, ISkCoreGuiConstants.ICONID_SDED_CLASSES_LIST //
     ) );
   }
 
