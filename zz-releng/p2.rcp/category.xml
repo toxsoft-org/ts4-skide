@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <category-def name="org.toxsoft.skide.releng.category" label="org.toxsoft.skide.releng Category">
+      <description>
+         org.toxsoft.skide.releng Category
+      </description>
+   </category-def>
+   <!-- TODO: -->
+   <bundle id="org.toxsoft.skide.core"/>
+
+   <!-- sources -->
+   <!-- TODO: -->
+   <bundle id="org.toxsoft.skide.core.source"/>
+
+</site>
