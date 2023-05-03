@@ -1,4 +1,4 @@
-package org.toxsoft.skide.pligin.sded.main;
+package org.toxsoft.skide.plugin.sded.main;
 
 import org.eclipse.swt.*;
 import org.eclipse.swt.custom.*;

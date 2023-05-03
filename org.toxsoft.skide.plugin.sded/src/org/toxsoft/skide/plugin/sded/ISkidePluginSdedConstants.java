@@ -1,4 +1,4 @@
-package org.toxsoft.skide.pligin.sded;
+package org.toxsoft.skide.plugin.sded;
 
 import org.eclipse.e4.core.contexts.*;
 import org.toxsoft.core.tsgui.graphics.icons.*;

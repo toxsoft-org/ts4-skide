@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="ASCII"?>
+<fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmi:id="_dgdykOmSEe2Op-0-_ZRMFg">
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_d4c0wOmSEe2Op-0-_ZRMFg" featurename="addons" parentElementId="org.toxsoft.mws.app.main">
+    <elements xsi:type="application:Addon" xmi:id="_e9ACAOmSEe2Op-0-_ZRMFg" elementId="org.toxsoft.skide.plugin.sded.addon.0" contributionURI="bundleclass://org.toxsoft.skide.plugin.sded/org.toxsoft.skide.plugin.sded.e4.addons.AddonSkidePluginSded"/>
+  </fragments>
+</fragment:ModelFragments>

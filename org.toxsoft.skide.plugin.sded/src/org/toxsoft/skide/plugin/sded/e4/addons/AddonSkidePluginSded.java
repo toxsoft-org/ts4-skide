@@ -1,10 +1,10 @@
-package org.toxsoft.skide.pligin.sded.e4.addons;
+package org.toxsoft.skide.plugin.sded.e4.addons;
 
 import org.eclipse.e4.core.contexts.*;
 import org.toxsoft.core.tsgui.mws.bases.*;
 import org.toxsoft.skide.core.api.*;
-import org.toxsoft.skide.pligin.sded.*;
-import org.toxsoft.skide.pligin.sded.main.*;
+import org.toxsoft.skide.plugin.sded.*;
+import org.toxsoft.skide.plugin.sded.main.*;
 
 /**
  * Plugin addon.

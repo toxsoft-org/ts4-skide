@@ -1,4 +1,4 @@
-package org.toxsoft.skide.pligin.sded.main;
+package org.toxsoft.skide.plugin.sded.main;
 
 import org.eclipse.swt.widgets.*;
 import org.toxsoft.core.tsgui.bricks.ctx.*;

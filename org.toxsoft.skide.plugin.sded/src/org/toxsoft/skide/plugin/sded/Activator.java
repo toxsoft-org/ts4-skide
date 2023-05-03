@@ -1,4 +1,4 @@
-package org.toxsoft.skide.pligin.sded;
+package org.toxsoft.skide.plugin.sded;
 
 import org.toxsoft.core.tsgui.mws.bases.*;
 
@@ -13,7 +13,7 @@ public class Activator
   /**
    * The plugin ID (for Java static imports).
    */
-  public static final String PLUGIN_ID = "org.toxsoft.skide.pligin.sded"; //$NON-NLS-1$
+  public static final String PLUGIN_ID = "org.toxsoft.skide.plugin.sded"; //$NON-NLS-1$
 
   private static Activator instance = null;
 

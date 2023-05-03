@@ -31,7 +31,7 @@ public abstract class AbstractSkideUnitPanel
   //
 
   /**
-   * Retruns the project unit of expected type;
+   * Returns the project unit of expected type;
    *
    * @param <U> - expected type of the unit
    * @return &lt;U&gt; - the project unit

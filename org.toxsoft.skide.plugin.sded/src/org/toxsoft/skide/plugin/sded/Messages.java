@@ -1,4 +1,4 @@
-package org.toxsoft.skide.pligin.sded;
+package org.toxsoft.skide.plugin.sded;
 
 import java.util.*;
 

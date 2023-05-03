@@ -1,12 +1,13 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: SkIDE plugin: Sysdescr Editor
-Bundle-SymbolicName: org.toxsoft.skide.pligin.sded;singleton:=true
+Bundle-SymbolicName: org.toxsoft.skide.plugin.sded;singleton:=true
 Bundle-Version: 1.0.0.qualifier
-Bundle-Activator: org.toxsoft.skide.pligin.sded.Activator
-Export-Package: org.toxsoft.skide.pligin.sded,
- org.toxsoft.skide.pligin.sded.e4.addons,
- org.toxsoft.skide.pligin.sded.main
+Bundle-Activator: org.toxsoft.skide.plugin.sded.Activator
+Bundle-Vendor: toxsoft.org
+Export-Package: org.toxsoft.skide.plugin.sded,
+ org.toxsoft.skide.plugin.sded.e4.addons,
+ org.toxsoft.skide.plugin.sded.main
 Require-Bundle: javax.annotation,
  javax.inject,
  org.eclipse.core.runtime,
@@ -20,14 +21,9 @@ Require-Bundle: javax.annotation,
  org.toxsoft.core.tsgui,
  org.toxsoft.core.tsgui.rcp,
  org.toxsoft.core.tsgui.mws,
- org.toxsoft.core.txtproj.lib,
- org.toxsoft.core.txtproj.gui,
  org.toxsoft.uskat.core,
- org.toxsoft.uskat.backend.memtext,
- org.toxsoft.uskat.s5,
  org.toxsoft.uskat.core.gui,
- org.toxsoft.skf.users.gui,
  org.toxsoft.skide.core
 Bundle-RequiredExecutionEnvironment: JavaSE-17
-Automatic-Module-Name: org.toxsoft.skide.pligin.sded
+Automatic-Module-Name: org.toxsoft.skide.plugin.sded
 Bundle-ActivationPolicy: lazy

@@ -1,9 +1,9 @@
-package org.toxsoft.skide.pligin.sded.main;
+package org.toxsoft.skide.plugin.sded.main;
 
 import static org.toxsoft.core.tslib.av.metainfo.IAvMetaConstants.*;
 import static org.toxsoft.skide.core.ISkideCoreConstants.*;
-import static org.toxsoft.skide.pligin.sded.ISkidePluginSdedSharedResources.*;
-import static org.toxsoft.skide.pligin.sded.ISkidePluginSdedConstants.*;
+import static org.toxsoft.skide.plugin.sded.ISkidePluginSdedConstants.*;
+import static org.toxsoft.skide.plugin.sded.ISkidePluginSdedSharedResources.*;
 
 import org.toxsoft.core.tsgui.bricks.ctx.*;
 import org.toxsoft.core.tslib.av.opset.impl.*;

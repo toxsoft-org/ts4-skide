@@ -1,9 +1,9 @@
-package org.toxsoft.skide.pligin.sded.main;
+package org.toxsoft.skide.plugin.sded.main;
 
 import static org.toxsoft.core.tsgui.bricks.actions.ITsStdActionDefs.*;
 import static org.toxsoft.core.tslib.av.metainfo.IAvMetaConstants.*;
 import static org.toxsoft.skide.core.ISkideCoreConstants.*;
-import static org.toxsoft.skide.pligin.sded.ISkidePluginSdedSharedResources.*;
+import static org.toxsoft.skide.plugin.sded.ISkidePluginSdedSharedResources.*;
 import static org.toxsoft.uskat.core.gui.ISkCoreGuiConstants.*;
 
 import org.toxsoft.core.tsgui.bricks.ctx.*;
@@ -17,19 +17,19 @@ import org.toxsoft.skide.core.api.impl.*;
  *
  * @author hazard157
  */
-public class SkideUnitClasses
+public class SkideUnitObjects
     extends AbstractSkideUnit {
 
   /**
    * The plugin ID.
    */
-  public static final String UNIT_ID = SKIDE_FULL_ID + ".unit.classes"; //$NON-NLS-1$
+  public static final String UNIT_ID = SKIDE_FULL_ID + ".unit.objects"; //$NON-NLS-1$
 
-  SkideUnitClasses( ITsGuiContext aContext, AbstractSkidePlugin aCreator ) {
+  SkideUnitObjects( ITsGuiContext aContext, AbstractSkidePlugin aCreator ) {
     super( UNIT_ID, OptionSetUtils.createOpSet( //
-        TSID_NAME, STR_SKIDE_CLASSES_EDITOR, //
-        TSID_DESCRIPTION, STR_SKIDE_CLASSES_EDITOR_D, //
-        TSID_ICON_ID, ICONID_SDED_CLASSES_LIST //
+        TSID_NAME, STR_SKIDE_OBJECTS_EDITOR, //
+        TSID_DESCRIPTION, STR_SKIDE_OBJECTS_EDITOR_D, //
+        TSID_ICON_ID, ICONID_SDED_OBJS_LIST //
     ), aContext, aCreator );
     unitActions().add( ACDEF_ABOUT );
   }
@@ -51,7 +51,7 @@ public class SkideUnitClasses
 
   @Override
   protected AbstractSkideUnitPanel doCreateUnitPanel( ITsGuiContext aContext ) {
-    return new SkideUnitPanelClasses( aContext, this );
+    return new SkideUnitPanelObjects( aContext, this );
   }
 
 }

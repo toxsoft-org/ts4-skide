@@ -16,7 +16,7 @@ import org.toxsoft.core.tslib.utils.errors.*;
  * <p>
  * SkIDE framework provides to environments to the plugin:
  * <ul>
- * <li>{@link #skEnv()} - SkIDE commmon environment, the single instance is shared between all plugins;</li>
+ * <li>{@link #skEnv()} - SkIDE common environment, the single instance is shared between all plugins;</li>
  * <li>{@link #plEnv()} - plugin specific environment, each plugin has it's own instance.</li>
  * </ul>
  * <p>
@@ -79,7 +79,7 @@ public abstract class AbstractSkidePlugin
   }
 
   /**
-   * Creates and returns conttributed project units.
+   * Creates and returns contributed project units.
    * <p>
    * This method is called only once.
    *
@@ -102,7 +102,7 @@ public abstract class AbstractSkidePlugin
   //
 
   /**
-   * Internal metho, must not be called by the clients.
+   * Internal method, must not be called by the clients.
    */
   @SuppressWarnings( "javadoc" )
   final public void papiInitialize( ISkideEnvironment aSkEnv, IPluginEnvironment aPlEnv ) {

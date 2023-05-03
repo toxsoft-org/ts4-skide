@@ -2,7 +2,7 @@
 <plugin>
 
    <extension
-         id="org.toxsoft.skide.pligin.sded.fragment"
+         id="org.toxsoft.skide.plugin.sded.fragment"
          point="org.eclipse.e4.workbench.model">
       <fragment
             uri="fragment.e4xmi"
