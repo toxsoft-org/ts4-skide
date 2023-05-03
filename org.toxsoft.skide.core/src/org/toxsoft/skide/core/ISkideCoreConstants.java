@@ -3,9 +3,9 @@ package org.toxsoft.skide.core;
 import static org.toxsoft.core.tslib.ITsHardConstants.*;
 import static org.toxsoft.skide.core.l10n.ISkideCoreSharedResources.*;
 
-import java.time.*;
+import java.time.Month;
 
-import org.eclipse.e4.core.contexts.*;
+import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.toxsoft.core.tsgui.graphics.icons.*;
 import org.toxsoft.core.tsgui.mws.appinf.*;
 import org.toxsoft.core.tslib.utils.*;
@@ -47,7 +47,7 @@ public interface ISkideCoreConstants {
   /**
    * Constants registration.
    *
-   * @param aWinContext {@link IEclipseContext} - windows level context
+   * @param aWinContext {@link IEclipseContext} - windows level context.
    */
   static void init( IEclipseContext aWinContext ) {
     ITsIconManager iconManager = aWinContext.get( ITsIconManager.class );
