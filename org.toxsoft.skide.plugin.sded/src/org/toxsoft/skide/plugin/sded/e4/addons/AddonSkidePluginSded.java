@@ -34,6 +34,7 @@ public class AddonSkidePluginSded
   @Override
   protected void initWin( IEclipseContext aWinContext ) {
     ISkidePluginSdedConstants.init( aWinContext );
+    //
   }
 
 }
