@@ -1,8 +1,6 @@
 package org.toxsoft.skide.plugin.exconn.e4.addons;
 
 import org.eclipse.e4.core.contexts.*;
-import org.toxsoft.core.tsgui.bricks.ctx.*;
-import org.toxsoft.core.tsgui.bricks.ctx.impl.*;
 import org.toxsoft.core.tsgui.bricks.quant.*;
 import org.toxsoft.core.tsgui.mws.bases.*;
 import org.toxsoft.core.tslib.av.opset.*;
@@ -89,16 +87,15 @@ public class AddonSkidePluginExconn
     ISkideEnvironment skEnv = aAppContext.get( ISkideEnvironment.class );
     skEnv.pluginsRegistrator().registerPlugin( SkidePluginExconn.INSTANCE );
     //
+    ISkideExternalConnectionsService exConnService = new SkideExternalConnectionsService();
+    aWinContext.set( ISkideExternalConnectionsService.class, exConnService );
+    //
     initConnectionConfigService( aAppContext );
   }
 
   @Override
   protected void initWin( IEclipseContext aWinContext ) {
     ISkidePluginExconnConstants.init( aWinContext );
-    //
-    ITsGuiContext ctx = new TsGuiContext( aWinContext );
-    ISkideExternalConnectionsService exConnService = new SkideExternalConnectionsService( ctx );
-    aWinContext.set( ISkideExternalConnectionsService.class, exConnService );
   }
 
 }

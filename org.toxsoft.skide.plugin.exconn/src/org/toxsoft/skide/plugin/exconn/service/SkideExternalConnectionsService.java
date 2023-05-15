@@ -33,7 +33,7 @@ public class SkideExternalConnectionsService
   /**
    * Constructor.
    */
-  public SkideExternalConnectionsService( ITsGuiContext aContext ) {
+  public SkideExternalConnectionsService() {
     // nop
   }
 
