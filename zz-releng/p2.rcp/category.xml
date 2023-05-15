@@ -8,10 +8,12 @@
    <!-- TODO: -->
    <bundle id="org.toxsoft.skide.core"/>
    <bundle id="org.toxsoft.skide.plugin.sded"/>
+   <bundle id="org.toxsoft.skide.plugin.exconn"/>
 
    <!-- sources -->
    <!-- TODO: -->
    <bundle id="org.toxsoft.skide.core.source"/>
    <bundle id="org.toxsoft.skide.plugin.sded.source"/>
+   <bundle id="org.toxsoft.skide.plugin.exconn.source"/>
 
 </site>
