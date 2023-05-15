@@ -88,7 +88,7 @@ public class AddonSkidePluginExconn
     skEnv.pluginsRegistrator().registerPlugin( SkidePluginExconn.INSTANCE );
     //
     ISkideExternalConnectionsService exConnService = new SkideExternalConnectionsService();
-    aWinContext.set( ISkideExternalConnectionsService.class, exConnService );
+    aAppContext.set( ISkideExternalConnectionsService.class, exConnService );
     //
     initConnectionConfigService( aAppContext );
   }

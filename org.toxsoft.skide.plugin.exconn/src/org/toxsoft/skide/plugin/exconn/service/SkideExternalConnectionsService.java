@@ -19,6 +19,9 @@ import org.toxsoft.uskat.core.connection.*;
 import org.toxsoft.uskat.core.gui.conn.*;
 import org.toxsoft.uskat.core.gui.conn.cfg.*;
 import org.toxsoft.uskat.core.gui.conn.cfg.m5.*;
+import org.toxsoft.uskat.core.impl.*;
+import org.toxsoft.uskat.s5.client.*;
+import org.toxsoft.uskat.s5.utils.threads.impl.*;
 
 /**
  * {@link ISkideExternalConnectionsService} implementation.
@@ -57,13 +60,26 @@ public class SkideExternalConnectionsService
       return null;
     }
     // prepare arguments
-    IConnectionConfigProvider ccProvider = ccService.listProviders().findByKey( conConf.id() );
+    // dima 15.05 fix
+    // IConnectionConfigProvider ccProvider = ccService.listProviders().findByKey( conConf.id() );
+    IConnectionConfigProvider ccProvider = ccService.listProviders().findByKey( conConf.providerId() );
     if( ccProvider == null ) {
       TsDialogUtils.error( shell, FMT_ERR_UNREGISTERED_PROVIDER, conConf.id() );
       return null;
     }
     ITsContext args = new TsContext();
     ccProvider.fillArgs( args, conConf.opValues() );
+    // dima 15.05 fix
+    args.params().setStr( IS5ConnectionParams.OP_USERNAME, "root" );
+    IS5ConnectionParams.REF_CONNECTION_LOCK.setRef( args, new S5Lockable() );
+    // 2022-10-25 mvk обязательно для RCP
+    IS5ConnectionParams.REF_CLASSLOADER.setRef( args, getClass().getClassLoader() );
+    ISkCoreConfigConstants.REFDEF_THREAD_SEPARATOR.setRef( args, SwtThreadSeparatorService.CREATOR );
+    String login = "root"; //$NON-NLS-1$
+    String password = "1"; //$NON-NLS-1$
+    args.params().setStr( IS5ConnectionParams.OP_USERNAME, login );
+    args.params().setStr( IS5ConnectionParams.OP_PASSWORD, password );
+
     // create connection
     ISkConnectionSupplier conSup = aContext.get( ISkConnectionSupplier.class );
     IdChain connId = new IdChain( conConf.id(), idGen.nextId() );
