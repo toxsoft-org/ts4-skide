@@ -14,8 +14,10 @@ public interface ISkidePluginSdedConstants {
   // ------------------------------------------------------------------------------------
   // Icons
 
-  String PREFIX_OF_ICON_FIELD_NAME = "ICONID_";  //$NON-NLS-1$
-  String ICONID_SYSDESCR           = "sysdescr"; //$NON-NLS-1$
+  String PREFIX_OF_ICON_FIELD_NAME = "ICONID_";            //$NON-NLS-1$
+  String ICONID_SYSDESCR           = "sysdescr";           //$NON-NLS-1$
+  String ICONID_CLASS_EDITOR       = "app-classes-editor"; //$NON-NLS-1$
+  String ICONID_OBJS_EDITOR        = "app-objects-editor"; //$NON-NLS-1$
 
   /**
    * Constants registration.

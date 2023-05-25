@@ -4,13 +4,13 @@ import static org.toxsoft.core.tsgui.bricks.actions.ITsStdActionDefs.*;
 import static org.toxsoft.core.tslib.av.metainfo.IAvMetaConstants.*;
 import static org.toxsoft.skide.core.ISkideCoreConstants.*;
 import static org.toxsoft.skide.plugin.sded.ISkidePluginSdedSharedResources.*;
-import static org.toxsoft.uskat.core.gui.ISkCoreGuiConstants.*;
 
 import org.toxsoft.core.tsgui.bricks.ctx.*;
 import org.toxsoft.core.tsgui.dialogs.*;
 import org.toxsoft.core.tslib.av.opset.impl.*;
 import org.toxsoft.skide.core.api.*;
 import org.toxsoft.skide.core.api.impl.*;
+import org.toxsoft.skide.plugin.sded.*;
 
 /**
  * SkiDE unit: USkat users and roles management.
@@ -29,7 +29,7 @@ public class SkideUnitObjects
     super( UNIT_ID, OptionSetUtils.createOpSet( //
         TSID_NAME, STR_SKIDE_OBJECTS_EDITOR, //
         TSID_DESCRIPTION, STR_SKIDE_OBJECTS_EDITOR_D, //
-        TSID_ICON_ID, ICONID_SDED_OBJS_LIST //
+        TSID_ICON_ID, ISkidePluginSdedConstants.ICONID_OBJS_EDITOR //
     ), aContext, aCreator );
     unitActions().add( ACDEF_ABOUT );
   }

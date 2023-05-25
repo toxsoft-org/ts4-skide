@@ -14,8 +14,8 @@ public interface ISkidePluginExconnConstants {
   // ------------------------------------------------------------------------------------
   // Icons
 
-  String PREFIX_OF_ICON_FIELD_NAME = "ICONID_";          //$NON-NLS-1$
-  String ICONID_SKIDE_CONNECTION   = "skide-connection"; //$NON-NLS-1$
+  String PREFIX_OF_ICON_FIELD_NAME = "ICONID_";        //$NON-NLS-1$
+  String ICONID_SKIDE_CONNECTION   = "app-connection"; //$NON-NLS-1$
 
   /**
    * Constants registration.
