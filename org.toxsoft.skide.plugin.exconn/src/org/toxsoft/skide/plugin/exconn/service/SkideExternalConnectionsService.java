@@ -2,29 +2,26 @@ package org.toxsoft.skide.plugin.exconn.service;
 
 import static org.toxsoft.skide.plugin.exconn.ISkidePluginExconnSharedResources.*;
 
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
-import org.toxsoft.core.tsgui.bricks.ctx.ITsGuiContext;
-import org.toxsoft.core.tsgui.dialogs.TsDialogUtils;
-import org.toxsoft.core.tsgui.dialogs.datarec.TsDialogInfo;
-import org.toxsoft.core.tsgui.m5.IM5Domain;
-import org.toxsoft.core.tsgui.m5.IM5Model;
-import org.toxsoft.core.tsgui.m5.gui.M5GuiUtils;
-import org.toxsoft.core.tsgui.m5.model.IM5LifecycleManager;
-import org.toxsoft.core.tslib.bricks.ctx.ITsContext;
-import org.toxsoft.core.tslib.bricks.ctx.impl.TsContext;
-import org.toxsoft.core.tslib.bricks.strid.idgen.IStridGenerator;
-import org.toxsoft.core.tslib.bricks.strid.idgen.SimpleStridGenaretor;
-import org.toxsoft.core.tslib.bricks.strid.more.IdChain;
-import org.toxsoft.core.tslib.utils.errors.TsNullArgumentRtException;
-import org.toxsoft.core.tslib.utils.logs.impl.LoggerUtils;
-import org.toxsoft.uskat.core.connection.ISkConnection;
-import org.toxsoft.uskat.core.gui.conn.ISkConnectionSupplier;
+import org.eclipse.swt.widgets.*;
+import org.toxsoft.core.tsgui.bricks.ctx.*;
+import org.toxsoft.core.tsgui.dialogs.*;
+import org.toxsoft.core.tsgui.dialogs.datarec.*;
+import org.toxsoft.core.tsgui.m5.*;
+import org.toxsoft.core.tsgui.m5.gui.*;
+import org.toxsoft.core.tsgui.m5.model.*;
+import org.toxsoft.core.tslib.bricks.ctx.*;
+import org.toxsoft.core.tslib.bricks.ctx.impl.*;
+import org.toxsoft.core.tslib.bricks.strid.idgen.*;
+import org.toxsoft.core.tslib.bricks.strid.more.*;
+import org.toxsoft.core.tslib.utils.errors.*;
+import org.toxsoft.core.tslib.utils.logs.impl.*;
+import org.toxsoft.uskat.core.connection.*;
+import org.toxsoft.uskat.core.gui.conn.*;
 import org.toxsoft.uskat.core.gui.conn.cfg.*;
-import org.toxsoft.uskat.core.gui.conn.cfg.m5.IConnectionConfigM5Constants;
-import org.toxsoft.uskat.core.impl.ISkCoreConfigConstants;
-import org.toxsoft.uskat.s5.client.IS5ConnectionParams;
-import org.toxsoft.uskat.s5.utils.threads.impl.S5Lockable;
+import org.toxsoft.uskat.core.gui.conn.cfg.m5.*;
+import org.toxsoft.uskat.core.impl.*;
+import org.toxsoft.uskat.s5.client.*;
+import org.toxsoft.uskat.s5.utils.threads.impl.*;
 
 /**
  * {@link ISkideExternalConnectionsService} implementation.
@@ -63,8 +60,6 @@ public class SkideExternalConnectionsService
       return null;
     }
     // prepare arguments
-    // dima 15.05 fix
-    // IConnectionConfigProvider ccProvider = ccService.listProviders().findByKey( conConf.id() );
     IConnectionConfigProvider ccProvider = ccService.listProviders().findByKey( conConf.providerId() );
     if( ccProvider == null ) {
       TsDialogUtils.error( shell, FMT_ERR_UNREGISTERED_PROVIDER, conConf.id() );
@@ -72,17 +67,31 @@ public class SkideExternalConnectionsService
     }
     ITsContext args = new TsContext();
     ccProvider.fillArgs( args, conConf.opValues() );
-    // dima 15.05 fix
-    args.params().setStr( IS5ConnectionParams.OP_USERNAME, "root" );
-    IS5ConnectionParams.REF_CONNECTION_LOCK.setRef( args, new S5Lockable() );
-    // 2022-10-25 mvk обязательно для RCP
-    IS5ConnectionParams.REF_CLASSLOADER.setRef( args, getClass().getClassLoader() );
-    ISkCoreConfigConstants.REFDEF_THREAD_SEPARATOR.setRef( args, SwtThreadSeparatorService.CREATOR );
-    SwtThreadSeparatorService.REF_DISPLAY.setRef( args, Display.getCurrent() );
-    String login = "root"; //$NON-NLS-1$
-    String password = "1"; //$NON-NLS-1$
+
+    /**
+     * TODO вниманию dima и MVK: выделенный внизу код неправильный! во-первых, он предназначен ТОЛЬКО для S5 соединения,
+     * а здесь код SkIDE, который может соединятся любым бекендм. Во-вторых, бекенд-специфичный код настроки аргументов
+     * дожен находится в классах, наследниках ConnectionConfigProvider. То есть, в реализации провайдера
+     * IConnectionConfigProvider.<br>
+     * При таком подходе, достаточно одной строки выше:<br>
+     * ccProvider.fillArgs( args, conConf.opValues() );<br>
+     * <p>
+     * По-хорошему, указанный код должен находится в теле метода S5ConnectionConfigProvider.doProcessArgs().
+     */
+    // TODO ---
+
+    String login = "root";
+    String password = "1";
     args.params().setStr( IS5ConnectionParams.OP_USERNAME, login );
     args.params().setStr( IS5ConnectionParams.OP_PASSWORD, password );
+    IS5ConnectionParams.REF_CONNECTION_LOCK.setRef( args, new S5Lockable() );
+    // necessary staff for RCP
+    IS5ConnectionParams.REF_CLASSLOADER.setRef( args, getClass().getClassLoader() );
+    ISkCoreConfigConstants.REFDEF_THREAD_SEPARATOR.setRef( args, SwtThreadSeparatorService.CREATOR );
+    Display display = aContext.get( Display.class );
+    SwtThreadSeparatorService.REF_DISPLAY.setRef( args, display );
+
+    // ---
 
     // create connection
     ISkConnectionSupplier conSup = aContext.get( ISkConnectionSupplier.class );
