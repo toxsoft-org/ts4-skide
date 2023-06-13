@@ -18,8 +18,8 @@ import org.toxsoft.skide.plugin.exconn.main.*;
 import org.toxsoft.skide.plugin.exconn.service.*;
 import org.toxsoft.uskat.backend.memtext.*;
 import org.toxsoft.uskat.backend.s5.gui.*;
+import org.toxsoft.uskat.backend.s5.gui.utils.*;
 import org.toxsoft.uskat.core.gui.conn.cfg.*;
-import org.toxsoft.uskat.s5.client.remote.*;
 
 /**
  * Plugin addon.
@@ -50,7 +50,7 @@ public class AddonSkidePluginExconn
     ConnectionConfigService ccService = (ConnectionConfigService)aAppContext.get( IConnectionConfigService.class );
     // register known providers
     ccService.registerPovider( new ConnectionConfigProvider( MtbBackendToFile.PROVIDER, IOptionSet.NULL ) );
-    ccService.registerPovider( new ConnectionConfigProvider( new S5RemoteBackendProvider(), IOptionSet.NULL ) );
+    ccService.registerPovider( S5ConnectionConfigProvider.INSTANCE );
     // load configs
     ITsWorkroom workroom = aAppContext.get( ITsWorkroom.class );
     TsInternalErrorRtException.checkNull( workroom );
