@@ -65,6 +65,7 @@ public class SfvSectionM5Model
           TSID_DESCRIPTION, STR_D_SECTION_CONTENT, //
           OPID_EDITOR_FACTORY_NAME, ValedAvStringText.FACTORY_NAME, //
           ValedStringText.OPDEF_IS_MULTI_LINE, AV_TRUE, //
+          OPID_IS_HEIGHT_FIXED, AV_FALSE, //
           OPID_VERTICAL_SPAN, avInt( 5 ) //
       ) {
 

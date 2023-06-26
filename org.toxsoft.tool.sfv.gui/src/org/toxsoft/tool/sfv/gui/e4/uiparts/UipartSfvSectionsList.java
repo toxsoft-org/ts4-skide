@@ -80,6 +80,7 @@ public class UipartSfvSectionsList
     OPDEF_IS_ACTIONS_CRUD.setValue( ctx.params(), AV_TRUE );
     OPDEF_IS_ACTIONS_REFRESH.setValue( ctx.params(), AV_TRUE );
     OPDEF_IS_ACTIONS_REORDER.setValue( ctx.params(), AV_TRUE );
+    OPDEF_IS_FILTER_PANE.setValue( ctx.params(), AV_TRUE );
     panel = new Mpc( ctx, model, lm.itemsProvider(), lm );
     panel.createControl( aParent );
     panel.addTsSelectionListener( ( aSource, aSelectedItem ) -> {
