@@ -49,8 +49,14 @@ public class AddonSkidePluginExconn
   private static void initConnectionConfigService( IEclipseContext aAppContext ) {
     ConnectionConfigService ccService = (ConnectionConfigService)aAppContext.get( IConnectionConfigService.class );
     // register known providers
-    ccService.registerPovider( new ConnectionConfigProvider( MtbBackendToFile.PROVIDER, IOptionSet.NULL ) );
-    ccService.registerPovider( S5ConnectionConfigProvider.INSTANCE );
+    // dima 24.08.23
+    IConnectionConfigProvider p1 = new ConnectionConfigProvider( MtbBackendToFile.PROVIDER, IOptionSet.NULL );
+    if( !ccService.listProviders().hasKey( p1.id() ) ) {
+      ccService.registerPovider( p1 );
+    }
+    if( !ccService.listProviders().hasKey( S5ConnectionConfigProvider.INSTANCE.id() ) ) {
+      ccService.registerPovider( S5ConnectionConfigProvider.INSTANCE );
+    }
     // load configs
     ITsWorkroom workroom = aAppContext.get( ITsWorkroom.class );
     TsInternalErrorRtException.checkNull( workroom );
