@@ -23,7 +23,7 @@ import org.toxsoft.uskat.core.impl.*;
  * @author mvk
  */
 @SuppressWarnings( "nls" )
-final class SwtThreadSeparatorService
+public final class SwtThreadSeparatorService
     extends AbstractSkService {
 
   /**

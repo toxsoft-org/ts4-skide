@@ -16,6 +16,7 @@ public interface ISkidePluginExconnConstants {
 
   String PREFIX_OF_ICON_FIELD_NAME = "ICONID_";        //$NON-NLS-1$
   String ICONID_SKIDE_CONNECTION   = "app-connection"; //$NON-NLS-1$
+  String ICONID_SYSDESCR_EXPORT    = "gdp-export";     //$NON-NLS-1$
 
   /**
    * Constants registration.
