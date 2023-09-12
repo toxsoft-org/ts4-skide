@@ -22,30 +22,16 @@ import org.toxsoft.core.tsgui.panels.toolbar.*;
 import org.toxsoft.core.tsgui.utils.layout.*;
 import org.toxsoft.core.tsgui.widgets.*;
 import org.toxsoft.core.tslib.av.impl.*;
-import org.toxsoft.core.tslib.bricks.ctx.*;
-import org.toxsoft.core.tslib.bricks.ctx.impl.*;
-import org.toxsoft.core.tslib.bricks.strid.coll.*;
 import org.toxsoft.core.tslib.bricks.strid.idgen.*;
-import org.toxsoft.core.tslib.bricks.strid.more.*;
 import org.toxsoft.core.tslib.coll.*;
-import org.toxsoft.core.tslib.coll.impl.*;
-import org.toxsoft.core.tslib.gw.skid.*;
 import org.toxsoft.core.tslib.utils.errors.*;
 import org.toxsoft.core.tslib.utils.logs.impl.*;
 import org.toxsoft.skide.core.api.*;
 import org.toxsoft.skide.core.api.impl.*;
 import org.toxsoft.skide.plugin.exconn.*;
 import org.toxsoft.skide.plugin.exconn.service.*;
-import org.toxsoft.uskat.core.api.sysdescr.*;
-import org.toxsoft.uskat.core.api.sysdescr.dto.*;
-import org.toxsoft.uskat.core.connection.*;
-import org.toxsoft.uskat.core.gui.conn.*;
 import org.toxsoft.uskat.core.gui.conn.cfg.*;
 import org.toxsoft.uskat.core.gui.conn.cfg.m5.*;
-import org.toxsoft.uskat.core.impl.*;
-import org.toxsoft.uskat.core.impl.dto.*;
-import org.toxsoft.uskat.s5.client.*;
-import org.toxsoft.uskat.s5.utils.threads.impl.*;
 
 /**
  * {@link AbstractSkideUnitPanel} implementation.
@@ -144,80 +130,6 @@ class SkideExconnUnitPanel
     } );
 
     return backplane;
-  }
-
-  private void exportSysdescr( IConnectionConfig aSelConfig ) {
-    // select the connection
-    IConnectionConfigService ccService = tsContext().get( IConnectionConfigService.class );
-    Shell shell = tsContext().get( Shell.class );
-
-    // prepare arguments
-    IConnectionConfigProvider ccProvider = ccService.listProviders().findByKey( aSelConfig.providerId() );
-    ITsContext args = new TsContext();
-    ccProvider.fillArgs( args, aSelConfig.opValues() );
-
-    /**
-     * TODO вниманию dima и MVK: выделенный внизу код неправильный! во-первых, он предназначен ТОЛЬКО для S5 соединения,
-     * а здесь код SkIDE, который может соединятся любым бекендм. Во-вторых, бекенд-специфичный код настроки аргументов
-     * дожен находится в классах, наследниках ConnectionConfigProvider. То есть, в реализации провайдера
-     * IConnectionConfigProvider.<br>
-     * При таком подходе, достаточно одной строки выше:<br>
-     * ccProvider.fillArgs( args, conConf.opValues() );<br>
-     * <p>
-     * По-хорошему, указанный код должен находится в теле метода S5ConnectionConfigProvider.doProcessArgs().
-     */
-    // TODO ---
-
-    String login = "root";
-    String password = "1";
-    args.params().setStr( IS5ConnectionParams.OP_USERNAME, login );
-    args.params().setStr( IS5ConnectionParams.OP_PASSWORD, password );
-    IS5ConnectionParams.REF_CONNECTION_LOCK.setRef( args, new S5Lockable() );
-    // necessary staff for RCP
-    IS5ConnectionParams.REF_CLASSLOADER.setRef( args, getClass().getClassLoader() );
-    ISkCoreConfigConstants.REFDEF_THREAD_SEPARATOR.setRef( args, SwtThreadSeparatorService.CREATOR );
-    Display display = tsContext().get( Display.class );
-    SwtThreadSeparatorService.REF_DISPLAY.setRef( args, display );
-
-    // ---
-
-    // create connection
-    ISkConnectionSupplier conSup = tsContext().get( ISkConnectionSupplier.class );
-    ISkConnection sourceConn = conSup.defConn();
-    IdChain connId = new IdChain( aSelConfig.id(), idGen.nextId() );
-    ISkConnection targetConn = conSup.createConnection( connId, tsContext() );
-    // open connection
-    try {
-      // TODO invoke connection progress dialog
-      targetConn.open( args );
-    }
-    catch( Exception ex ) {
-      TsDialogUtils.error( shell, ex );
-      conSup.removeConnection( connId );
-      LoggerUtils.errorLogger().error( ex );
-    }
-    // тут выкачиваем классы и объекты из источника
-    IStridablesList<ISkClassInfo> classList = sourceConn.coreApi().sysdescr().listClasses();
-    IListEdit<IDtoClassInfo> dtoClassList = new ElemArrayList<>();
-    for( ISkClassInfo classInfo : classList ) {
-      dtoClassList.add( DtoClassInfo.createFromSk( classInfo, false ) );
-    }
-
-    // запрашиваем у пользователя что записывать
-    // TODO
-
-    // записываем в целевую базу
-    for( IDtoClassInfo dtoClassInfo : dtoClassList ) {
-      // создаем класс
-      targetConn.coreApi().sysdescr().defineClass( dtoClassInfo );
-      // создаем его объекты
-      ISkidList skidList = sourceConn.coreApi().objService().listSkids( dtoClassInfo.id(), false );
-      for( Skid skid : skidList ) {
-        // создаем DtoFullObject
-        DtoFullObject dto = DtoFullObject.createDtoFullObject( skid, sourceConn.coreApi() );
-        DtoFullObject.defineFullObject( targetConn.coreApi(), dto );
-      }
-    }
   }
 
   /**
