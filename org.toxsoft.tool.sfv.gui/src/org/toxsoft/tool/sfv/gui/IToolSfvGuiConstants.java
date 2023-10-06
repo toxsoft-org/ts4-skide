@@ -24,6 +24,12 @@ import org.toxsoft.core.tslib.bricks.strid.coll.impl.*;
 @SuppressWarnings( "javadoc" )
 public interface IToolSfvGuiConstants {
 
+  /**
+   * TODO tool button: save current section to file<br>
+   * TODO tool button: replace section from file<br>
+   * TODO tool button: add section from file<br>
+   */
+
   String SKIDE_ID = "org.toxsoft.skide"; //$NON-NLS-1$
 
   // ------------------------------------------------------------------------------------
@@ -57,7 +63,6 @@ public interface IToolSfvGuiConstants {
       TSID_DEFAULT_VALUE, AV_STR_EMPTY //
   );
 
-  // FIXME IDataDef APPRM_SECTION_FONT = DataDef.create3( "SectionFont", DT_FONT, //$NON-NLS-1$
   IDataDef APPRM_SECTION_FONT = DataDef.create( "SectionFont", VALOBJ, //$NON-NLS-1$
       TSID_NAME, STR_N_APPREF_SECTION_FONT, //
       TSID_DESCRIPTION, STR_D_APPREF_SECTION_FONT, //

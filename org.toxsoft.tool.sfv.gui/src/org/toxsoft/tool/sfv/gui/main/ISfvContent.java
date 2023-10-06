@@ -26,4 +26,5 @@ public interface ISfvContent
    * @return {@link IListEdit}&lt;{@link ISfvSection}&gt; - an editable instance of newly created sections list
    */
   IListEdit<ISfvSection> listSectionsById( String aSectionId );
+
 }

@@ -37,7 +37,7 @@ public class QuantSkide020SkConnection
   public static final String WORKROOM_FILE_SKIDE_SYSTEM = "uskat-system.textual"; //$NON-NLS-1$
 
   /**
-   * Constrcutor.
+   * Constructor.
    */
   public QuantSkide020SkConnection() {
     super( QuantSkide020SkConnection.class.getSimpleName() );
@@ -51,7 +51,7 @@ public class QuantSkide020SkConnection
    * Opens default {@link ISkConnectionSupplier#defConn()} as the workroom-local textual backend.
    *
    * @param aWinContext {@link IEclipseContext} - the windows level context
-   * @param aWorkroom {@link ITsWorkroom} - the workroom to store ackend file
+   * @param aWorkroom {@link ITsWorkroom} - the workroom to store Sk-backend file
    */
   private static void internalOpenSkConnection( IEclipseContext aWinContext, ITsWorkroom aWorkroom ) {
     ISkConnectionSupplier cs = aWinContext.get( ISkConnectionSupplier.class );
