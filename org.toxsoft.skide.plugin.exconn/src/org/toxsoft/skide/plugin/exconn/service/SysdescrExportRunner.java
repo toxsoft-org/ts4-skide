@@ -43,7 +43,7 @@ public class SysdescrExportRunner
 
   private final ITsGuiContext     tsContext;
   private final IConnectionConfig targetConnConfig;
-  private boolean                 success;
+  private boolean                 success = true;
 
   private static final ILogger logger = LoggerUtils.errorLogger();
 
@@ -107,18 +107,23 @@ public class SysdescrExportRunner
         if( nonYourBusiness( dtoClassInfo, targetConn ) ) {
           continue;
         }
-        // создаем класс
-        targetConn.coreApi().sysdescr().defineClass( dtoClassInfo );
-        // создаем его объекты
-        ISkidList skidList = sourceConn.coreApi().objService().listSkids( dtoClassInfo.id(), false );
-        for( Skid skid : skidList ) {
-          // создаем DtoFullObject
-          DtoFullObject dto = DtoFullObject.createDtoFullObject( skid, sourceConn.coreApi() );
-          DtoFullObject.defineFullObject( targetConn.coreApi(), dto );
+        try {
+          // создаем класс
+          targetConn.coreApi().sysdescr().defineClass( dtoClassInfo );
+          // создаем его объекты
+          ISkidList skidList = sourceConn.coreApi().objService().listSkids( dtoClassInfo.id(), false );
+          for( Skid skid : skidList ) {
+            // создаем DtoFullObject
+            DtoFullObject dto = DtoFullObject.createDtoFullObject( skid, sourceConn.coreApi() );
+            DtoFullObject.defineFullObject( targetConn.coreApi(), dto );
+          }
+        }
+        catch( Exception ex ) {
+          TsDialogUtils.info( shell, "Error in process: %s ", ex.getMessage() );
+          success = false;
         }
       }
     } );
-    success = true;
     aMonitor.done();
 
   }
