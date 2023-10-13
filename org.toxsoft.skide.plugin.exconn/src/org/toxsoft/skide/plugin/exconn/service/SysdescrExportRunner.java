@@ -57,7 +57,6 @@ public class SysdescrExportRunner
     TsNullArgumentRtException.checkNull( aSelConfig );
     tsContext = aContext;
     targetConnConfig = aSelConfig;
-    success = false;
   }
 
   // ------------------------------------------------------------------------------------
