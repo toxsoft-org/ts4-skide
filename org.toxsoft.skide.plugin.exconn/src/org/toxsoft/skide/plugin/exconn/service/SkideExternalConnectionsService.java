@@ -11,6 +11,7 @@ import org.toxsoft.core.tsgui.m5.gui.*;
 import org.toxsoft.core.tsgui.m5.model.*;
 import org.toxsoft.core.tslib.bricks.ctx.*;
 import org.toxsoft.core.tslib.bricks.ctx.impl.*;
+import org.toxsoft.core.tslib.bricks.geometry.impl.TsPoint;
 import org.toxsoft.core.tslib.bricks.strid.idgen.*;
 import org.toxsoft.core.tslib.bricks.strid.more.*;
 import org.toxsoft.core.tslib.utils.errors.*;
@@ -55,7 +56,9 @@ public class SkideExternalConnectionsService
         m5.getModel( IConnectionConfigM5Constants.MID_SK_CONN_CFG, IConnectionConfig.class );
     IM5LifecycleManager<IConnectionConfig> lm = model.getLifecycleManager( ccService );
     TsDialogInfo di = new TsDialogInfo( aContext, DLG_SELECT_CFG_AND_OPEN, DLG_SELECT_CFG_AND_OPEN_D );
-    IConnectionConfig conConf = M5GuiUtils.askSelectItem( di, model, null, lm.itemsProvider(), lm );
+    // установим нормальный размер диалога
+    di.setMinSize( new TsPoint( -30, -30 ) );
+        IConnectionConfig conConf = M5GuiUtils.askSelectItem( di, model, null, lm.itemsProvider(), lm );
     if( conConf == null ) {
       return null;
     }
