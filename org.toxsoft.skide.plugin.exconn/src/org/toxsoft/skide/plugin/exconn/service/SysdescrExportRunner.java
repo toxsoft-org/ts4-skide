@@ -39,7 +39,7 @@ import org.toxsoft.uskat.s5.utils.threads.impl.*;
 public class SysdescrExportRunner
     implements IRunnableWithProgress {
 
-  private final IStridGenerator idGen = new SimpleStridGenaretor( SimpleStridGenaretor.DEFAULT_INITIAL_STATE );
+  private final IStridGenerator idGen = new SimpleStridGenerator( SimpleStridGenerator.DEFAULT_INITIAL_STATE );
 
   private final ITsGuiContext     tsContext;
   private final IConnectionConfig targetConnConfig;

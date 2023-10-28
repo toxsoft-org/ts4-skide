@@ -32,7 +32,7 @@ import org.toxsoft.uskat.s5.utils.threads.impl.*;
 public class SkideExternalConnectionsService
     implements ISkideExternalConnectionsService {
 
-  private final IStridGenerator idGen = new SimpleStridGenaretor( SimpleStridGenaretor.DEFAULT_INITIAL_STATE );
+  private final IStridGenerator idGen = new SimpleStridGenerator( SimpleStridGenerator.DEFAULT_INITIAL_STATE );
 
   /**
    * Constructor.

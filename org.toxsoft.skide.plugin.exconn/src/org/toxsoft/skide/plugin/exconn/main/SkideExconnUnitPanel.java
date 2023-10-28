@@ -42,7 +42,7 @@ import org.toxsoft.uskat.core.gui.conn.cfg.m5.*;
 class SkideExconnUnitPanel
     extends AbstractSkideUnitPanel {
 
-  private final IStridGenerator idGen = new SimpleStridGenaretor( SimpleStridGenaretor.DEFAULT_INITIAL_STATE );
+  private final IStridGenerator idGen = new SimpleStridGenerator( SimpleStridGenerator.DEFAULT_INITIAL_STATE );
   private TsComposite           backplane;
 
   final static String ACTID_EXPORT_SYSDESCR = SK_ID + ".org.toxsoft.skide.plugin.exconn.ExportSysdescr"; //$NON-NLS-1$
