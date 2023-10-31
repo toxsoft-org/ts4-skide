@@ -5,6 +5,8 @@
     <parameters xmi:id="_d26DUOg3Ee267uR4TcEmwA" elementId="org.toxsoft.mws.cmd.switch_persp.arg.perspId" name="org.toxsoft.mws.cmd.switch_persp.arg.perspId"/>
   </imports>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_8lh9oOQiEe2eQ-UrCgEt_w" featurename="addons" parentElementId="org.toxsoft.mws.app.main">
+    <elements xsi:type="application:Addon" xmi:id="_NK6r8HfmEe6CT6bN5vWckA" elementId="org.toxsoft.skide.exe.addon.1" contributionURI="bundleclass://org.toxsoft.core.tsgui/org.toxsoft.core.tsgui.mws.e4.addons.AddonMainWindowDebugSize"/>
+    <elements xsi:type="application:Addon" xmi:id="_OdDCMHfmEe6CT6bN5vWckA" elementId="org.toxsoft.skide.exe.addon.2" contributionURI="bundleclass://org.toxsoft.core.tsgui/org.toxsoft.core.tsgui.mws.e4.addons.AddonInitialPerspectiveChooser"/>
     <elements xsi:type="application:Addon" xmi:id="_C9qkYOQjEe2eQ-UrCgEt_w" elementId="org.toxsoft.skide.exe.addon.0" contributionURI="bundleclass://org.toxsoft.skide.exe/org.toxsoft.skide.exe.e4.addons.AddonSkideExe"/>
   </fragments>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_hoLVgOg3Ee267uR4TcEmwA" featurename="children" parentElementId="org.toxsoft.mws.perspectivestack.main" positionInList="">
