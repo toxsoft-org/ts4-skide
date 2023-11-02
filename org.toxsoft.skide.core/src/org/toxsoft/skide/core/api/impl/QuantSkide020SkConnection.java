@@ -8,6 +8,7 @@ import java.io.*;
 
 import org.eclipse.e4.core.contexts.*;
 import org.toxsoft.core.tsgui.bricks.quant.*;
+import org.toxsoft.core.tsgui.mws.services.timers.*;
 import org.toxsoft.core.tslib.bricks.ctx.*;
 import org.toxsoft.core.tslib.bricks.ctx.impl.*;
 import org.toxsoft.core.tslib.utils.errors.*;
@@ -15,6 +16,7 @@ import org.toxsoft.core.txtproj.lib.workroom.*;
 import org.toxsoft.uskat.backend.memtext.*;
 import org.toxsoft.uskat.core.api.cmdserv.*;
 import org.toxsoft.uskat.core.gui.conn.*;
+import org.toxsoft.uskat.core.impl.*;
 
 /**
  * SkIDE builtin connection initialization.
@@ -61,6 +63,8 @@ public class QuantSkide020SkConnection
     File file = new File( aWorkroom.wrDir(), WORKROOM_FILE_SKIDE_SYSTEM );
     OPDEF_FILE_PATH.setValue( args.params(), avStr( file.getAbsolutePath() ) );
     REFDEF_BACKEND_PROVIDER.setRef( args, MtbBackendToFile.PROVIDER );
+    SkDoJobCallerService.REF_TSGUI_TIMER_SERVICE.setRef( args, aWinContext.get( ITsGuiTimersService.class ) );
+    ISkCoreConfigConstants.REFDEF_THREAD_SEPARATOR.setRef( args, SkDoJobCallerService.CREATOR );
     cs.defConn().open( args );
   }
 
