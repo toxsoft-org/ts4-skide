@@ -8,10 +8,12 @@ import org.eclipse.e4.ui.model.application.*;
 import org.eclipse.e4.ui.model.application.ui.basic.*;
 import org.eclipse.e4.ui.workbench.modeling.*;
 import org.eclipse.swt.widgets.*;
+import org.toxsoft.core.tsgui.bricks.quant.*;
 import org.toxsoft.core.tsgui.graphics.icons.impl.*;
 import org.toxsoft.core.tsgui.mws.*;
 import org.toxsoft.core.tsgui.mws.bases.*;
 import org.toxsoft.core.tsgui.mws.services.e4helper.*;
+import org.toxsoft.core.tsgui.rcp.*;
 import org.toxsoft.skide.exe.Activator;
 
 /**
@@ -32,6 +34,11 @@ public class AddonSkideExe
   // ------------------------------------------------------------------------------------
   // MwsAbstractAddon
   //
+
+  @Override
+  protected void doRegisterQuants( IQuantRegistrator aQuantRegistrator ) {
+    aQuantRegistrator.registerQuant( new QuantTsGuiRcp() );
+  }
 
   @Override
   protected void initApp( IEclipseContext aAppContext ) {
