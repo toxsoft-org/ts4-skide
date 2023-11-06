@@ -1,0 +1,6 @@
+ 1. Common actions for SkIDE plugins (maybe use visitor with isActionSupported(...))
+    - generate Java interfaces with constants
+    - export to the server
+    - validation for integrity and other criteria ???
+
+    
