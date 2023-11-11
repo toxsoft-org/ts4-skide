@@ -28,6 +28,12 @@ public interface ISkideCoreSharedResources {
   String STR_SPP_DESCRIPTION_D = Messages.getString( "STR_D_SPP_DESCRIPTION" ); //$NON-NLS-1$
 
   /**
+   * {@link QuantSkide020SkConnection}
+   */
+  String LOG_FMT_INFO_TEXTUAL_SYSDB = Messages.getString( "LOG_FMT_INFO_TEXTUAL_SYSDB" ); //$NON-NLS-1$
+  String LOG_FMT_INFO_SQLITE_SYSDB  = Messages.getString( "LOG_FMT_INFO_SQLITE_SYSDB" );  //$NON-NLS-1$
+
+  /**
    * {@link QuantSkide030Environment}
    */
   String FMT_ERR_CANT_INIT_SKIDE_PLUGIN = Messages.getString( "FMT_ERR_CANT_INIT_SKIDE_PLUGIN" ); //$NON-NLS-1$
