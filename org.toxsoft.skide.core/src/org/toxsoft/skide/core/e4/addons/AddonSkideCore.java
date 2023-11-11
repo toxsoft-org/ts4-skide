@@ -32,12 +32,7 @@ public class AddonSkideCore
     aQuantRegistrator.registerQuant( new QuantSkCoreGui() );
     aQuantRegistrator.registerQuant( new QuantSkUsersGui() );
     aQuantRegistrator.registerQuant( new QuantSkide010Workroom() );
-
-    // textual or SQLite?
-    // aQuantRegistrator.registerQuant( new QuantSkide020SkConnection() ); // Textual
-    aQuantRegistrator.registerQuant( new QuantSkide022SkConnection() ); // SQLite
-    // ---
-
+    aQuantRegistrator.registerQuant( new QuantSkide020SkConnection() );
     aQuantRegistrator.registerQuant( new QuantSkide030Environment() );
   }
 
