@@ -21,10 +21,8 @@ import org.toxsoft.skide.core.gui.m5.*;
 public class QuantSkide030Environment
     extends AbstractQuant {
 
-  // TODO proj props edinting
-
   /**
-   * Constrcutor.
+   * Constructor.
    */
   public QuantSkide030Environment() {
     super( QuantSkide030Environment.class.getSimpleName() );

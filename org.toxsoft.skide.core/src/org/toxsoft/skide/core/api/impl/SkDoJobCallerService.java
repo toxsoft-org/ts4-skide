@@ -6,7 +6,6 @@ import static org.toxsoft.core.tslib.bricks.ctx.impl.TsContextRefDef.*;
 import static org.toxsoft.uskat.core.ISkHardConstants.*;
 
 import org.toxsoft.core.tsgui.mws.services.timers.*;
-import org.toxsoft.core.tslib.bricks.*;
 import org.toxsoft.core.tslib.bricks.ctx.*;
 import org.toxsoft.uskat.core.*;
 import org.toxsoft.uskat.core.devapi.*;
@@ -31,7 +30,7 @@ public final class SkDoJobCallerService
   public static final String SERVICE_ID = SK_SYSEXT_SERVICE_ID_PREFIX + ".DoJobCallerService"; //$NON-NLS-1$
 
   /**
-   * Mandotary context parameter: {@link ITsGuiTimersService}
+   * Mandatory context parameter: {@link ITsGuiTimersService}
    */
   public static final ITsContextRefDef<ITsGuiTimersService> REF_TSGUI_TIMER_SERVICE =
       create( SERVICE_ID + ".Display", ITsGuiTimersService.class, //$NON-NLS-1$

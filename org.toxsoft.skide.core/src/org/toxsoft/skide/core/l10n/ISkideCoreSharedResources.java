@@ -22,10 +22,14 @@ public interface ISkideCoreSharedResources {
   /**
    * {@link ISkideProjectPropertiesConstants}
    */
-  String STR_SPP_NAME          = Messages.getString( "STR_N_SPP_NAME" );        //$NON-NLS-1$
-  String STR_SPP_NAME_D        = Messages.getString( "STR_D_SPP_NAME" );        //$NON-NLS-1$
-  String STR_SPP_DESCRIPTION   = Messages.getString( "STR_N_SPP_DESCRIPTION" ); //$NON-NLS-1$
-  String STR_SPP_DESCRIPTION_D = Messages.getString( "STR_D_SPP_DESCRIPTION" ); //$NON-NLS-1$
+  String STR_SPP_PROJ_ID       = Messages.getString( "STR_SPP_PROJ_ID" );       //$NON-NLS-1$
+  String STR_SPP_PROJ_ID_D     = Messages.getString( "STR_SPP_PROJ_ID_D" );     //$NON-NLS-1$
+  String STR_SPP_ALIAS         = Messages.getString( "STR_SPP_ALIAS" );         //$NON-NLS-1$
+  String STR_SPP_ALIAS_D       = Messages.getString( "STR_SPP_ALIAS_D" );       //$NON-NLS-1$
+  String STR_SPP_NAME          = Messages.getString( "STR_SPP_NAME" );          //$NON-NLS-1$
+  String STR_SPP_NAME_D        = Messages.getString( "STR_SPP_NAME_D" );        //$NON-NLS-1$
+  String STR_SPP_DESCRIPTION   = Messages.getString( "STR_SPP_DESCRIPTION" );   //$NON-NLS-1$
+  String STR_SPP_DESCRIPTION_D = Messages.getString( "STR_SPP_DESCRIPTION_D" ); //$NON-NLS-1$
 
   /**
    * {@link QuantSkide020SkConnection}

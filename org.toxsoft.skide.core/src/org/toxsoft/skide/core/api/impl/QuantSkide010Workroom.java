@@ -15,6 +15,7 @@ import org.toxsoft.core.tslib.utils.errors.*;
 import org.toxsoft.core.tslib.utils.logs.impl.*;
 import org.toxsoft.core.tslib.utils.progargs.*;
 import org.toxsoft.core.txtproj.lib.workroom.*;
+import org.toxsoft.skide.core.api.*;
 
 /**
  * SkIDE workroom initialization quant.
@@ -90,6 +91,23 @@ public class QuantSkide010Workroom
   }
 
   // ------------------------------------------------------------------------------------
+  // implementation
+  //
+
+  /**
+   * Update main windows title reflecting project properties and workroom name.
+   *
+   * @param aWinContext {@link IEclipseContext} - windows level context
+   */
+  void updateWindowsTitle( IEclipseContext aWinContext ) {
+    ITsWorkroom wr = aWinContext.get( ITsWorkroom.class );
+    ISkideProjectProperties spp = aWinContext.get( ISkideEnvironment.class ).projectProperties();
+    String title = String.format( "%s (%s) - %s", spp.projAlias(), wr.wrDir().getName(), APP_INFO.nmName() ); //$NON-NLS-1$
+    MWindow window = aWinContext.get( MWindow.class );
+    window.setLabel( title );
+  }
+
+  // ------------------------------------------------------------------------------------
   // AbstractQuant
   //
 
@@ -100,10 +118,10 @@ public class QuantSkide010Workroom
 
   @Override
   protected void doInitWin( IEclipseContext aWinContext ) {
-    ITsWorkroom wr = aWinContext.get( ITsWorkroom.class );
-    MWindow window = aWinContext.get( MWindow.class );
-    String title = String.format( "%s - %s", wr.wrDir().getName(), APP_INFO.nmName() ); //$NON-NLS-1$
-    window.setLabel( title );
+    ISkideEnvironment skEnv = aWinContext.get( ISkideEnvironment.class );
+    skEnv.projectProperties().genericChangeEventer().addListener( s -> updateWindowsTitle( aWinContext ) );
+    //
+    updateWindowsTitle( aWinContext );
   }
 
 }

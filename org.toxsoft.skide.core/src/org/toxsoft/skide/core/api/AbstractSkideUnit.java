@@ -16,7 +16,7 @@ import org.toxsoft.skide.core.api.impl.*;
  */
 public non-sealed abstract class AbstractSkideUnit
     extends StridableParameterized
-    implements ISkideUnit, ITsGuiContextable {
+    implements ISkideUnit, ISkidePluginRelated, ITsGuiContextable {
 
   private final IStridablesListEdit<ITsActionDef> unitActions = new StridablesList<>();
 
@@ -58,6 +58,20 @@ public non-sealed abstract class AbstractSkideUnit
     if( unitActions.hasKey( aActionId ) ) {
       doHandleAction( aActionId );
     }
+  }
+
+  // ------------------------------------------------------------------------------------
+  // ISkidePluginRelated
+  //
+
+  @Override
+  public ISkideEnvironment skEnv() {
+    return skidePlugin().skEnv();
+  }
+
+  @Override
+  public IPluginEnvironment plEnv() {
+    return skidePlugin().plEnv();
   }
 
   // ------------------------------------------------------------------------------------

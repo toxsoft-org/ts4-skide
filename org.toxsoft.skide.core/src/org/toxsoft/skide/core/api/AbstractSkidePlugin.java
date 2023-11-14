@@ -14,21 +14,21 @@ import org.toxsoft.core.tslib.utils.errors.*;
  * This interface is to be implemented by SkIDE contributor and instance to be registered in
  * {@link ISkidePluginsRegistrator}.
  * <p>
- * SkIDE framework provides to environments to the plugin:
+ * SkIDE framework provides the environments to the plugin:
  * <ul>
  * <li>{@link #skEnv()} - SkIDE common environment, the single instance is shared between all plugins;</li>
  * <li>{@link #plEnv()} - plugin specific environment, each plugin has it's own instance.</li>
  * </ul>
  * <p>
  * Plugin contributes units to the SkIDE project by the method {@link #createUnits(ITsGuiContext)}. Project unit is a
- * visualization of the plugin in the <i>SkIDE project perspectiove</i>. Plugins are free to create individual
+ * visualization of the plugin in the <i>SkIDE project perspective</i>. Plugins are free to create individual
  * perspectives with arbitrary content.
  *
  * @author hazard157
  */
 public abstract class AbstractSkidePlugin
     extends StridableParameterized
-    implements ICloseable {
+    implements ISkidePluginRelated, ICloseable {
 
   private ISkideEnvironment  skideEnvironment  = null;
   private IPluginEnvironment pluginEnvironment = null;
@@ -55,28 +55,24 @@ public abstract class AbstractSkidePlugin
   }
 
   // ------------------------------------------------------------------------------------
-  // API
+  // ISkidePluginRelated
   //
 
-  /**
-   * Returns the same environment as found in the application context.
-   *
-   * @return {@link ISkideEnvironment} - common environment for all plugins
-   */
+  @Override
   final public ISkideEnvironment skEnv() {
     TsIllegalStateRtException.checkNull( skideEnvironment );
     return skideEnvironment;
   }
 
-  /**
-   * Returns the environment instance specifically created fro this plugin.
-   *
-   * @return {@link IPluginEnvironment} - plugin-specific environment
-   */
+  @Override
   final public IPluginEnvironment plEnv() {
     TsIllegalStateRtException.checkNull( pluginEnvironment );
     return pluginEnvironment;
   }
+
+  // ------------------------------------------------------------------------------------
+  // API
+  //
 
   /**
    * Creates and returns contributed project units.

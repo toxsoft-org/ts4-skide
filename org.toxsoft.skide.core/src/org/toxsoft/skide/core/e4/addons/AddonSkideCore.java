@@ -44,6 +44,7 @@ public class AddonSkideCore
   @Override
   protected void initWin( IEclipseContext aWinContext ) {
     // nop
+
   }
 
 }

@@ -1,12 +1,15 @@
 package org.toxsoft.skide.core.api;
 
-import static org.toxsoft.skide.core.ISkideCoreConstants.*;
 import static org.toxsoft.skide.core.api.ISkideProjectPropertiesConstants.*;
 
 import org.toxsoft.core.tslib.av.opset.*;
 import org.toxsoft.core.tslib.av.utils.*;
 import org.toxsoft.core.tslib.bricks.events.change.*;
+import org.toxsoft.core.tslib.bricks.validator.*;
+import org.toxsoft.core.tslib.bricks.validator.impl.*;
+import org.toxsoft.core.tslib.utils.errors.*;
 import org.toxsoft.core.txtproj.lib.workroom.*;
+import org.toxsoft.uskat.core.api.objserv.*;
 
 /**
  * The SkIDE workroom-specific properties are called "Project properties" for user convenience.
@@ -22,12 +25,25 @@ public interface ISkideProjectProperties
     extends IParameterized, IGenericChangeEventCapable {
 
   /**
-   * The section ID of the {@link ISkideProjectProperties} storage in {@link ITsWorkroom#getApplicationStorage()}.
+   * Returns the globally unique project ID.
+   *
+   * @return String - SkIDE project ID (an IDpath)
    */
-  String STORAGE_OPID_PROPECT_PROPS = SKIDE_FULL_ID + ".ProjectProperties"; //$NON-NLS-1$
+  default String projId() {
+    return OPDEF_SPP_PROJ_ID.getValue( params() ).asString();
+  }
 
   /**
-   * Returns the project single line name.
+   * Returns the short project alias.
+   *
+   * @return String - SkIDE project alias (an IDname)
+   */
+  default String projAlias() {
+    return OPDEF_SPP_ALIAS.getValue( params() ).asString();
+  }
+
+  /**
+   * Returns the project short, human readable name.
    *
    * @return String - SkIDE project name
    */
@@ -43,5 +59,23 @@ public interface ISkideProjectProperties
   default String description() {
     return OPDEF_SPP_DESCRIPTION.getValue( params() ).asString();
   }
+
+  /**
+   * Returns the editing validator.
+   *
+   * @return {@link ITsValidationSupport}&lt;{@link ISkObjectServiceValidator}&gt; - the service validator
+   */
+  ITsValidationSupport<ISkideProjectPropertiesValidator> svs();
+
+  /**
+   * Changes the project properties.
+   * <p>
+   * The argument may contains only part of the properties. Unknown properties will be ignored.
+   *
+   * @param aProperties {@link IOptionSet} - changed properties
+   * @throws TsNullArgumentRtException any argument = <code>null</code>
+   * @throws TsValidationFailedRtException failed call to {@link #svs()} validator
+   */
+  void setProperties( IOptionSet aProperties );
 
 }

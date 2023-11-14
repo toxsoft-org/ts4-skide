@@ -11,7 +11,8 @@ import org.toxsoft.skide.core.api.*;
  * @author hazard157
  */
 public abstract class AbstractSkideUnitPanel
-    extends AbstractLazyPanel<Control> {
+    extends AbstractLazyPanel<Control>
+    implements ISkidePluginRelated {
 
   private final ISkideUnit unit;
 
@@ -24,6 +25,20 @@ public abstract class AbstractSkideUnitPanel
   public AbstractSkideUnitPanel( ITsGuiContext aContext, ISkideUnit aUnit ) {
     super( aContext );
     unit = aUnit;
+  }
+
+  // ------------------------------------------------------------------------------------
+  // ISkidePluginRelated
+  //
+
+  @Override
+  public ISkideEnvironment skEnv() {
+    return unit.skEnv();
+  }
+
+  @Override
+  public IPluginEnvironment plEnv() {
+    return unit.plEnv();
   }
 
   // ------------------------------------------------------------------------------------
