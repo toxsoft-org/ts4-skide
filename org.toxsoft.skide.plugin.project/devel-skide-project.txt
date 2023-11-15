@@ -1,0 +1,2 @@
+--- add menu item "Edit ptoject properties" in main menu "SkIDE" drop-down menu
+--- concept: multiple "deployed application description" to generate Eclipse product of a workstation application
