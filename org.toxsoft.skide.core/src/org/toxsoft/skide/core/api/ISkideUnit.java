@@ -2,6 +2,7 @@ package org.toxsoft.skide.core.api;
 
 import org.toxsoft.core.tsgui.bricks.actions.*;
 import org.toxsoft.core.tsgui.bricks.ctx.*;
+import org.toxsoft.core.tslib.bricks.gentask.*;
 import org.toxsoft.core.tslib.bricks.strid.*;
 import org.toxsoft.core.tslib.bricks.strid.coll.*;
 import org.toxsoft.skide.core.api.impl.*;
@@ -19,8 +20,7 @@ import org.toxsoft.skide.core.api.impl.*;
  * @author hazard157
  */
 public sealed interface ISkideUnit
-    extends ISkidePluginRelated, IStridableParameterized, ITsActionHandler
-    permits AbstractSkideUnit {
+    extends ISkidePluginRelated, IStridableParameterized, IGenericTaskCapable permits AbstractSkideUnit {
 
   /**
    * Returns the creator plugin.

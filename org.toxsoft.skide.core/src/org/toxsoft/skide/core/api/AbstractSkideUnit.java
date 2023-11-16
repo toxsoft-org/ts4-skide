@@ -3,9 +3,12 @@ package org.toxsoft.skide.core.api;
 import org.toxsoft.core.tsgui.bricks.actions.*;
 import org.toxsoft.core.tsgui.bricks.ctx.*;
 import org.toxsoft.core.tslib.av.opset.*;
+import org.toxsoft.core.tslib.bricks.gentask.*;
 import org.toxsoft.core.tslib.bricks.strid.coll.*;
 import org.toxsoft.core.tslib.bricks.strid.coll.impl.*;
 import org.toxsoft.core.tslib.bricks.strid.impl.*;
+import org.toxsoft.core.tslib.coll.primtypes.*;
+import org.toxsoft.core.tslib.coll.primtypes.impl.*;
 import org.toxsoft.core.tslib.utils.errors.*;
 import org.toxsoft.skide.core.api.impl.*;
 
@@ -16,9 +19,11 @@ import org.toxsoft.skide.core.api.impl.*;
  */
 public non-sealed abstract class AbstractSkideUnit
     extends StridableParameterized
-    implements ISkideUnit, ISkidePluginRelated, ITsGuiContextable {
+    implements ISkideUnit, ITsGuiContextable {
 
   private final IStridablesListEdit<ITsActionDef> unitActions = new StridablesList<>();
+
+  private final IStringMapEdit<IGenericTaskRunner> genTaskRunners = new StringMap<>();
 
   private final ITsGuiContext       tsContext;
   private final AbstractSkidePlugin creatorPlugin;
@@ -50,17 +55,6 @@ public non-sealed abstract class AbstractSkideUnit
   }
 
   // ------------------------------------------------------------------------------------
-  // ITsActionHandler
-  //
-
-  @Override
-  final public void handleAction( String aActionId ) {
-    if( unitActions.hasKey( aActionId ) ) {
-      doHandleAction( aActionId );
-    }
-  }
-
-  // ------------------------------------------------------------------------------------
   // ISkidePluginRelated
   //
 
@@ -72,6 +66,15 @@ public non-sealed abstract class AbstractSkideUnit
   @Override
   public IPluginEnvironment plEnv() {
     return skidePlugin().plEnv();
+  }
+
+  // ------------------------------------------------------------------------------------
+  // IGenericTaskCapable
+  //
+
+  @Override
+  public IStringMap<IGenericTaskRunner> getGenericTaskRunners() {
+    return genTaskRunners;
   }
 
   // ------------------------------------------------------------------------------------
@@ -97,19 +100,25 @@ public non-sealed abstract class AbstractSkideUnit
   }
 
   // ------------------------------------------------------------------------------------
-  // To implement
+  // API for subclasses
   //
 
   /**
-   * The subclass must execute actions if any is defined in {@link #unitActions()}.
-   * <p>
-   * Does nothing in the base class so there is no need to call superclass method when overriding.
+   * Adds task runner to the declared runners {@link #getGenericTaskRunners()}.
    *
-   * @param aActionId String - ID of action, checked to be from kist of {@link #unitActions()}
+   * @param aTaskRunner {@link IGenericTaskRunner} - the runner to add
+   * @throws TsNullArgumentRtException any argument = <code>null</code>
+   * @throws TsItemAlreadyExistsRtException task with the same {@link IGenericTaskInfo#id()} is already added
    */
-  protected void doHandleAction( String aActionId ) {
-    // nop
+  public void addTaskRunner( IGenericTaskRunner aTaskRunner ) {
+    TsNullArgumentRtException.checkNull( aTaskRunner );
+    TsItemAlreadyExistsRtException.checkTrue( genTaskRunners.hasKey( aTaskRunner.taskInfo().id() ) );
+    genTaskRunners.put( NONE_ID, aTaskRunner );
   }
+
+  // ------------------------------------------------------------------------------------
+  // To implement
+  //
 
   /**
    * Subclass must create the new instance of the unit panel
