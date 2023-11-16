@@ -6,7 +6,6 @@ import static org.toxsoft.skide.core.ISkideCoreConstants.*;
 import static org.toxsoft.skide.plugin.sded.ISkidePluginSdedSharedResources.*;
 
 import org.toxsoft.core.tsgui.bricks.ctx.*;
-import org.toxsoft.core.tsgui.dialogs.*;
 import org.toxsoft.core.tslib.av.opset.impl.*;
 import org.toxsoft.skide.core.api.*;
 import org.toxsoft.skide.core.api.impl.*;
@@ -32,21 +31,6 @@ public class SkideUnitClasses
         TSID_ICON_ID, ISkidePluginSdedConstants.ICONID_CLASS_EDITOR //
     ), aContext, aCreator );
     unitActions().add( ACDEF_ABOUT );
-  }
-
-  @Override
-  protected void doHandleAction( String aActionId ) {
-    switch( aActionId ) {
-      case ACTID_ABOUT: {
-        // TODO display complete info about unit
-        TsDialogUtils.info( getShell(), id() + '\n' + nmName() + '\n' + description() );
-        break;
-      }
-      default: {
-        // TODO display info about known but unhandled action
-        TsDialogUtils.info( getShell(), aActionId );
-      }
-    }
   }
 
   @Override

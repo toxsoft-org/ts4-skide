@@ -2,5 +2,8 @@
     - generate Java interfaces with constants
     - export to the server
     - validation for integrity and other criteria ???
+    
+--- develop: IDataType editor embedded panel VALED
+--- in DtoAttrInfo/DtoRtdataInfo change TextAndButton data type VALED on embedded panel VALED
 
     

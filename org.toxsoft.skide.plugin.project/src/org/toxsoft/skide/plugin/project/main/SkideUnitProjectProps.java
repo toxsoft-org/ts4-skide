@@ -7,7 +7,6 @@ import static org.toxsoft.skide.core.ISkideCoreConstants.*;
 import static org.toxsoft.skide.plugin.project.ISkidePluginProjectSharedResources.*;
 
 import org.toxsoft.core.tsgui.bricks.ctx.*;
-import org.toxsoft.core.tsgui.dialogs.*;
 import org.toxsoft.core.tslib.av.opset.impl.*;
 import org.toxsoft.skide.core.api.*;
 import org.toxsoft.skide.core.api.impl.*;
@@ -43,21 +42,6 @@ public class SkideUnitProjectProps
      * TODO add menu item in "SkIDE" menu with "Project properties"<br>
      * TODO <br>
      */
-  }
-
-  @Override
-  protected void doHandleAction( String aActionId ) {
-    switch( aActionId ) {
-      case ACTID_ABOUT: {
-        // TODO display complete info about unit
-        TsDialogUtils.info( getShell(), id() + '\n' + nmName() + '\n' + description() );
-        break;
-      }
-      default: {
-        // TODO display info about known but unhandled action
-        TsDialogUtils.info( getShell(), aActionId );
-      }
-    }
   }
 
   @Override
