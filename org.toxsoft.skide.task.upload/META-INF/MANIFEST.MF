@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: SkIDE Task: Upload data to external SK-connection
+Bundle-SymbolicName: org.toxsoft.skide.task.upload
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: org.toxsoft.skide.task.upload.Activator
+Bundle-Vendor: toxsoft.og
+Require-Bundle: org.eclipse.core.runtime
+Bundle-RequiredExecutionEnvironment: JavaSE-17
+Automatic-Module-Name: org.toxsoft.skide.task.upload
+Bundle-ActivationPolicy: lazy
