@@ -3,9 +3,9 @@ package org.toxsoft.skide.core;
 import static org.toxsoft.core.tslib.ITsHardConstants.*;
 import static org.toxsoft.skide.core.l10n.ISkideCoreSharedResources.*;
 
-import java.time.Month;
+import java.time.*;
 
-import org.eclipse.e4.core.contexts.IEclipseContext;
+import org.eclipse.e4.core.contexts.*;
 import org.toxsoft.core.tsgui.graphics.icons.*;
 import org.toxsoft.core.tsgui.mws.appinf.*;
 import org.toxsoft.core.tslib.utils.*;
@@ -33,6 +33,8 @@ public interface ISkideCoreConstants {
   // E4
 
   String PERPSID_SKIDE_PROJECT = "org.toxsoft.skide.persp.project"; //$NON-NLS-1$
+
+  String TOOLBARID_SKIDE_TASKS = "org.toxsoft.skide.toolbar.task"; //$NON-NLS-1$
 
   String CMDID_SKIDE_SHOW_PLUGINS = "org.toxsoft.skide.cmd.show_plugins"; //$NON-NLS-1$
 

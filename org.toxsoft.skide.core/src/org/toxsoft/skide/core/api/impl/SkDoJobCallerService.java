@@ -34,7 +34,7 @@ public final class SkDoJobCallerService
    */
   public static final ITsContextRefDef<ITsGuiTimersService> REF_TSGUI_TIMER_SERVICE =
       create( SERVICE_ID + ".Display", ITsGuiTimersService.class, //$NON-NLS-1$
-          TSID_NAME, "TImer service", // N_DISPLAY,
+          TSID_NAME, "Timer service", //
           TSID_DESCRIPTION, "The TsGUI library times service to use quick times for CoreApi doJob()", // D_DISPLAY,
           TSID_IS_MANDATORY, AV_TRUE, //
           TSID_IS_NULL_ALLOWED, AV_FALSE //

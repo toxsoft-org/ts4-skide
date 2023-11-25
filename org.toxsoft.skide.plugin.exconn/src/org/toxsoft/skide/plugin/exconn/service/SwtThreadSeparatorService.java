@@ -37,7 +37,7 @@ public final class SwtThreadSeparatorService
   public static final String SERVICE_ID = "SwtThreadSeparator"; //$NON-NLS-1$
 
   /**
-   * Mandotary context parameter: Display
+   * Mandatory context parameter: Display
    * <p>
    * Тип: {@link Display}
    */
@@ -47,7 +47,7 @@ public final class SwtThreadSeparatorService
       TSID_IS_NULL_ALLOWED, AV_FALSE );
 
   /**
-   * Mandotary context parameter: dojob timeout (msec)
+   * Mandatory context parameter: dojob timeout (msec)
    * <p>
    * Тип: {@link EAtomicType#INTEGER}
    */
