@@ -30,6 +30,8 @@ public interface ISkideCoreSharedResources {
   String STR_SPP_NAME_D        = Messages.getString( "STR_SPP_NAME_D" );        //$NON-NLS-1$
   String STR_SPP_DESCRIPTION   = Messages.getString( "STR_SPP_DESCRIPTION" );   //$NON-NLS-1$
   String STR_SPP_DESCRIPTION_D = Messages.getString( "STR_SPP_DESCRIPTION_D" ); //$NON-NLS-1$
+  String STR_SPP_COPYRIGHT     = Messages.getString( "STR_SPP_COPYRIGHT" );     //$NON-NLS-1$
+  String STR_SPP_COPYRIGHT_D   = Messages.getString( "STR_SPP_COPYRIGHT_D" );   //$NON-NLS-1$
 
   /**
    * {@link QuantSkide020SkConnection}

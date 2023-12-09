@@ -7,6 +7,7 @@ import static org.toxsoft.skide.core.ISkideCoreConstants.*;
  *
  * @author hazard157
  */
+@SuppressWarnings( "javadoc" )
 public interface ISkideCodegenTaskConstants {
 
   String SKIDE_CODEGEN_TASK_ID = SKIDE_FULL_ID + ".CodeGenerator"; //$NON-NLS-1$

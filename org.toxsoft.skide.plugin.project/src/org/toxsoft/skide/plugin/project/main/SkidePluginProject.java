@@ -11,7 +11,7 @@ import org.toxsoft.core.tslib.bricks.strid.coll.*;
 import org.toxsoft.skide.core.api.*;
 
 /**
- * SkIDE plugin: Sysdescr (classes) editor.
+ * SkIDE plugin: work with project-wide settings and tasks.
  *
  * @author hazard157
  */

@@ -25,11 +25,13 @@ public interface ISkideProjectPropertiesConstants {
    */
   String STORAGE_OPID_PROPECT_PROPS = SKIDE_FULL_ID + ".ProjectProperties"; //$NON-NLS-1$
 
-  String DEFAULT_PROJECT_ID    = "org.toxsoft.skide.default_project_id"; //$NON-NLS-1$
-  String DEFAULT_PROJECT_ALIAS = "default_project_alias";                //$NON-NLS-1$
+  String DEFAULT_PROJECT_ID        = "org.toxsoft.skide.default_project_id"; //$NON-NLS-1$
+  String DEFAULT_PROJECT_ALIAS     = "default_project_alias";                //$NON-NLS-1$
+  String DEFAULT_PROJECT_COPYRIGHT = "ToxSoft Company, 1993-2023";           //$NON-NLS-1$
 
   String OPID_SPP_PROJ_ID     = IAvMetaConstants.TSID_ID;
   String OPID_SPP_ALIAS       = TS_ID + ".Alias";                 //$NON-NLS-1$
+  String OPID_SPP_COPYRIGHT   = TS_ID + ".Copyright";             //$NON-NLS-1$
   String OPID_SPP_NAME        = IAvMetaConstants.TSID_NAME;
   String OPID_SPP_DESCRIPTION = IAvMetaConstants.TSID_DESCRIPTION;
 
@@ -50,6 +52,12 @@ public interface ISkideProjectPropertiesConstants {
       TSID_DESCRIPTION, STR_SPP_NAME_D //
   );
 
+  IDataDef OPDEF_SPP_COPYRIGHT = DataDef.createOverride2( OPID_SPP_COPYRIGHT, DDEF_IDNAME, //
+      TSID_NAME, STR_SPP_COPYRIGHT, //
+      TSID_DESCRIPTION, STR_SPP_COPYRIGHT_D, //
+      TSID_DEFAULT_VALUE, avStr( DEFAULT_PROJECT_COPYRIGHT ) //
+  );
+
   IDataDef OPDEF_SPP_DESCRIPTION = DataDef.createOverride2( OPID_SPP_DESCRIPTION, DDEF_DESCRIPTION, //
       TSID_NAME, STR_SPP_DESCRIPTION, //
       TSID_DESCRIPTION, STR_SPP_DESCRIPTION_D //
@@ -61,6 +69,7 @@ public interface ISkideProjectPropertiesConstants {
       OPDEF_SPP_PROJ_ID, //
       OPDEF_SPP_ALIAS, //
       OPDEF_SPP_NAME, //
+      OPDEF_SPP_COPYRIGHT, //
       OPDEF_SPP_DESCRIPTION //
   );
 

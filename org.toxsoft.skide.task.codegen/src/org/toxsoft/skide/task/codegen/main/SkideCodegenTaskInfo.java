@@ -1,6 +1,10 @@
 package org.toxsoft.skide.task.codegen.main;
 
-import org.toxsoft.core.tslib.av.opset.*;
+import static org.toxsoft.core.tslib.av.metainfo.IAvMetaConstants.*;
+import static org.toxsoft.skide.task.codegen.main.ISkResources.*;
+import static org.toxsoft.skide.task.codegen.main.ISkideCodegenTaskConstants.*;
+
+import org.toxsoft.core.tslib.av.opset.impl.*;
 import org.toxsoft.core.tslib.bricks.gentask.*;
 
 /**
@@ -11,9 +15,16 @@ import org.toxsoft.core.tslib.bricks.gentask.*;
 public final class SkideCodegenTaskInfo
     extends GenericTaskInfo {
 
-  public SkideCodegenTaskInfo( String aId, IOptionSet aParams ) {
-    super( aId, aParams );
-    // TODO Auto-generated constructor stub
+  /**
+   * The singleton instance
+   */
+  public static final IGenericTaskInfo INSTANCE = new SkideCodegenTaskInfo();
+
+  private SkideCodegenTaskInfo() {
+    super( SKIDE_CODEGEN_TASK_ID, OptionSetUtils.createOpSet( //
+        TSID_NAME, STR_TASK_CODEGEN, //
+        TSID_DESCRIPTION, STR_TASK_CODEGEN_D//
+    ) );
   }
 
 }
