@@ -52,7 +52,7 @@ public interface ISkideProjectPropertiesConstants {
       TSID_DESCRIPTION, STR_SPP_NAME_D //
   );
 
-  IDataDef OPDEF_SPP_COPYRIGHT = DataDef.createOverride2( OPID_SPP_COPYRIGHT, DDEF_IDNAME, //
+  IDataDef OPDEF_SPP_COPYRIGHT = DataDef.createOverride2( OPID_SPP_COPYRIGHT, DDEF_STRING, //
       TSID_NAME, STR_SPP_COPYRIGHT, //
       TSID_DESCRIPTION, STR_SPP_COPYRIGHT_D, //
       TSID_DEFAULT_VALUE, avStr( DEFAULT_PROJECT_COPYRIGHT ) //
