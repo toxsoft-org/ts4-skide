@@ -1,11 +1,11 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: SkIDE Task: Generate source code
-Bundle-SymbolicName: org.toxsoft.skide.task.codegen
+Bundle-SymbolicName: org.toxsoft.skide.task.codegen;singleton:=true
 Bundle-Version: 1.0.0.qualifier
-Export-Package: org.toxsoft.skide.task.codegen
 Bundle-Activator: org.toxsoft.skide.task.codegen.Activator
 Bundle-Vendor: toxsoft.og
+Export-Package: org.toxsoft.skide.task.codegen
 Require-Bundle: javax.annotation,
  javax.inject,
  org.eclipse.core.runtime,
