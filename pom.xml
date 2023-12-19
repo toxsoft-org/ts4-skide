@@ -518,6 +518,7 @@
         <module>org.toxsoft.skide.plugin.sded</module>
         <module>org.toxsoft.skide.plugin.exconn</module>
         <module>org.toxsoft.skide.plugin.project</module> 
+        <module>org.toxsoft.skide.exe</module>
  
         <module>zz-releng/p2.rcp</module>
         <module>zz-releng/ant.rcp</module>
