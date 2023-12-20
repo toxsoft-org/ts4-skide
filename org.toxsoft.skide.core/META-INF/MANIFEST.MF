@@ -34,6 +34,7 @@ Require-Bundle: javax.annotation,
  org.toxsoft.uskat.s5,
  org.toxsoft.uskat.core.gui,
  org.toxsoft.skf.users.gui,
+ org.toxsoft.skf.rri.lib,
  org.toxsoft.extlibs.sqlite-jdbc,
  org.toxsoft.uskat.backend.sqlite
 Bundle-RequiredExecutionEnvironment: JavaSE-17
