@@ -28,12 +28,22 @@
   </fragments>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_8FCGAOi_Ee2ZzusL1E-79Q" featurename="commands" parentElementId="org.toxsoft.mws.app.main">
     <elements xsi:type="commands:Command" xmi:id="_9qfA4Oi_Ee2ZzusL1E-79Q" elementId="org.toxsoft.skide.cmd.show_plugins" commandName="%Cmd_ShowPlugins" description="%Cmd_ShowPlugins_D" category="_cJNLYOg3Ee267uR4TcEmwA"/>
+    <elements xsi:type="commands:Command" xmi:id="_whgMgKILEe6V_dXpAxRkbQ" elementId="org.toxsoft.skide.cmd.run_task" commandName="%Cmd_RunTask" description="%Cmd_RunTask_D" category="_cJNLYOg3Ee267uR4TcEmwA">
+      <parameters xmi:id="_DwImwKIbEe6V_dXpAxRkbQ" elementId="org.toxsoft.skide.cmdarg.run_task_id" name="Task ID"/>
+    </elements>
   </fragments>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_iY30YOjAEe2ZzusL1E-79Q" featurename="handlers" parentElementId="org.toxsoft.mws.window.main">
     <elements xsi:type="commands:Handler" xmi:id="_klhSIOjAEe2ZzusL1E-79Q" elementId="org.toxsoft.skide.exe.handler.0" contributionURI="bundleclass://org.toxsoft.skide.core/org.toxsoft.skide.core.e4.handlers.CmdSkideShowPluginsList" command="_9qfA4Oi_Ee2ZzusL1E-79Q"/>
+    <elements xsi:type="commands:Handler" xmi:id="_L2BGkKIMEe6V_dXpAxRkbQ" elementId="org.toxsoft.skide.exe.handler.1" contributionURI="bundleclass://org.toxsoft.skide.core/org.toxsoft.skide.core.e4.handlers.CmdSkideRunTask" command="_whgMgKILEe6V_dXpAxRkbQ"/>
   </fragments>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_IpsuMOjFEe2ZzusL1E-79Q" featurename="children" parentElementId="org.toxsoft.mws.menu.main.help" positionInList="index:0">
     <elements xsi:type="menu:HandledMenuItem" xmi:id="_MWbeoOjFEe2ZzusL1E-79Q" elementId="org.toxsoft.skide.exe.handledmenuitem.0" command="_9qfA4Oi_Ee2ZzusL1E-79Q"/>
     <elements xsi:type="menu:MenuSeparator" xmi:id="_OHUNcOjFEe2ZzusL1E-79Q" elementId="org.toxsoft.skide.exe.menuseparator.1"/>
+  </fragments>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_TuurUKF0Ee6V_dXpAxRkbQ" featurename="children" parentElementId="org.toxsoft.mws.menu.main" positionInList="after:org.toxsoft.mws.menu.main.file">
+    <elements xsi:type="menu:Menu" xmi:id="_W5qWQKF0Ee6V_dXpAxRkbQ" elementId="org.toxsoft.skide.menu.tasks" label="%MMenu_Skide_Tasks" tooltip="%MMenu_Skide_Tasks_D" mnemonics=""/>
+  </fragments>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_VataEKF2Ee6V_dXpAxRkbQ" featurename="children" parentElementId="org.toxsoft.mws.main.trimbar.top">
+    <elements xsi:type="menu:ToolBar" xmi:id="_YlsIUKF2Ee6V_dXpAxRkbQ" elementId="org.toxsoft.skide.toolbar.tasks"/>
   </fragments>
 </fragment:ModelFragments>

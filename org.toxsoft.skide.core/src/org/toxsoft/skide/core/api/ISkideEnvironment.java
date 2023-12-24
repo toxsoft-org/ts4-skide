@@ -25,7 +25,7 @@ public interface ISkideEnvironment {
   ISkideProjectProperties projectProperties();
 
   /**
-   * Returns SkIDE task manager to run {@link ISkideUnit#getGenericTaskRunners()} tasks.
+   * Returns SkIDE task manager to run {@link ISkideUnit#listTaskRunners()} tasks.
    *
    * @return {@link ISkideGenericTaskManager} - the SkIDE task manager
    */

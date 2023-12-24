@@ -10,10 +10,10 @@ import org.toxsoft.skide.core.api.*;
  *
  * @author hazard157
  */
-class SkideProjectUnitM5LifecycleManager
+class SkideUnitM5LifecycleManager
     extends M5LifecycleManager<ISkideUnit, ISkidePluginsRegistrator> {
 
-  public SkideProjectUnitM5LifecycleManager( IM5Model<ISkideUnit> aModel, ISkidePluginsRegistrator aMaster ) {
+  public SkideUnitM5LifecycleManager( IM5Model<ISkideUnit> aModel, ISkidePluginsRegistrator aMaster ) {
     super( aModel, false, false, false, true, aMaster );
   }
 

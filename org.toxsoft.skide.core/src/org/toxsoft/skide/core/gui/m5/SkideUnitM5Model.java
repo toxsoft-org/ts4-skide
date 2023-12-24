@@ -60,12 +60,12 @@ public class SkideUnitM5Model
   @Override
   protected IM5LifecycleManager<ISkideUnit> doCreateDefaultLifecycleManager() {
     ISkidePluginsRegistrator pluginsRegistrator = tsContext().get( ISkideEnvironment.class ).pluginsRegistrator();
-    return new SkideProjectUnitM5LifecycleManager( this, pluginsRegistrator );
+    return new SkideUnitM5LifecycleManager( this, pluginsRegistrator );
   }
 
   @Override
   protected IM5LifecycleManager<ISkideUnit> doCreateLifecycleManager( Object aMaster ) {
-    return new SkideProjectUnitM5LifecycleManager( this, ISkidePluginsRegistrator.class.cast( aMaster ) );
+    return new SkideUnitM5LifecycleManager( this, ISkidePluginsRegistrator.class.cast( aMaster ) );
   }
 
 }

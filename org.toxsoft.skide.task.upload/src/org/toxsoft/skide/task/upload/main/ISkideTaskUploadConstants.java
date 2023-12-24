@@ -1,4 +1,4 @@
-package org.toxsoft.skide.task.codegen.main;
+package org.toxsoft.skide.task.upload.main;
 
 import static org.toxsoft.skide.core.ISkideCoreConstants.*;
 
@@ -8,8 +8,8 @@ import static org.toxsoft.skide.core.ISkideCoreConstants.*;
  * @author hazard157
  */
 @SuppressWarnings( "javadoc" )
-public interface ISkideCodegenTaskConstants {
+public interface ISkideTaskUploadConstants {
 
-  String SKIDE_CODEGEN_TASK_ID = SKIDE_FULL_ID + ".CodeGenerator"; //$NON-NLS-1$
+  String SKIDE_TASK_UPLOAD_ID = SKIDE_FULL_ID + ".task.Upload"; //$NON-NLS-1$
 
 }

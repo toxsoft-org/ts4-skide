@@ -1,15 +1,19 @@
 package org.toxsoft.skide.core.e4.addons;
 
+import static org.toxsoft.skide.core.ISkideCoreConstants.*;
+
 import org.eclipse.e4.core.contexts.*;
+import org.eclipse.e4.ui.model.application.*;
+import org.eclipse.e4.ui.model.application.commands.*;
 import org.eclipse.e4.ui.model.application.ui.basic.*;
 import org.eclipse.e4.ui.model.application.ui.menu.*;
 import org.eclipse.e4.ui.workbench.modeling.*;
+import org.toxsoft.core.tsgui.graphics.icons.*;
 import org.toxsoft.core.tsgui.mws.*;
 import org.toxsoft.core.tsgui.mws.bases.*;
 import org.toxsoft.core.tsgui.mws.services.e4helper.*;
 import org.toxsoft.core.tslib.bricks.gentask.*;
 import org.toxsoft.core.tslib.bricks.strid.coll.*;
-import org.toxsoft.core.tslib.utils.*;
 import org.toxsoft.core.tslib.utils.errors.*;
 import org.toxsoft.skide.core.api.*;
 
@@ -29,6 +33,52 @@ public class AddonSkideUnitTasksGui
   }
 
   // ------------------------------------------------------------------------------------
+  // implementation
+  //
+
+  private void initializeSkideTasksMenu( IEclipseContext aWinContext ) {
+    // preconditions
+    ISkideEnvironment skideEnv = aWinContext.get( ISkideEnvironment.class );
+    TsInternalErrorRtException.checkNull( skideEnv );
+    ITsE4Helper e4Helper = aWinContext.get( ITsE4Helper.class );
+    MWindow mainWindow = aWinContext.get( MWindow.class );
+    EModelService modelService = aWinContext.get( EModelService.class );
+    MApplication application = aWinContext.get( MApplication.class );
+    MMenu tasksMenu = e4Helper.findElement( mainWindow, MMNUID_SKIDE_TASKS, MMenu.class, EModelService.IN_MAIN_MENU );
+    TsInternalErrorRtException.checkNull( tasksMenu );
+    ITsIconManager iconManager = aWinContext.get( ITsIconManager.class );
+    IStridablesList<IGenericTaskInfo> taskInfos = skideEnv.taskManager().listTasks();
+    if( taskInfos.isEmpty() ) {
+      return;
+    }
+    // initialize tasks menu
+    MCommand cmd = e4Helper.findElement( application, CMDID_SKIDE_RUN_TASK, MCommand.class, EModelService.ANYWHERE );
+    // menu item "select and run task" with following separator
+    MHandledMenuItem mItem = modelService.createModelElement( MHandledMenuItem.class );
+    mItem.setCommand( cmd );
+    tasksMenu.getChildren().add( mItem );
+    MMenuSeparator separator = modelService.createModelElement( MMenuSeparator.class );
+    tasksMenu.getChildren().add( separator );
+    // menu items - one per registered task
+    int counter = 0;
+    for( IGenericTaskInfo taskInfo : taskInfos ) {
+      mItem = modelService.createModelElement( MHandledMenuItem.class );
+      mItem.setLabel( taskInfo.nmName() );
+      mItem.setTooltip( taskInfo.description() );
+      if( taskInfo.iconId() != null ) {
+        mItem.setIconURI( iconManager.findStdIconBundleUri( taskInfo.iconId(), EIconSize.IS_24X24 ) );
+      }
+      mItem.setCommand( cmd );
+      MParameter commandParam = modelService.createModelElement( MParameter.class );
+      commandParam.setName( CMDARGID_SKIDE_RUN_TASK_ID );
+      commandParam.setElementId( CMDARGID_SKIDE_RUN_TASK_ID + '.' + counter++ );
+      commandParam.setValue( taskInfo.id() );
+      mItem.getParameters().add( commandParam );
+      tasksMenu.getChildren().add( mItem );
+    }
+  }
+
+  // ------------------------------------------------------------------------------------
   // MwsAbstractAddon
   //
 
@@ -39,21 +89,7 @@ public class AddonSkideUnitTasksGui
 
   @Override
   protected void initWin( IEclipseContext aWinContext ) {
-    ISkideEnvironment skideEnv = aWinContext.get( ISkideEnvironment.class );
-    TsInternalErrorRtException.checkNull( skideEnv );
-    IStridablesList<IGenericTaskInfo> taskInfos = skideEnv.taskManager().listTasks();
-    ITsE4Helper e4Helper = aWinContext.get( ITsE4Helper.class );
-
-    // TODO add menu items (one per task) to the SkIDE menu
-    MWindow mainWindow = aWinContext.get( MWindow.class );
-    MMenu skideMenu = e4Helper.findElement( mainWindow, //
-        IMwsCoreConstants.MWSID_MENU_MAIN_FILE, MMenu.class, EModelService.IN_MAIN_MENU );
-
-    TsTestUtils.nl();
-    TsTestUtils.pl( "=== SkIDE menu: %s", skideMenu );
-    TsTestUtils.pl( "=== Tasks count: %d", taskInfos.size() );
-
-    TsTestUtils.nl();
+    initializeSkideTasksMenu( aWinContext );
   }
 
 }
