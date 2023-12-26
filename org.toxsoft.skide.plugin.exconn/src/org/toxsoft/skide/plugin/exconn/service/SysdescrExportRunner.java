@@ -2,42 +2,36 @@ package org.toxsoft.skide.plugin.exconn.service;
 
 import static org.toxsoft.skide.plugin.exconn.ISkidePluginExconnSharedResources.*;
 
-import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.*;
 
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.jface.operation.IRunnableWithProgress;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
-import org.toxsoft.core.tsgui.bricks.ctx.ITsGuiContext;
-import org.toxsoft.core.tsgui.dialogs.TsDialogUtils;
-import org.toxsoft.core.tslib.bricks.ctx.ITsContext;
-import org.toxsoft.core.tslib.bricks.ctx.impl.TsContext;
-import org.toxsoft.core.tslib.bricks.strid.coll.IStridablesList;
-import org.toxsoft.core.tslib.bricks.strid.idgen.IStridGenerator;
-import org.toxsoft.core.tslib.bricks.strid.idgen.SimpleStridGenerator;
-import org.toxsoft.core.tslib.bricks.strid.more.IdChain;
-import org.toxsoft.core.tslib.coll.IListEdit;
-import org.toxsoft.core.tslib.coll.impl.ElemArrayList;
-import org.toxsoft.core.tslib.gw.IGwHardConstants;
-import org.toxsoft.core.tslib.gw.skid.ISkidList;
-import org.toxsoft.core.tslib.gw.skid.Skid;
-import org.toxsoft.core.tslib.utils.errors.TsIllegalArgumentRtException;
-import org.toxsoft.core.tslib.utils.errors.TsNullArgumentRtException;
-import org.toxsoft.core.tslib.utils.logs.ILogger;
-import org.toxsoft.core.tslib.utils.logs.impl.LoggerUtils;
-import org.toxsoft.skf.rri.lib.impl.SkRegRefInfoService;
-import org.toxsoft.uskat.core.api.sysdescr.ISkClassInfo;
-import org.toxsoft.uskat.core.api.sysdescr.ISkSysdescr;
-import org.toxsoft.uskat.core.api.sysdescr.dto.IDtoClassInfo;
-import org.toxsoft.uskat.core.connection.ISkConnection;
-import org.toxsoft.uskat.core.gui.conn.ISkConnectionSupplier;
+import org.eclipse.core.runtime.*;
+import org.eclipse.jface.operation.*;
+import org.eclipse.swt.widgets.*;
+import org.toxsoft.core.tsgui.bricks.ctx.*;
+import org.toxsoft.core.tsgui.dialogs.*;
+import org.toxsoft.core.tslib.bricks.ctx.*;
+import org.toxsoft.core.tslib.bricks.ctx.impl.*;
+import org.toxsoft.core.tslib.bricks.strid.coll.*;
+import org.toxsoft.core.tslib.bricks.strid.idgen.*;
+import org.toxsoft.core.tslib.bricks.strid.more.*;
+import org.toxsoft.core.tslib.coll.*;
+import org.toxsoft.core.tslib.coll.impl.*;
+import org.toxsoft.core.tslib.gw.*;
+import org.toxsoft.core.tslib.gw.skid.*;
+import org.toxsoft.core.tslib.utils.errors.*;
+import org.toxsoft.core.tslib.utils.logs.*;
+import org.toxsoft.core.tslib.utils.logs.impl.*;
+import org.toxsoft.skf.rri.lib.*;
+import org.toxsoft.skf.rri.lib.impl.*;
+import org.toxsoft.uskat.core.api.sysdescr.*;
+import org.toxsoft.uskat.core.api.sysdescr.dto.*;
+import org.toxsoft.uskat.core.connection.*;
+import org.toxsoft.uskat.core.gui.conn.*;
 import org.toxsoft.uskat.core.gui.conn.cfg.*;
-import org.toxsoft.uskat.core.impl.ISkCoreConfigConstants;
-import org.toxsoft.uskat.core.impl.SkCoreUtils;
-import org.toxsoft.uskat.core.impl.dto.DtoClassInfo;
-import org.toxsoft.uskat.core.impl.dto.DtoFullObject;
-import org.toxsoft.uskat.s5.client.IS5ConnectionParams;
-import org.toxsoft.uskat.s5.utils.threads.impl.S5Lockable;
+import org.toxsoft.uskat.core.impl.*;
+import org.toxsoft.uskat.core.impl.dto.*;
+import org.toxsoft.uskat.s5.client.*;
+import org.toxsoft.uskat.s5.utils.threads.impl.*;
 
 /**
  * Экспорт системного описания из текстового backend в боевой сервер.
@@ -130,6 +124,35 @@ public class SysdescrExportRunner
           success = false;
         }
       }
+      // TODO перенести в свой раздел
+      ISkRegRefInfoService sourceRriService = sourceConn.coreApi().getService( ISkRegRefInfoService.SERVICE_ID );
+      ISkRegRefInfoService targetRriService = targetConn.coreApi().getService( ISkRegRefInfoService.SERVICE_ID );
+      // получаем список секций в источнике
+      for( ISkRriSection srcSection : sourceRriService.listSections() ) {
+        ISkRriSection targetSection;
+        if( targetRriService.findSection( srcSection.id() ) == null ) {
+          // создаем секцию в целевом соединении
+          targetSection = targetRriService.createSection( srcSection.id(), srcSection.nmName(),
+              srcSection.description(), srcSection.params() );
+        }
+        else {
+          targetSection = targetRriService.getSection( srcSection.id() );
+          targetSection.setSectionProps( srcSection.nmName(), srcSection.description(), srcSection.params() );
+        }
+        // копируем в нее содержание исходной
+        for( String srcClassId : srcSection.listClassIds() ) {
+          // создаем класс в целевой секции
+          for( ISkRriParamInfo paramInfo : srcSection.listParamInfoes( srcClassId ) ) {
+            if( !paramInfo.isLink() ) {
+              targetSection.defineAttrParam( srcClassId, paramInfo.attrInfo() );
+            }
+            else {
+              targetSection.defineLinkParam( srcClassId, paramInfo.linkInfo() );
+            }
+          }
+        }
+      }
+
     } );
     aMonitor.done();
 
