@@ -22,7 +22,6 @@ import org.toxsoft.core.tslib.utils.errors.*;
 import org.toxsoft.core.tslib.utils.logs.*;
 import org.toxsoft.core.tslib.utils.logs.impl.*;
 import org.toxsoft.skf.rri.lib.*;
-import org.toxsoft.skf.rri.lib.impl.*;
 import org.toxsoft.uskat.core.api.sysdescr.*;
 import org.toxsoft.uskat.core.api.sysdescr.dto.*;
 import org.toxsoft.uskat.core.connection.*;
@@ -202,11 +201,6 @@ public class SysdescrExportRunner
     ISkCoreConfigConstants.REFDEF_THREAD_SEPARATOR.setRef( args, SwtThreadSeparatorService.CREATOR );
     Display display = tsContext.get( Display.class );
     SwtThreadSeparatorService.REF_DISPLAY.setRef( args, display );
-
-    // ---
-    // 2023-12-20 mvk
-    // register core api extension
-    SkCoreUtils.registerSkServiceCreator( SkRegRefInfoService.CREATOR );
 
     // create connection
     ISkConnectionSupplier conSup = tsContext.get( ISkConnectionSupplier.class );
