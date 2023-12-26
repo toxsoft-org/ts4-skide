@@ -8,7 +8,7 @@ import org.toxsoft.core.tslib.coll.primtypes.*;
 import org.toxsoft.core.tslib.utils.errors.*;
 
 /**
- * Manages the tasks to be executed by SkIDE units {@link ISkideUnit#getGenericTaskRunners()}.
+ * Manages the tasks to be executed by SkIDE units {@link ISkideUnit#listTaskRunners()}.
  *
  * @author hazard157
  */
@@ -42,7 +42,7 @@ public interface ISkideGenericTaskManager {
   /**
    * Returns the SkIDE plugins capable to run specified task.
    * <p>
-   * Returns the plugins having task ID declared in the keys of the map {@link ISkideUnit#getGenericTaskRunners()}.
+   * Returns the plugins having task ID declared in the keys of the map {@link ISkideUnit#listTaskRunners()}.
    *
    * @param aTaskId String - the task ID
    * @return {@link IStridablesList}&lt;{@link ISkideUnit}&gt; - list of units declaring task as runnable

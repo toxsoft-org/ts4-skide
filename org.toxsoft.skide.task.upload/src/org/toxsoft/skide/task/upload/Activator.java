@@ -1,22 +1,38 @@
 package org.toxsoft.skide.task.upload;
 
-import org.osgi.framework.BundleActivator;
-import org.osgi.framework.BundleContext;
+import org.toxsoft.core.tsgui.mws.bases.*;
 
-public class Activator implements BundleActivator {
+/**
+ * The plugin activator.
+ *
+ * @author hazard157
+ */
+public class Activator
+    extends MwsActivator {
 
-	private static BundleContext context;
+  /**
+   * The plugin ID (for Java static imports).
+   */
+  public static final String PLUGIN_ID = "org.toxsoft.skide.task.upload"; //$NON-NLS-1$
 
-	static BundleContext getContext() {
-		return context;
-	}
+  private static Activator instance = null;
 
-	public void start(BundleContext bundleContext) throws Exception {
-		Activator.context = bundleContext;
-	}
+  /**
+   * Constructor.
+   */
+  public Activator() {
+    super( PLUGIN_ID );
+    checkInstance( instance );
+    instance = this;
+  }
 
-	public void stop(BundleContext bundleContext) throws Exception {
-		Activator.context = null;
-	}
+  /**
+   * Returns the reference to the activator singleton.
+   *
+   * @return {@link Activator} - the activator singleton
+   */
+  public static Activator getInstance() {
+    return instance;
+  }
 
 }

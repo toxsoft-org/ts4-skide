@@ -34,9 +34,13 @@ public interface ISkideCoreConstants {
 
   String PERPSID_SKIDE_PROJECT = "org.toxsoft.skide.persp.project"; //$NON-NLS-1$
 
-  String TOOLBARID_SKIDE_TASKS = "org.toxsoft.skide.toolbar.task"; //$NON-NLS-1$
+  String MMNUID_SKIDE_TASKS = "org.toxsoft.skide.menu.tasks"; //$NON-NLS-1$
 
-  String CMDID_SKIDE_SHOW_PLUGINS = "org.toxsoft.skide.cmd.show_plugins"; //$NON-NLS-1$
+  String TOOLBARID_SKIDE_TASKS = "org.toxsoft.skide.toolbar.tasks"; //$NON-NLS-1$
+
+  String CMDID_SKIDE_SHOW_PLUGINS   = "org.toxsoft.skide.cmd.show_plugins";   //$NON-NLS-1$
+  String CMDID_SKIDE_RUN_TASK       = "org.toxsoft.skide.cmd.run_task";       //$NON-NLS-1$
+  String CMDARGID_SKIDE_RUN_TASK_ID = "org.toxsoft.skide.cmdarg.run_task_id"; //$NON-NLS-1$
 
   // ------------------------------------------------------------------------------------
   // Icons

@@ -50,6 +50,15 @@ public interface ISkideCoreSharedResources {
   String FMT_ERR_DUPLICATE_PROJ_UNIT_ID = Messages.getString( "FMT_ERR_DUPLICATE_PROJ_UNIT_ID" ); //$NON-NLS-1$
 
   /**
+   * {@link CmdSkideRunTask}
+   */
+  String DLG_SELECT_TASK               = Messages.getString( "DLG_SELECT_TASK" );               //$NON-NLS-1$
+  String DLG_SELECT_TASK_D             = Messages.getString( "DLG_SELECT_TASK_D" );             //$NON-NLS-1$
+  String DLG_SELECT_TASK_UNITS         = Messages.getString( "DLG_SELECT_TASK_UNITS" );         //$NON-NLS-1$
+  String DLG_SELECT_TASK_UNITS_D       = Messages.getString( "DLG_SELECT_TASK_UNITS_D" );       //$NON-NLS-1$
+  String FMT_WARN_NO_UNITS_TO_RUN_TASK = Messages.getString( "FMT_WARN_NO_UNITS_TO_RUN_TASK" ); //$NON-NLS-1$
+
+  /**
    * {@link CmdSkideShowPluginsList}
    */
   String DLG_SHOW_UNITS   = Messages.getString( "DLG_SHOW_UNITS" );   //$NON-NLS-1$

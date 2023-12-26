@@ -5,7 +5,11 @@ Bundle-SymbolicName: org.toxsoft.skide.task.codegen;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: org.toxsoft.skide.task.codegen.Activator
 Bundle-Vendor: toxsoft.og
-Export-Package: org.toxsoft.skide.task.codegen
+Export-Package: org.toxsoft.skide.task.codegen,
+ org.toxsoft.skide.task.codegen.e4.addons,
+ org.toxsoft.skide.task.codegen.gen,
+ org.toxsoft.skide.task.codegen.gen.cw,
+ org.toxsoft.skide.task.codegen.main
 Require-Bundle: javax.annotation,
  javax.inject,
  org.eclipse.core.runtime,

@@ -20,11 +20,14 @@ import org.toxsoft.core.tsgui.m5.gui.mpc.impl.*;
 import org.toxsoft.core.tsgui.m5.gui.panels.*;
 import org.toxsoft.core.tsgui.m5.gui.panels.impl.*;
 import org.toxsoft.core.tsgui.m5.model.*;
+import org.toxsoft.skide.core.*;
 import org.toxsoft.skide.core.api.*;
 import org.toxsoft.skide.core.gui.m5.*;
 
 /**
  * Command: show registered SkIDE plugins with contributed units in dialog.
+ * <p>
+ * Command ID: {@link ISkideCoreConstants#CMDID_SKIDE_SHOW_PLUGINS}.
  *
  * @author hazard157
  */

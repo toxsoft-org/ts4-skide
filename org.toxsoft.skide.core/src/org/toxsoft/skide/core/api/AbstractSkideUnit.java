@@ -23,8 +23,6 @@ public non-sealed abstract class AbstractSkideUnit
 
   private final IStridablesListEdit<ITsActionDef> unitActions = new StridablesList<>();
 
-  private final IStringMapEdit<IGenericTaskRunner> genTaskRunners = new StringMap<>();
-
   private final ITsGuiContext       tsContext;
   private final AbstractSkidePlugin creatorPlugin;
 
@@ -69,15 +67,6 @@ public non-sealed abstract class AbstractSkideUnit
   }
 
   // ------------------------------------------------------------------------------------
-  // IGenericTaskCapable
-  //
-
-  @Override
-  public IStringMap<IGenericTaskRunner> getGenericTaskRunners() {
-    return genTaskRunners;
-  }
-
-  // ------------------------------------------------------------------------------------
   // ISkideUnit
   //
 
@@ -99,21 +88,15 @@ public non-sealed abstract class AbstractSkideUnit
     return p;
   }
 
-  // ------------------------------------------------------------------------------------
-  // API for subclasses
-  //
-
-  /**
-   * Adds task runner to the declared runners {@link #getGenericTaskRunners()}.
-   *
-   * @param aTaskRunner {@link IGenericTaskRunner} - the runner to add
-   * @throws TsNullArgumentRtException any argument = <code>null</code>
-   * @throws TsItemAlreadyExistsRtException task with the same {@link IGenericTaskInfo#id()} is already added
-   */
-  public void addTaskRunner( IGenericTaskRunner aTaskRunner ) {
-    TsNullArgumentRtException.checkNull( aTaskRunner );
-    TsItemAlreadyExistsRtException.checkTrue( genTaskRunners.hasKey( aTaskRunner.taskInfo().id() ) );
-    genTaskRunners.put( NONE_ID, aTaskRunner );
+  @Override
+  final public IStringMap<IGenericTaskRunner> listTaskRunners() {
+    IStringMapEdit<IGenericTaskRunner> map = new StridMap<>();
+    doFilleTaskRunners( map );
+    for( String tid : map.keys() ) {
+      IGenericTaskRunner runner = map.getByKey( tid );
+      TsInternalErrorRtException.checkFalse( tid.equals( runner.taskInfo().id() ) );
+    }
+    return map;
   }
 
   // ------------------------------------------------------------------------------------
@@ -127,5 +110,16 @@ public non-sealed abstract class AbstractSkideUnit
    * @return {@link AbstractSkideUnitPanel} created instance
    */
   protected abstract AbstractSkideUnitPanel doCreateUnitPanel( ITsGuiContext aContext );
+
+  /**
+   * Implementation must fill argument map with the provided task runners if any.
+   * <p>
+   * Does nothing in the base class, there is no need to call superclass method when overriding.
+   *
+   * @param aTaskRunnersMap {@link IStringMapEdit}&lt;{@link IGenericTaskRunner}&gt; - the map "task ID" - "task runner"
+   */
+  protected void doFilleTaskRunners( IStringMapEdit<IGenericTaskRunner> aTaskRunnersMap ) {
+    // nop
+  }
 
 }

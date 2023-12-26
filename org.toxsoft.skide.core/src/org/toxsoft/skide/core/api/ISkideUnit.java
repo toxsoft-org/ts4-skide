@@ -5,13 +5,14 @@ import org.toxsoft.core.tsgui.bricks.ctx.*;
 import org.toxsoft.core.tslib.bricks.gentask.*;
 import org.toxsoft.core.tslib.bricks.strid.*;
 import org.toxsoft.core.tslib.bricks.strid.coll.*;
+import org.toxsoft.core.tslib.coll.primtypes.*;
 import org.toxsoft.skide.core.api.impl.*;
 
 /**
  * SkIDE project unit is visual representation of the functionality contributed by the plugin.
  * <p>
- * Each plugin contributes one or more unit to the SkIDE. Although it is possible to create plugin without project units
- * it seems not to have much sense.
+ * Each plugin contributes one or more unit to the SkIDE. It is possible to create plugin without project units, only
+ * providing the task runners via {@link AbstractSkidePlugin#listTaskRunners()}.
  * <p>
  * Units must have unique IDs. {@link #nmName()} and {@link #description()} is used together with {@link #iconId()} to
  * visualize unit in the list of the units in the SkIDE project perspective. The method
@@ -20,7 +21,8 @@ import org.toxsoft.skide.core.api.impl.*;
  * @author hazard157
  */
 public sealed interface ISkideUnit
-    extends ISkidePluginRelated, IStridableParameterized, IGenericTaskCapable permits AbstractSkideUnit {
+    extends ISkidePluginRelated, IStridableParameterized
+    permits AbstractSkideUnit {
 
   /**
    * Returns the creator plugin.
@@ -51,5 +53,12 @@ public sealed interface ISkideUnit
    * @return {@link AbstractSkideUnitPanel} - instance of the panel
    */
   AbstractSkideUnitPanel createUnitPanel( ITsGuiContext aContext );
+
+  /**
+   * Returns all task runners contributed by this unit.
+   *
+   * @return {@link IStringMap}&lt;{@link IGenericTaskRunner}&gt; - map "task ID" - "task runner"
+   */
+  IStringMap<IGenericTaskRunner> listTaskRunners();
 
 }
