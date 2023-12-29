@@ -21,6 +21,7 @@ import org.toxsoft.core.tslib.gw.skid.*;
 import org.toxsoft.core.tslib.utils.errors.*;
 import org.toxsoft.core.tslib.utils.logs.*;
 import org.toxsoft.core.tslib.utils.logs.impl.*;
+import org.toxsoft.skf.rri.lib.*;
 import org.toxsoft.uskat.core.api.sysdescr.*;
 import org.toxsoft.uskat.core.api.sysdescr.dto.*;
 import org.toxsoft.uskat.core.connection.*;
@@ -122,6 +123,35 @@ public class SysdescrExportRunner
           success = false;
         }
       }
+      // TODO перенести в свой раздел
+      ISkRegRefInfoService sourceRriService = sourceConn.coreApi().getService( ISkRegRefInfoService.SERVICE_ID );
+      ISkRegRefInfoService targetRriService = targetConn.coreApi().getService( ISkRegRefInfoService.SERVICE_ID );
+      // получаем список секций в источнике
+      for( ISkRriSection srcSection : sourceRriService.listSections() ) {
+        ISkRriSection targetSection;
+        if( targetRriService.findSection( srcSection.id() ) == null ) {
+          // создаем секцию в целевом соединении
+          targetSection = targetRriService.createSection( srcSection.id(), srcSection.nmName(),
+              srcSection.description(), srcSection.params() );
+        }
+        else {
+          targetSection = targetRriService.getSection( srcSection.id() );
+          targetSection.setSectionProps( srcSection.nmName(), srcSection.description(), srcSection.params() );
+        }
+        // копируем в нее содержание исходной
+        for( String srcClassId : srcSection.listClassIds() ) {
+          // создаем класс в целевой секции
+          for( ISkRriParamInfo paramInfo : srcSection.listParamInfoes( srcClassId ) ) {
+            if( !paramInfo.isLink() ) {
+              targetSection.defineAttrParam( srcClassId, paramInfo.attrInfo() );
+            }
+            else {
+              targetSection.defineLinkParam( srcClassId, paramInfo.linkInfo() );
+            }
+          }
+        }
+      }
+
     } );
     aMonitor.done();
 

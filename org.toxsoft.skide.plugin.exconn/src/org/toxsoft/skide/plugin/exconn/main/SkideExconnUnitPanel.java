@@ -100,7 +100,7 @@ class SkideExconnUnitPanel
 
             switch( aActionId ) {
               case ACTID_EXPORT_SYSDESCR:
-                // exportSysdescr( selConfig );
+                // TODO convert to IGenericTasksApi
                 // Запускаем процесс с индикатором выполнения
                 SysdescrExportRunner importer = new SysdescrExportRunner( tsContext(), selConfig );
                 runInWaitingDialog( getShell(), STR_EXPORT_SYSDESCR, importer );
