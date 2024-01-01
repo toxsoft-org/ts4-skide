@@ -79,11 +79,6 @@ public class QuantSkide020SkConnection
     REFDEF_BACKEND_PROVIDER.setRef( args, MtbBackendToFile.PROVIDER );
     SkDoJobCallerService.REF_TSGUI_TIMER_SERVICE.setRef( args, aWinContext.get( ITsGuiTimersService.class ) );
     ISkCoreConfigConstants.REFDEF_THREAD_SEPARATOR.setRef( args, SkDoJobCallerService.CREATOR );
-
-    // 2023-12-20 mvk
-    // register core api extension
-    // SkCoreUtils.registerSkServiceCreator( SkRegRefInfoService.CREATOR );
-
     cs.defConn().open( args );
     LoggerUtils.defaultLogger().info( LOG_FMT_INFO_TEXTUAL_SYSDB, file.getAbsolutePath() );
   }
@@ -104,11 +99,6 @@ public class QuantSkide020SkConnection
     ISkBackensSqliteConstants.OPDEF_DB_FILE_NAME.setValue( args.params(), avStr( file.getAbsolutePath() ) );
     SkDoJobCallerService.REF_TSGUI_TIMER_SERVICE.setRef( args, aWinContext.get( ITsGuiTimersService.class ) );
     ISkCoreConfigConstants.REFDEF_THREAD_SEPARATOR.setRef( args, SkDoJobCallerService.CREATOR );
-
-    // 2023-12-20 mvk
-    // register core api extension
-    // SkCoreUtils.registerSkServiceCreator( SkRegRefInfoService.CREATOR );
-
     cs.defConn().open( args );
     LoggerUtils.defaultLogger().info( LOG_FMT_INFO_SQLITE_SYSDB, file.getAbsolutePath() );
   }

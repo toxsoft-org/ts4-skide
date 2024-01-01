@@ -14,7 +14,7 @@ public class SkideEnvironment
 
   private final ISkidePluginsRegistrator plugReg;
   private final ISkideProjectProperties  projProps;
-  private final ISkideGenericTaskManager taskManager;
+  private final ISkideTaskManager taskManager;
 
   /**
    * Constructor.
@@ -25,7 +25,7 @@ public class SkideEnvironment
     plugReg = new SkidePluginsRegistrator();
     ITsWorkroom wr = aAppContext.get( ITsWorkroom.class );
     projProps = new SkideProjectProperties( wr.getApplicationStorage() );
-    taskManager = new SkideGenericTaskManager( this );
+    taskManager = new SkideTaskManager( this );
   }
 
   // ------------------------------------------------------------------------------------
@@ -43,7 +43,7 @@ public class SkideEnvironment
   }
 
   @Override
-  public ISkideGenericTaskManager taskManager() {
+  public ISkideTaskManager taskManager() {
     return taskManager;
   }
 

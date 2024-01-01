@@ -11,12 +11,12 @@ import org.toxsoft.core.tslib.utils.errors.*;
 import org.toxsoft.skide.core.api.*;
 
 /**
- * {@link ISkideGenericTaskManager} implementation.
+ * {@link ISkideTaskManager} implementation.
  *
  * @author hazard157
  */
-public class SkideGenericTaskManager
-    implements ISkideGenericTaskManager {
+public class SkideTaskManager
+    implements ISkideTaskManager {
 
   private final ISkideEnvironment skideEnv;
 
@@ -28,7 +28,7 @@ public class SkideGenericTaskManager
    * @param aEnv {@link ISkideEnvironment} - the owner environment
    * @throws TsNullArgumentRtException any argument = <code>null</code>
    */
-  public SkideGenericTaskManager( ISkideEnvironment aEnv ) {
+  public SkideTaskManager( ISkideEnvironment aEnv ) {
     TsNullArgumentRtException.checkNull( aEnv );
     skideEnv = aEnv;
   }

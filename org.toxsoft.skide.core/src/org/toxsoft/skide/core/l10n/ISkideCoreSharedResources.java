@@ -56,6 +56,7 @@ public interface ISkideCoreSharedResources {
   String DLG_SELECT_TASK_D             = Messages.getString( "DLG_SELECT_TASK_D" );             //$NON-NLS-1$
   String DLG_SELECT_TASK_UNITS         = Messages.getString( "DLG_SELECT_TASK_UNITS" );         //$NON-NLS-1$
   String DLG_SELECT_TASK_UNITS_D       = Messages.getString( "DLG_SELECT_TASK_UNITS_D" );       //$NON-NLS-1$
+  String MSG_NO_REGISTERED_SKIDE_TASK  = Messages.getString( "MSG_NO_REGISTERED_SKIDE_TASK" );  //$NON-NLS-1$
   String FMT_WARN_NO_UNITS_TO_RUN_TASK = Messages.getString( "FMT_WARN_NO_UNITS_TO_RUN_TASK" ); //$NON-NLS-1$
 
   /**

@@ -18,7 +18,7 @@ import org.toxsoft.core.tslib.utils.errors.*;
 import org.toxsoft.skide.core.api.*;
 
 /**
- * Adds GUI items of the registered tasks {@link ISkideGenericTaskManager#listTasks()}.
+ * Adds GUI items of the registered tasks {@link ISkideTaskManager#listTasks()}.
  *
  * @author hazard157
  */
@@ -56,6 +56,7 @@ public class AddonSkideUnitTasksGui
     // menu item "select and run task" with following separator
     MHandledMenuItem mItem = modelService.createModelElement( MHandledMenuItem.class );
     mItem.setCommand( cmd );
+    mItem.setIconURI( iconManager.findStdIconBundleUri( ICONID_TASKS, EIconSize.IS_24X24 ) );
     tasksMenu.getChildren().add( mItem );
     MMenuSeparator separator = modelService.createModelElement( MMenuSeparator.class );
     tasksMenu.getChildren().add( separator );

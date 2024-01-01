@@ -83,12 +83,11 @@ public class CmdSkideRunTask {
    * @author hazard157
    */
   static class SkideUnitOfTaskM5LifecycleManager
-      extends M5LifecycleManager<ISkideUnit, ISkideGenericTaskManager> {
+      extends M5LifecycleManager<ISkideUnit, ISkideTaskManager> {
 
     private final String taskId;
 
-    public SkideUnitOfTaskM5LifecycleManager( IM5Model<ISkideUnit> aModel, ISkideGenericTaskManager aMaster,
-        String aTaskId ) {
+    public SkideUnitOfTaskM5LifecycleManager( IM5Model<ISkideUnit> aModel, ISkideTaskManager aMaster, String aTaskId ) {
       super( aModel, false, false, false, true, aMaster );
       taskId = StridUtils.checkValidIdPath( aTaskId );
     }
@@ -101,13 +100,19 @@ public class CmdSkideRunTask {
   }
 
   /**
-   * Invokes dialog to select the task to run from the {@link ISkideGenericTaskManager#listTasks()}.
+   * Invokes dialog to select the task to run from the {@link ISkideTaskManager#listTasks()}.
+   * <p>
+   * If no task is registered displays the warning message and returns <code>null</code>.
    *
    * @param aSkideEnv {@link ISkEventHandler} - SkIDE environment
    * @param aEclipseContext {@link IEclipseContext} - the context
-   * @return String - selected taks ID or <code>null</code>
+   * @return String - selected task ID or <code>null</code>
    */
   private static String selectTask( ISkideEnvironment aSkideEnv, IEclipseContext aEclipseContext ) {
+    if( aSkideEnv.taskManager().listTasks().isEmpty() ) {
+      TsDialogUtils.warn( aEclipseContext.get( Shell.class ), MSG_NO_REGISTERED_SKIDE_TASK );
+      return null;
+    }
     ITsGuiContext ctx = new TsGuiContext( aEclipseContext );
     OPDEF_IS_TOOLBAR.setValue( ctx.params(), AV_FALSE );
     TsDialogInfo di = new TsDialogInfo( ctx, DLG_SELECT_TASK, DLG_SELECT_TASK_D );

@@ -7,6 +7,7 @@ import org.toxsoft.core.tsgui.bricks.ctx.impl.*;
 import org.toxsoft.core.tsgui.panels.*;
 import org.toxsoft.core.tslib.coll.primtypes.*;
 import org.toxsoft.core.tslib.coll.primtypes.impl.*;
+import org.toxsoft.core.tslib.utils.logs.impl.*;
 import org.toxsoft.skide.core.api.*;
 import org.toxsoft.skide.core.api.impl.*;
 
@@ -48,10 +49,18 @@ class ContentPanel
     }
     AbstractSkideUnitPanel panel = unitPanelsMap.findByKey( aUnit.id() );
     if( panel == null ) {
-      ITsGuiContext ctx = new TsGuiContext( tsContext() );
-      panel = aUnit.createUnitPanel( ctx );
-      panel.createControl( this );
-      unitPanelsMap.put( aUnit.id(), panel );
+      try {
+        ITsGuiContext ctx = new TsGuiContext( tsContext() );
+        panel = aUnit.createUnitPanel( ctx );
+        panel.createControl( this );
+        unitPanelsMap.put( aUnit.id(), panel );
+      }
+      catch( Exception ex ) {
+        LoggerUtils.errorLogger().error( ex );
+        stackLayout.topControl = null;
+        this.layout();
+        return;
+      }
     }
     stackLayout.topControl = panel.getControl();
     this.layout();

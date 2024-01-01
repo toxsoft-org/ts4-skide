@@ -49,6 +49,8 @@ public interface ISkideCoreConstants {
   String ICONID_APP_ICON           = "app-icon";       //$NON-NLS-1$
   String ICONID_FOLDER_GENERAL     = "folder-general"; //$NON-NLS-1$
   String ICONID_FILE_GENERAL       = "file-general";   //$NON-NLS-1$
+  String ICONID_TASK               = "task";           //$NON-NLS-1$
+  String ICONID_TASKS              = "tasks";          //$NON-NLS-1$
 
   /**
    * Constants registration.

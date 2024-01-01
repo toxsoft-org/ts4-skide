@@ -4,6 +4,7 @@ import org.eclipse.e4.core.contexts.*;
 import org.toxsoft.core.tsgui.bricks.quant.*;
 import org.toxsoft.core.tsgui.mws.bases.*;
 import org.toxsoft.skf.users.gui.*;
+import org.toxsoft.skide.core.*;
 import org.toxsoft.skide.core.Activator;
 import org.toxsoft.skide.core.api.impl.*;
 import org.toxsoft.uskat.core.gui.*;
@@ -43,8 +44,7 @@ public class AddonSkideCore
 
   @Override
   protected void initWin( IEclipseContext aWinContext ) {
-    // nop
-
+    ISkideCoreConstants.init( aWinContext );
   }
 
 }

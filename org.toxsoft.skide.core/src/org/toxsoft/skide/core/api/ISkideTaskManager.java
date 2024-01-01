@@ -12,7 +12,7 @@ import org.toxsoft.core.tslib.utils.errors.*;
  *
  * @author hazard157
  */
-public interface ISkideGenericTaskManager {
+public interface ISkideTaskManager {
 
   /**
    * Returns all registered tasks.
