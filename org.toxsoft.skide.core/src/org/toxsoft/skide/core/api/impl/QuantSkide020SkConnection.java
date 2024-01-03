@@ -77,8 +77,8 @@ public class QuantSkide020SkConnection
     File file = new File( aWorkroom.wrDir(), WORKROOM_FILE_SKIDE_SYSDB_TXT );
     OPDEF_FILE_PATH.setValue( args.params(), avStr( file.getAbsolutePath() ) );
     REFDEF_BACKEND_PROVIDER.setRef( args, MtbBackendToFile.PROVIDER );
-    SkDoJobCallerService.REF_TSGUI_TIMER_SERVICE.setRef( args, aWinContext.get( ITsGuiTimersService.class ) );
-    ISkCoreConfigConstants.REFDEF_THREAD_SEPARATOR.setRef( args, SkDoJobCallerService.CREATOR );
+    SkSwtThreadSeparatorService.REFDEF_TSGUI_TIMER_SERVICE.setRef( args, aWinContext.get( ITsGuiTimersService.class ) );
+    ISkCoreConfigConstants.REFDEF_THREAD_SEPARATOR.setRef( args, SkSwtThreadSeparatorService.CREATOR );
     cs.defConn().open( args );
     LoggerUtils.defaultLogger().info( LOG_FMT_INFO_TEXTUAL_SYSDB, file.getAbsolutePath() );
   }
@@ -97,8 +97,8 @@ public class QuantSkide020SkConnection
     File file = new File( aWorkroom.wrDir(), WORKROOM_FILE_SKIDE_SYSDB_SQLITE );
     REFDEF_BACKEND_PROVIDER.setRef( args, SkBackendSqlite.PROVIDER );
     ISkBackensSqliteConstants.OPDEF_DB_FILE_NAME.setValue( args.params(), avStr( file.getAbsolutePath() ) );
-    SkDoJobCallerService.REF_TSGUI_TIMER_SERVICE.setRef( args, aWinContext.get( ITsGuiTimersService.class ) );
-    ISkCoreConfigConstants.REFDEF_THREAD_SEPARATOR.setRef( args, SkDoJobCallerService.CREATOR );
+    SkSwtThreadSeparatorService.REFDEF_TSGUI_TIMER_SERVICE.setRef( args, aWinContext.get( ITsGuiTimersService.class ) );
+    ISkCoreConfigConstants.REFDEF_THREAD_SEPARATOR.setRef( args, SkSwtThreadSeparatorService.CREATOR );
     cs.defConn().open( args );
     LoggerUtils.defaultLogger().info( LOG_FMT_INFO_SQLITE_SYSDB, file.getAbsolutePath() );
   }
