@@ -21,6 +21,8 @@
     <ant dir="../../org.toxsoft.skide.plugin.sded" antfile="${ts-scripts-dir}/ts-build-lib.xml" target="build-lib-jar" /> 
     <ant dir="../../org.toxsoft.skide.plugin.exconn" antfile="${ts-scripts-dir}/ts-build-lib.xml" target="build-lib-jar" /> 
     <ant dir="../../org.toxsoft.skide.plugin.project" antfile="${ts-scripts-dir}/ts-build-lib.xml" target="build-lib-jar" /> 
+    <ant dir="../../org.toxsoft.skide.plugin.template" antfile="${ts-scripts-dir}/ts-build-lib.xml" target="build-lib-jar" /> 
+    <ant dir="../../org.toxsoft.skide.task.codegen" antfile="${ts-scripts-dir}/ts-build-lib.xml" target="build-lib-jar" /> 
     <ant dir="../../org.toxsoft.skide.exe" antfile="${ts-scripts-dir}/ts-build-lib.xml" target="build-lib-jar" />  
   </target>
 
@@ -36,6 +38,8 @@
                                 org.toxsoft.skide.plugin.sded,
                                 org.toxsoft.skide.plugin.exconn,
                                 org.toxsoft.skide.plugin.project,
+                                org.toxsoft.skide.plugin.template,
+                                org.toxsoft.skide.task.codegen,
                                 org.toxsoft.skide.exe"
                        useworkspacecompiledclasses="true"
                        useJARFormat="true" />
