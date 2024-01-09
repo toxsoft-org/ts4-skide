@@ -1,8 +1,8 @@
 package org.toxsoft.skide.task.codegen.main;
 
 import static org.toxsoft.core.tslib.av.metainfo.IAvMetaConstants.*;
-import static org.toxsoft.skide.task.codegen.main.ISkResources.*;
-import static org.toxsoft.skide.task.codegen.main.ISkideTaskCodegenConstants.*;
+import static org.toxsoft.skide.task.codegen.ISkideTaskCodegenSharedResources.*;
+import static org.toxsoft.skide.task.codegen.ISkideTaskCodegenConstants.*;
 
 import org.toxsoft.core.tslib.av.opset.impl.*;
 import org.toxsoft.core.tslib.bricks.gentask.*;

@@ -1,8 +1,8 @@
-package org.toxsoft.skide.task.upload.main;
+package org.toxsoft.skide.plugin.exconn.main;
 
 import static org.toxsoft.core.tslib.av.metainfo.IAvMetaConstants.*;
-import static org.toxsoft.skide.task.upload.main.ISkResources.*;
-import static org.toxsoft.skide.task.upload.main.ISkideTaskUploadConstants.*;
+import static org.toxsoft.skide.plugin.exconn.ISkidePluginExconnConstants.*;
+import static org.toxsoft.skide.plugin.exconn.ISkidePluginExconnSharedResources.*;
 
 import org.toxsoft.core.tslib.av.opset.impl.*;
 import org.toxsoft.core.tslib.bricks.gentask.*;
@@ -23,7 +23,8 @@ public final class SkideTaskUploadInfo
   private SkideTaskUploadInfo() {
     super( SKIDE_TASK_UPLOAD_ID, OptionSetUtils.createOpSet( //
         TSID_NAME, STR_TASK_UPLOAD, //
-        TSID_DESCRIPTION, STR_TASK_UPLOAD_D//
+        TSID_DESCRIPTION, STR_TASK_UPLOAD_D, //
+        TSID_ICON_ID, ICONID_TASK_UPLOAD //
     ) );
   }
 

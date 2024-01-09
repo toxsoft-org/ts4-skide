@@ -36,7 +36,7 @@ public class AddonSkideUnitTasksGui
   // implementation
   //
 
-  private void initializeSkideTasksMenu( IEclipseContext aWinContext ) {
+  private static void initializeSkideTasksMenu( IEclipseContext aWinContext ) {
     // preconditions
     ISkideEnvironment skideEnv = aWinContext.get( ISkideEnvironment.class );
     TsInternalErrorRtException.checkNull( skideEnv );
@@ -53,17 +53,13 @@ public class AddonSkideUnitTasksGui
     }
     // initialize tasks menu
     MCommand cmd = e4Helper.findElement( application, CMDID_SKIDE_RUN_TASK, MCommand.class, EModelService.ANYWHERE );
-    // menu item "select and run task" with following separator
-    MHandledMenuItem mItem = modelService.createModelElement( MHandledMenuItem.class );
-    mItem.setCommand( cmd );
-    mItem.setIconURI( iconManager.findStdIconBundleUri( ICONID_TASKS, EIconSize.IS_24X24 ) );
-    tasksMenu.getChildren().add( mItem );
+    // add separator after menu item "select and configure task"
     MMenuSeparator separator = modelService.createModelElement( MMenuSeparator.class );
     tasksMenu.getChildren().add( separator );
     // menu items - one per registered task
     int counter = 0;
     for( IGenericTaskInfo taskInfo : taskInfos ) {
-      mItem = modelService.createModelElement( MHandledMenuItem.class );
+      MHandledMenuItem mItem = modelService.createModelElement( MHandledMenuItem.class );
       mItem.setLabel( taskInfo.nmName() );
       mItem.setTooltip( taskInfo.description() );
       if( taskInfo.iconId() != null ) {

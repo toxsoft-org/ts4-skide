@@ -24,7 +24,7 @@ public class SkideUnitProjectProps
     extends AbstractSkideUnit {
 
   /**
-   * The plugin ID.
+   * The unit ID.
    */
   public static final String UNIT_ID = SKIDE_FULL_ID + ".unit.project_1"; //$NON-NLS-1$
 

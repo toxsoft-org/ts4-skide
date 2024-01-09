@@ -1,10 +1,12 @@
 package org.toxsoft.skide.task.codegen.main;
 
+import java.util.concurrent.*;
+
 import org.toxsoft.core.tslib.bricks.ctx.*;
 import org.toxsoft.core.tslib.bricks.gentask.*;
 
 public class Task
-    extends AbstractGenericTaskRunner {
+    extends AbstractGenericTask {
 
   public Task( IGenericTaskInfo aTaskInfo ) {
     super( aTaskInfo );
@@ -12,7 +14,13 @@ public class Task
   }
 
   @Override
-  protected GenericTask doRun( ITsContextRo aInput ) {
+  protected ITsContextRo doRunSync( ITsContextRo aInput ) {
+    // TODO Auto-generated method stub
+    return super.doRunSync( aInput );
+  }
+
+  @Override
+  protected Future<ITsContextRo> doRunAsync( ITsContextRo aInput, ITsContext aOutput ) {
     // TODO Auto-generated method stub
     return null;
   }

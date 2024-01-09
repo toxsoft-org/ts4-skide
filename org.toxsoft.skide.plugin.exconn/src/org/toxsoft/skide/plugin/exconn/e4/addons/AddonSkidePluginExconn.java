@@ -89,9 +89,10 @@ public class AddonSkidePluginExconn
 
   @Override
   protected void initApp( IEclipseContext aAppContext ) {
-    // register SkIDE plugin
-    ISkideEnvironment skEnv = aAppContext.get( ISkideEnvironment.class );
-    skEnv.pluginsRegistrator().registerPlugin( SkidePluginExconn.INSTANCE );
+    // register SkIDE plugin and upload task
+    ISkideEnvironment skideEnv = aAppContext.get( ISkideEnvironment.class );
+    skideEnv.pluginsRegistrator().registerPlugin( SkidePluginExconn.INSTANCE );
+    skideEnv.taskManager().registerTask( SkideTaskUploadInfo.INSTANCE );
     //
     ISkideExternalConnectionsService exConnService = new SkideExternalConnectionsService();
     aAppContext.set( ISkideExternalConnectionsService.class, exConnService );

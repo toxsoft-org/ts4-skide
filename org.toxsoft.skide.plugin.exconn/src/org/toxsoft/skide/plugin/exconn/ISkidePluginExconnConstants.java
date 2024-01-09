@@ -1,5 +1,7 @@
 package org.toxsoft.skide.plugin.exconn;
 
+import static org.toxsoft.skide.core.ISkideCoreConstants.*;
+
 import org.eclipse.e4.core.contexts.*;
 import org.toxsoft.core.tsgui.graphics.icons.*;
 
@@ -11,12 +13,15 @@ import org.toxsoft.core.tsgui.graphics.icons.*;
 @SuppressWarnings( "javadoc" )
 public interface ISkidePluginExconnConstants {
 
+  String SKIDE_TASK_UPLOAD_ID = SKIDE_FULL_ID + ".task.upload"; //$NON-NLS-1$
+
   // ------------------------------------------------------------------------------------
   // Icons
 
   String PREFIX_OF_ICON_FIELD_NAME = "ICONID_";        //$NON-NLS-1$
   String ICONID_SKIDE_CONNECTION   = "app-connection"; //$NON-NLS-1$
   String ICONID_SYSDESCR_EXPORT    = "gdp_export";     //$NON-NLS-1$
+  String ICONID_TASK_UPLOAD        = "task-upload";    //$NON-NLS-1$
 
   /**
    * Constants registration.

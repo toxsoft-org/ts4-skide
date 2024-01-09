@@ -4,6 +4,7 @@ import org.eclipse.e4.core.contexts.*;
 import org.toxsoft.core.tsgui.mws.bases.*;
 import org.toxsoft.core.tslib.utils.errors.*;
 import org.toxsoft.skide.core.api.*;
+import org.toxsoft.skide.plugin.exconn.main.*;
 import org.toxsoft.skide.task.upload.*;
 import org.toxsoft.skide.task.upload.main.*;
 

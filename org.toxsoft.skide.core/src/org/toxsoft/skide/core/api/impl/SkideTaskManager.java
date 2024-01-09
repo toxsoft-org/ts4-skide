@@ -55,8 +55,8 @@ public class SkideTaskManager
     // run only for capable items that can run the task
     IStridablesListEdit<ISkideUnit> unitsToRun = new StridablesList<>();
     for( ISkideUnit u : listCapableUnits( aTaskId ) ) {
-      IGenericTaskRunner taskRunner = u.listTaskRunners().getByKey( aTaskId );
-      ValidationResult vr = taskRunner.canRun( aInput );
+      IGenericTask task = u.listSupportedTasks().getByKey( aTaskId );
+      ValidationResult vr = task.canRun( aInput );
       if( !vr.isError() ) {
         unitsToRun.add( u );
       }
@@ -77,7 +77,7 @@ public class SkideTaskManager
     TsNullArgumentRtException.checkNull( aTaskId );
     IStridablesListEdit<ISkideUnit> ll = new StridablesList<>();
     for( ISkideUnit u : skideEnv.pluginsRegistrator().listUnits() ) {
-      if( u.listTaskRunners().hasKey( aTaskId ) ) {
+      if( u.listSupportedTasks().hasKey( aTaskId ) ) {
         ll.add( u );
       }
     }

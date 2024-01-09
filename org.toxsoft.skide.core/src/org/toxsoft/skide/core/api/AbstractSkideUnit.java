@@ -19,7 +19,7 @@ import org.toxsoft.skide.core.api.impl.*;
  */
 public non-sealed abstract class AbstractSkideUnit
     extends StridableParameterized
-    implements ISkideUnit, ITsGuiContextable {
+    implements ISkideUnit, ITsGuiContextable, ISkidePluginRelated {
 
   private final IStridablesListEdit<ITsActionDef> unitActions = new StridablesList<>();
 
@@ -67,6 +67,21 @@ public non-sealed abstract class AbstractSkideUnit
   }
 
   // ------------------------------------------------------------------------------------
+  // IGenericTasksProvider
+  //
+
+  @Override
+  public IStringMap<IGenericTask> listSupportedTasks() {
+    IStringMapEdit<IGenericTask> map = new StridMap<>();
+    doFillTasks( map );
+    for( String tid : map.keys() ) {
+      IGenericTask task = map.getByKey( tid );
+      TsInternalErrorRtException.checkFalse( tid.equals( task.taskInfo().id() ) );
+    }
+    return map;
+  }
+
+  // ------------------------------------------------------------------------------------
   // ISkideUnit
   //
 
@@ -88,17 +103,6 @@ public non-sealed abstract class AbstractSkideUnit
     return p;
   }
 
-  @Override
-  final public IStringMap<IGenericTaskRunner> listTaskRunners() {
-    IStringMapEdit<IGenericTaskRunner> map = new StridMap<>();
-    doFilleTaskRunners( map );
-    for( String tid : map.keys() ) {
-      IGenericTaskRunner runner = map.getByKey( tid );
-      TsInternalErrorRtException.checkFalse( tid.equals( runner.taskInfo().id() ) );
-    }
-    return map;
-  }
-
   // ------------------------------------------------------------------------------------
   // To implement
   //
@@ -112,13 +116,13 @@ public non-sealed abstract class AbstractSkideUnit
   protected abstract AbstractSkideUnitPanel doCreateUnitPanel( ITsGuiContext aContext );
 
   /**
-   * Implementation must fill argument map with the provided task runners if any.
+   * Implementation must fill argument map with the provided tasks if any.
    * <p>
    * Does nothing in the base class, there is no need to call superclass method when overriding.
    *
-   * @param aTaskRunnersMap {@link IStringMapEdit}&lt;{@link IGenericTaskRunner}&gt; - the map "task ID" - "task runner"
+   * @param aTaskRunnersMap {@link IStringMapEdit}&lt;{@link IGenericTask}&gt; - the map to fill "task ID" - "the task"
    */
-  protected void doFilleTaskRunners( IStringMapEdit<IGenericTaskRunner> aTaskRunnersMap ) {
+  protected void doFillTasks( IStringMapEdit<IGenericTask> aTaskRunnersMap ) {
     // nop
   }
 

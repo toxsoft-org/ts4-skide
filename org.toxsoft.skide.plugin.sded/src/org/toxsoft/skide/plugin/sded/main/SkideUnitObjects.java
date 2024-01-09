@@ -7,9 +7,12 @@ import static org.toxsoft.skide.plugin.sded.ISkidePluginSdedSharedResources.*;
 
 import org.toxsoft.core.tsgui.bricks.ctx.*;
 import org.toxsoft.core.tslib.av.opset.impl.*;
+import org.toxsoft.core.tslib.bricks.gentask.*;
+import org.toxsoft.core.tslib.coll.primtypes.*;
 import org.toxsoft.skide.core.api.*;
 import org.toxsoft.skide.core.api.impl.*;
 import org.toxsoft.skide.plugin.sded.*;
+import org.toxsoft.skide.plugin.sded.tasks.codegen.*;
 
 /**
  * SkiDE unit: USkat users and roles management.
@@ -36,6 +39,12 @@ public class SkideUnitObjects
   @Override
   protected AbstractSkideUnitPanel doCreateUnitPanel( ITsGuiContext aContext ) {
     return new SkideUnitPanelObjects( aContext, this );
+  }
+
+  @Override
+  protected void doFillTasks( IStringMapEdit<IGenericTask> aTaskRunnersMap ) {
+    IGenericTask task = new TaskObjectsCodegen();
+    aTaskRunnersMap.put( task.taskInfo().id(), task );
   }
 
 }

@@ -25,8 +25,8 @@ public interface ISkideTaskManager {
    * Runs (starts) the task for all SkIDE units.
    * <p>
    * Runs task for all units sequentially one after another, starting next unit only when previous is finished. Units
-   * with {@link IGenericTaskRunner#canRun(ITsContextRo)} returning error are omitted. Method may return an empty map if
-   * no unit declares specified task or if all declaring units can not run the task.
+   * with {@link IGenericTask#canRun(ITsContextRo)} returning error are omitted. Method may return an empty map if no
+   * unit declares specified task or if all declaring units can not run the task.
    *
    * @param aTaskId String - the ID of the task to run
    * @param aInput {@link ITsContextRo} - the task input (options and references)
