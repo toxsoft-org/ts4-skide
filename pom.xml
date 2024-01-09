@@ -517,7 +517,9 @@
         <module>org.toxsoft.skide.core</module>
         <module>org.toxsoft.skide.plugin.sded</module>
         <module>org.toxsoft.skide.plugin.exconn</module>
-        <module>org.toxsoft.skide.plugin.project</module> 
+        <module>org.toxsoft.skide.plugin.project</module>
+        <module>org.toxsoft.skide.plugin.template</module>
+        <module>org.toxsoft.skide.task.codegen</module>
         <module>org.toxsoft.skide.exe</module>
  
         <module>zz-releng/p2.rcp</module>

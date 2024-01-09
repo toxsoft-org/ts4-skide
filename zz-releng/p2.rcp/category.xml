@@ -10,6 +10,8 @@
    <bundle id="org.toxsoft.skide.plugin.sded"/>
    <bundle id="org.toxsoft.skide.plugin.exconn"/>
    <bundle id="org.toxsoft.skide.plugin.project"/>
+   <bundle id="org.toxsoft.skide.plugin.template"/>
+   <bundle id="org.toxsoft.skide.task.codegen"/>
    <bundle id="org.toxsoft.skide.exe"/>
 
    <!-- sources -->
@@ -18,6 +20,8 @@
    <bundle id="org.toxsoft.skide.plugin.sded.source"/>
    <bundle id="org.toxsoft.skide.plugin.exconn.source"/>
    <bundle id="org.toxsoft.skide.plugin.project.source"/>
+   <bundle id="org.toxsoft.skide.plugin.template.source"/>
+   <bundle id="org.toxsoft.skide.task.codegen.source"/>
    <bundle id="org.toxsoft.skide.exe.source"/>
 
 </site>
