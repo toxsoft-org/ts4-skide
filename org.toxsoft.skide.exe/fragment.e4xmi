@@ -28,10 +28,10 @@
   </fragments>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_8FCGAOi_Ee2ZzusL1E-79Q" featurename="commands" parentElementId="org.toxsoft.mws.app.main">
     <elements xsi:type="commands:Command" xmi:id="_9qfA4Oi_Ee2ZzusL1E-79Q" elementId="org.toxsoft.skide.cmd.show_plugins" commandName="%Cmd_ShowPlugins" description="%Cmd_ShowPlugins_D" category="_cJNLYOg3Ee267uR4TcEmwA"/>
-    <elements xsi:type="commands:Command" xmi:id="_whgMgKILEe6V_dXpAxRkbQ" elementId="org.toxsoft.skide.cmd.run_task" commandName="%Cmd_RunTask" description="%Cmd_RunTask_D" category="_cJNLYOg3Ee267uR4TcEmwA" commandIconURI="platform:/plugin/org.toxsoft.skide.core/icons/is24x24/tasks.png">
+    <elements xsi:type="commands:Command" xmi:id="_whgMgKILEe6V_dXpAxRkbQ" elementId="org.toxsoft.skide.cmd.run_task" commandName="%Cmd_RunTask" description="%Cmd_RunTask_D" category="_cJNLYOg3Ee267uR4TcEmwA">
       <parameters xmi:id="_DwImwKIbEe6V_dXpAxRkbQ" elementId="org.toxsoft.skide.cmdarg.run_task_id" name="Run Task ID"/>
     </elements>
-    <elements xsi:type="commands:Command" xmi:id="_-yo3UKpEEe6vnvHRzlfkOA" elementId="org.toxsoft.skide.cmd.configure_task" commandName="%Cmd_ConfigureTask" description="%Cmd_ConfigureTask_D" category="_cJNLYOg3Ee267uR4TcEmwA" commandIconURI="platform:/plugin/org.toxsoft.skide.core/icons/is24x24/tasks-config.png">
+    <elements xsi:type="commands:Command" xmi:id="_-yo3UKpEEe6vnvHRzlfkOA" elementId="org.toxsoft.skide.cmd.configure_task" commandName="%Cmd_ConfigureTask" description="%Cmd_ConfigureTask_D" category="_cJNLYOg3Ee267uR4TcEmwA">
       <parameters xmi:id="_afUr4KpoEe6vnvHRzlfkOA" elementId="org.toxsoft.skide.cmdarg.cfg_task_id" name="Configurate Task ID"/>
     </elements>
   </fragments>
