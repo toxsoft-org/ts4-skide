@@ -7,7 +7,6 @@ import static org.toxsoft.skide.plugin.sded.ISkidePluginSdedSharedResources.*;
 
 import org.toxsoft.core.tsgui.bricks.ctx.*;
 import org.toxsoft.core.tslib.av.opset.impl.*;
-import org.toxsoft.core.tslib.bricks.gentask.*;
 import org.toxsoft.core.tslib.coll.primtypes.*;
 import org.toxsoft.skide.core.api.*;
 import org.toxsoft.skide.core.api.impl.*;
@@ -42,8 +41,8 @@ public class SkideUnitObjects
   }
 
   @Override
-  protected void doFillTasks( IStringMapEdit<IGenericTask> aTaskRunnersMap ) {
-    IGenericTask task = new TaskObjectsCodegen();
+  protected void doFillTasks( IStringMapEdit<AbstractSkideUnitTask> aTaskRunnersMap ) {
+    AbstractSkideUnitTask task = new TaskObjectsCodegen( this );
     aTaskRunnersMap.put( task.taskInfo().id(), task );
   }
 

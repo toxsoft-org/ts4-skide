@@ -3,7 +3,6 @@ package org.toxsoft.skide.core.api;
 import org.toxsoft.core.tsgui.bricks.actions.*;
 import org.toxsoft.core.tsgui.bricks.ctx.*;
 import org.toxsoft.core.tslib.av.opset.*;
-import org.toxsoft.core.tslib.bricks.gentask.*;
 import org.toxsoft.core.tslib.bricks.strid.coll.*;
 import org.toxsoft.core.tslib.bricks.strid.coll.impl.*;
 import org.toxsoft.core.tslib.bricks.strid.impl.*;
@@ -13,7 +12,7 @@ import org.toxsoft.core.tslib.utils.errors.*;
 import org.toxsoft.skide.core.api.impl.*;
 
 /**
- * {@link ISkideUnit} implementation.
+ * {@link ISkideUnit} base implementation.
  *
  * @author hazard157
  */
@@ -25,6 +24,8 @@ public non-sealed abstract class AbstractSkideUnit
 
   private final ITsGuiContext       tsContext;
   private final AbstractSkidePlugin creatorPlugin;
+
+  private IStringMap<AbstractSkideUnitTask> tasksMap = null; // lasy initialization
 
   /**
    * Constructor.
@@ -67,18 +68,21 @@ public non-sealed abstract class AbstractSkideUnit
   }
 
   // ------------------------------------------------------------------------------------
-  // IGenericTasksProvider
+  // AbstractSkideUnitTasksProvider
   //
 
   @Override
-  public IStringMap<IGenericTask> listSupportedTasks() {
-    IStringMapEdit<IGenericTask> map = new StridMap<>();
-    doFillTasks( map );
-    for( String tid : map.keys() ) {
-      IGenericTask task = map.getByKey( tid );
-      TsInternalErrorRtException.checkFalse( tid.equals( task.taskInfo().id() ) );
+  public IStringMap<AbstractSkideUnitTask> listSupportedTasks() {
+    if( tasksMap == null ) {
+      IStringMapEdit<AbstractSkideUnitTask> map = new StridMap<>();
+      doFillTasks( map );
+      for( String tid : map.keys() ) {
+        AbstractSkideUnitTask task = map.getByKey( tid );
+        TsInternalErrorRtException.checkFalse( tid.equals( task.taskInfo().id() ) );
+      }
+      tasksMap = map;
     }
-    return map;
+    return tasksMap;
   }
 
   // ------------------------------------------------------------------------------------
@@ -120,9 +124,10 @@ public non-sealed abstract class AbstractSkideUnit
    * <p>
    * Does nothing in the base class, there is no need to call superclass method when overriding.
    *
-   * @param aTaskRunnersMap {@link IStringMapEdit}&lt;{@link IGenericTask}&gt; - the map to fill "task ID" - "the task"
+   * @param aTaskRunnersMap {@link IStringMapEdit}&lt;{@link AbstractSkideUnitTask}&gt; - the map to fill "task ID" -
+   *          "the task"
    */
-  protected void doFillTasks( IStringMapEdit<IGenericTask> aTaskRunnersMap ) {
+  protected void doFillTasks( IStringMapEdit<AbstractSkideUnitTask> aTaskRunnersMap ) {
     // nop
   }
 

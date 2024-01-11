@@ -9,7 +9,8 @@ Export-Package: org.toxsoft.skide.task.codegen,
  org.toxsoft.skide.task.codegen.e4.addons,
  org.toxsoft.skide.task.codegen.gen,
  org.toxsoft.skide.task.codegen.gen.cw,
- org.toxsoft.skide.task.codegen.main
+ org.toxsoft.skide.task.codegen.main,
+ org.toxsoft.skide.task.codegen.valed
 Require-Bundle: javax.annotation,
  javax.inject,
  org.eclipse.core.runtime,

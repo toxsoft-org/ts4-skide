@@ -1,10 +1,14 @@
 package org.toxsoft.skide.plugin.sded.tasks.codegen;
 
+import static org.toxsoft.skide.plugin.sded.tasks.codegen.IPackageConstants.*;
+
 import java.util.concurrent.*;
 
 import org.toxsoft.core.tslib.bricks.ctx.*;
-import org.toxsoft.core.tslib.bricks.gentask.*;
+import org.toxsoft.core.tslib.bricks.strid.coll.impl.*;
 import org.toxsoft.core.tslib.bricks.validator.*;
+import org.toxsoft.core.tslib.utils.errors.*;
+import org.toxsoft.skide.core.api.*;
 import org.toxsoft.skide.plugin.sded.main.*;
 import org.toxsoft.skide.task.codegen.main.*;
 
@@ -14,13 +18,16 @@ import org.toxsoft.skide.task.codegen.main.*;
  * @author hazard157
  */
 public class TaskClassesCodegen
-    extends AbstractGenericTask {
+    extends AbstractSkideUnitTask {
 
   /**
    * Constructor.
+   *
+   * @param aOwnerUnit {@link AbstractSkideUnit} - the owner unit
+   * @throws TsNullArgumentRtException any argument = <code>null</code>
    */
-  public TaskClassesCodegen() {
-    super( SkideTaskCodegenInfo.INSTANCE );
+  public TaskClassesCodegen( AbstractSkideUnit aOwnerUnit ) {
+    super( aOwnerUnit, SkideTaskCodegenInfo.INSTANCE, new StridablesList<>( OPDEF_GW_CLASSES_INTERFACE_NAME ) );
   }
 
   // ------------------------------------------------------------------------------------
@@ -35,8 +42,8 @@ public class TaskClassesCodegen
 
   @Override
   protected Future<ITsContextRo> doRunAsync( ITsContextRo aInput, ITsContext aOutput ) {
-    // TODO Auto-generated method stub
-    return null;
+    // TODO реализовать TaskClassesCodegen.doRunAsync()
+    throw new TsUnderDevelopmentRtException( "TaskClassesCodegen.doRunAsync()" );
   }
 
   @Override

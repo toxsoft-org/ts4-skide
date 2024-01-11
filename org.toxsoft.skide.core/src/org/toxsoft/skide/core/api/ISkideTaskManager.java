@@ -1,5 +1,6 @@
 package org.toxsoft.skide.core.api;
 
+import org.toxsoft.core.tslib.av.opset.*;
 import org.toxsoft.core.tslib.bricks.ctx.*;
 import org.toxsoft.core.tslib.bricks.gentask.*;
 import org.toxsoft.core.tslib.bricks.strid.coll.*;
@@ -42,7 +43,7 @@ public interface ISkideTaskManager {
   /**
    * Returns the SkIDE plugins capable to run specified task.
    * <p>
-   * Returns the plugins having task ID declared in the keys of the map {@link ISkideUnit#listTaskRunners()}.
+   * Returns the plugins having task ID declared in the keys of the map {@link ISkideUnit#listSupportedTasks()}.
    *
    * @param aTaskId String - the task ID
    * @return {@link IStridablesList}&lt;{@link ISkideUnit}&gt; - list of units declaring task as runnable
@@ -57,5 +58,28 @@ public interface ISkideTaskManager {
    * @throws TsItemAlreadyExistsRtException the task with the same ID is already registered
    */
   void registerTask( IGenericTaskInfo aTaskInfo );
+
+  /**
+   * Returns saved input parameters of the specified task.
+   * <p>
+   * If task input was not saved yet then returns the default values as defined by {@link IGenericTaskInfo#inOps()}.
+   *
+   * @param aTaskId String - the task ID
+   * @return {@link IOptionSet} - the task input parameters
+   * @throws TsNullArgumentRtException any argument = <code>null</code>
+   * @throws TsItemNotFoundRtException no such task is registered in {@link #listTasks()}
+   */
+  IOptionSet getTaskInputOptions( String aTaskId );
+
+  /**
+   * Saves to the permanent storage the task input parameters.
+   *
+   * @param aTaskId String - the task ID
+   * @param aTaskInputOps {@link IOptionSet} - the task input parameters
+   * @throws TsNullArgumentRtException any argument = <code>null</code>
+   * @throws TsItemNotFoundRtException no such task is registered in {@link #listTasks()}
+   * @throws TsValidationFailedRtException failed check of input options vs {@link IGenericTaskInfo#inOps()}
+   */
+  void setTaskInputOptions( String aTaskId, IOptionSet aTaskInputOps );
 
 }

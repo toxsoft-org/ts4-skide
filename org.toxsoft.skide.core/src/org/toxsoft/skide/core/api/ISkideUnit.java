@@ -2,7 +2,6 @@ package org.toxsoft.skide.core.api;
 
 import org.toxsoft.core.tsgui.bricks.actions.*;
 import org.toxsoft.core.tsgui.bricks.ctx.*;
-import org.toxsoft.core.tslib.bricks.gentask.*;
 import org.toxsoft.core.tslib.bricks.strid.*;
 import org.toxsoft.core.tslib.bricks.strid.coll.*;
 import org.toxsoft.core.tslib.coll.primtypes.*;
@@ -56,8 +55,8 @@ public sealed interface ISkideUnit
   /**
    * Returns supported tasks.
    *
-   * @return {@link IStringMap}&lt;{@link IUnitTask}&gt; - map "task ID" - "the task"
+   * @return {@link IStringMap}&lt;{@link AbstractSkideUnitTask}&gt; - map "task ID" - "the task"
    */
-  IStringMap<IGenericTask> listSupportedTasks();
+  IStringMap<AbstractSkideUnitTask> listSupportedTasks();
 
 }
