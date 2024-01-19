@@ -16,8 +16,6 @@ import org.toxsoft.core.tsgui.mws.services.e4helper.*;
 import org.toxsoft.core.tsgui.rcp.*;
 import org.toxsoft.skide.exe.Activator;
 
-import com.hazard157.core.gui.*;
-
 /**
  * Application addon.
  *
@@ -40,7 +38,6 @@ public class AddonSkideExe
   @Override
   protected void doRegisterQuants( IQuantRegistrator aQuantRegistrator ) {
     aQuantRegistrator.registerQuant( new QuantTsGuiRcp() );
-    aQuantRegistrator.registerQuant( new QuantHzCoreGui() );
   }
 
   @Override
