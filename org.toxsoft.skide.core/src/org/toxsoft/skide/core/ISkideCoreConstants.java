@@ -53,6 +53,10 @@ public interface ISkideCoreConstants {
   String ICONID_FILE_GENERAL       = "file-general";   //$NON-NLS-1$
   String ICONID_TASK               = "task";           //$NON-NLS-1$
   String ICONID_TASKS              = "tasks";          //$NON-NLS-1$
+  String ICONID_TASK_CONFIG        = "task-config";    //$NON-NLS-1$
+  String ICONID_TASKS_CONFIG       = "tasks-config";   //$NON-NLS-1$
+  String ICONID_TASK_RUN           = "task-run";       //$NON-NLS-1$
+  String ICONID_TASK_RESULTS       = "task-results";   //$NON-NLS-1$
 
   /**
    * Constants registration.

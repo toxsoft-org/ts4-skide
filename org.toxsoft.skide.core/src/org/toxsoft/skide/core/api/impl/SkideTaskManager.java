@@ -112,7 +112,7 @@ public class SkideTaskManager
     IGenericTaskInfo taskInfo = registeredTasks.getByKey( aTaskId ); // also checks if aTaskId exists
     IKeepablesStorage ktorStorage = skideEnv.getSkideCoreStorage().ktorStorage();
     IStringMap<IOptionSet> insMap = ktorStorage.readStridMap( SECTID_TASK_INPUT_PARAMS_MAP, OptionSetKeeper.KEEPER );
-    IOptionSet inOps = insMap.getByKey( aTaskId );
+    IOptionSet inOps = insMap.findByKey( aTaskId );
     if( inOps != null ) {
       return inOps;
     }
@@ -127,7 +127,7 @@ public class SkideTaskManager
     IStringMap<IOptionSet> oldMap = ktorStorage.readStridMap( SECTID_TASK_INPUT_PARAMS_MAP, OptionSetKeeper.KEEPER );
     IStringMapEdit<IOptionSet> newMap = new StringMap<>( oldMap );
     newMap.put( aTaskId, aTaskInputOps );
-    ktorStorage.writeStridMap( SECTID_TASK_INPUT_PARAMS_MAP, newMap, OptionSetKeeper.KEEPER );
+    ktorStorage.writeStridMap( SECTID_TASK_INPUT_PARAMS_MAP, newMap, OptionSetKeeper.KEEPER, true );
   }
 
 }

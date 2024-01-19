@@ -31,7 +31,7 @@ public class AddonSkidePluginExconn
 
   /**
    * Section ID to store {@link IConnectionConfigService#listConfigs()} using
-   * {@link IKeepablesStorage#writeColl(String, ITsCollection, IEntityKeeper)}
+   * {@link IKeepablesStorage#writeColl(String, ITsCollection, IEntityKeeper, boolean)}
    */
   private static final String SECTID_CONNECTION_CONFIGS = "ConnectionConfigs"; //$NON-NLS-1$
 
@@ -67,7 +67,7 @@ public class AddonSkidePluginExconn
 
       @Override
       public void onConfigsListChanged( IConnectionConfigService aSource ) {
-        storage.writeColl( SECTID_CONNECTION_CONFIGS, ccService.listConfigs(), ConnectionConfig.KEEPER );
+        storage.writeColl( SECTID_CONNECTION_CONFIGS, ccService.listConfigs(), ConnectionConfig.KEEPER, true );
       }
 
       @Override

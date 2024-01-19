@@ -10,13 +10,14 @@ import org.toxsoft.core.tsgui.bricks.ctx.*;
 import org.toxsoft.core.tslib.av.opset.impl.*;
 import org.toxsoft.skide.core.api.*;
 import org.toxsoft.skide.core.api.impl.*;
+import org.toxsoft.skide.core.gui.tasks.*;
 
 /**
- * SkiDE unit: view and edit SkIDE project properties.
+ * SkiDE unit panel: configure and run code generation task.
  *
  * @author hazard157
  */
-public class SkideUnitTaskCodegenConfig
+public class SkideUnitTaskCodegenPanel
     extends AbstractSkideUnit {
 
   /**
@@ -24,7 +25,7 @@ public class SkideUnitTaskCodegenConfig
    */
   public static final String UNIT_ID = SKIDE_FULL_ID + ".unit.task_codegen_config"; //$NON-NLS-1$
 
-  SkideUnitTaskCodegenConfig( ITsGuiContext aContext, AbstractSkidePlugin aCreator ) {
+  SkideUnitTaskCodegenPanel( ITsGuiContext aContext, AbstractSkidePlugin aCreator ) {
     super( UNIT_ID, OptionSetUtils.createOpSet( //
         TSID_NAME, STR_TASK_CODEGEN, //
         TSID_DESCRIPTION, STR_TASK_CODEGEN_D, //
@@ -35,7 +36,7 @@ public class SkideUnitTaskCodegenConfig
 
   @Override
   protected AbstractSkideUnitPanel doCreateUnitPanel( ITsGuiContext aContext ) {
-    return new SkideUnitTaskCodegenConfigPanel( aContext, this );
+    return new SkideUnitTaskPanel( aContext, this, SkideTaskCodegenInfo.TASK_ID );
   }
 
 }

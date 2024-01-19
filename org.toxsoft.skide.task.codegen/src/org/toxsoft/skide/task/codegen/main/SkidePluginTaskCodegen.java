@@ -38,7 +38,7 @@ public class SkidePluginTaskCodegen
 
   @Override
   protected void doCreateUnits( ITsGuiContext aContext, IStridablesListEdit<ISkideUnit> aUnitsList ) {
-    aUnitsList.add( new SkideUnitTaskCodegenConfig( aContext, this ) );
+    aUnitsList.add( new SkideUnitTaskCodegenPanel( aContext, this ) );
   }
 
 }

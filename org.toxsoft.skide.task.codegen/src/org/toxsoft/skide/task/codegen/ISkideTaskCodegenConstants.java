@@ -13,7 +13,7 @@ import org.toxsoft.core.tsgui.graphics.icons.*;
 @SuppressWarnings( "javadoc" )
 public interface ISkideTaskCodegenConstants {
 
-  String SKIDE_TASK_CODEGEN_ID = SKIDE_FULL_ID + ".task.CodeGenerator"; //$NON-NLS-1$
+  
 
   // ------------------------------------------------------------------------------------
   // Icons

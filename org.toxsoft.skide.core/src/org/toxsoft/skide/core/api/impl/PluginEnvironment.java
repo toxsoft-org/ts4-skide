@@ -1,5 +1,7 @@
 package org.toxsoft.skide.core.api.impl;
 
+import static org.toxsoft.core.txtproj.lib.workroom.ITsWorkroomConstants.*;
+
 import java.io.*;
 
 import org.toxsoft.core.tslib.bricks.strid.impl.*;
@@ -16,8 +18,6 @@ import org.toxsoft.skide.core.api.*;
  */
 class PluginEnvironment
     implements IPluginEnvironment {
-
-  private static final String UNIT_STORAGE_FILE_EXT = ".unit_storage"; //$NON-NLS-1$
 
   private final ITsWorkroomStorage            wrStorage;
   private final IStringMap<IKeepablesStorage> ksMap = new StringMap<>();
@@ -40,7 +40,7 @@ class PluginEnvironment
     StridUtils.checkValidIdPath( aUnitId );
     IKeepablesStorage ks = ksMap.findByKey( aUnitId );
     if( ks == null ) {
-      File f = new File( wrStorage.rootDir(), aUnitId + UNIT_STORAGE_FILE_EXT );
+      File f = new File( wrStorage.rootDir(), aUnitId + '.' + TS_WORKROOM_KEEPABLE_STORAGE_FILES_EXT );
       ks = new KeepablesStorageInFile( f );
     }
     return ks;
