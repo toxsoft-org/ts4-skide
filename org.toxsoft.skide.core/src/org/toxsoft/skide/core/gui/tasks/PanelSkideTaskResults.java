@@ -2,10 +2,10 @@ package org.toxsoft.skide.core.gui.tasks;
 
 import java.util.*;
 
-import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
 import org.toxsoft.core.tsgui.bricks.ctx.*;
 import org.toxsoft.core.tsgui.panels.*;
+import org.toxsoft.core.tsgui.utils.layout.*;
 import org.toxsoft.core.tslib.bricks.gentask.*;
 import org.toxsoft.core.tslib.utils.errors.*;
 import org.toxsoft.skide.core.api.*;
