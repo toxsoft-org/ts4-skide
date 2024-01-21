@@ -141,13 +141,8 @@ public class SysdescrExportRunner
         // копируем в нее содержание исходной
         for( String srcClassId : srcSection.listClassIds() ) {
           // создаем класс в целевой секции
-          for( ISkRriParamInfo paramInfo : srcSection.listParamInfoes( srcClassId ) ) {
-            if( !paramInfo.isLink() ) {
-              targetSection.defineAttrParam( srcClassId, paramInfo.attrInfo() );
-            }
-            else {
-              targetSection.defineLinkParam( srcClassId, paramInfo.linkInfo() );
-            }
+          for( IDtoRriParamInfo paramInfo : srcSection.listParamInfoes( srcClassId ) ) {
+            targetSection.defineParam( srcClassId, paramInfo );
           }
         }
       }
