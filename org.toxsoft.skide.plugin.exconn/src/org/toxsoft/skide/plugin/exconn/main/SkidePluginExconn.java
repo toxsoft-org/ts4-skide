@@ -39,7 +39,7 @@ public class SkidePluginExconn
   @Override
   protected void doCreateUnits( ITsGuiContext aContext, IStridablesListEdit<ISkideUnit> aUnitsList ) {
     aUnitsList.add( new SkideUnitExconn( aContext, this ) );
-    aUnitsList.add( new SkideUnitTaskUploadConfig( aContext, this ) );
+    aUnitsList.add( new SkideUnitTaskUpload( aContext, this ) );
   }
 
 }
