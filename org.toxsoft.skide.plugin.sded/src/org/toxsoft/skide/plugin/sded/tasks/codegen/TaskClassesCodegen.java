@@ -2,6 +2,7 @@ package org.toxsoft.skide.plugin.sded.tasks.codegen;
 
 import static org.toxsoft.core.tslib.bricks.gentask.IGenericTaskConstants.*;
 import static org.toxsoft.core.tslib.gw.IGwHardConstants.*;
+import static org.toxsoft.core.tslib.utils.TsLibUtils.*;
 import static org.toxsoft.skide.plugin.sded.ISkidePluginSdedSharedResources.*;
 import static org.toxsoft.skide.plugin.sded.tasks.codegen.IPackageConstants.*;
 import static org.toxsoft.skide.task.codegen.gen.ICodegenConstants.*;
@@ -77,7 +78,7 @@ public class TaskClassesCodegen
   // implementation
   //
 
-  private static void wroteClassProps( ISkClassProps<?> aProps, IJavaConstantsInterfaceWriter aJw ) {
+  private static void writeClassProps( ISkClassProps<?> aProps, IJavaConstantsInterfaceWriter aJw ) {
     String prefix = PROP_PREFIX_MAP.getByKey( aProps.kind() );
     for( IDtoClassPropInfoBase prop : aProps.listSelf() ) {
       String cn = makeJavaConstName( prefix, prop.id() );
@@ -88,10 +89,10 @@ public class TaskClassesCodegen
   private static void writeClass( ISkClassInfo aCinf, IJavaConstantsInterfaceWriter aJw ) {
     aJw.addCommentLine( StridUtils.printf( StridUtils.FORMAT_ID_NAME, aCinf ) );
     String cn = makeJavaConstName( PREFIX_CLASS, aCinf.id() );
-    aJw.addConstString( cn, aCinf.id() );
-    for( ESkClassPropKind k : ESkClassPropKind.asList() ) {
+    aJw.addConstString( cn, aCinf.id(), EMPTY_STRING );
+    for( ESkClassPropKind k : PROP_PREFIX_MAP.keys() ) {
       ISkClassProps<?> props = aCinf.props( k );
-      wroteClassProps( props, aJw );
+      writeClassProps( props, aJw );
     }
   }
 
