@@ -1,4 +1,4 @@
-package org.toxsoft.skide.core.api;
+package org.toxsoft.skide.core.api.impl;
 
 import java.util.concurrent.*;
 
@@ -9,22 +9,13 @@ import org.toxsoft.core.tslib.av.opset.impl.*;
 import org.toxsoft.core.tslib.bricks.ctx.*;
 import org.toxsoft.core.tslib.bricks.gentask.*;
 import org.toxsoft.core.tslib.bricks.strid.coll.*;
-import org.toxsoft.core.tslib.coll.primtypes.*;
 import org.toxsoft.core.tslib.utils.errors.*;
 import org.toxsoft.core.txtproj.lib.storage.*;
+import org.toxsoft.skide.core.api.*;
 import org.toxsoft.uskat.core.api.users.*;
 
 /**
  * Base class to implement SkIDE task in plugins.
- * <p>
- * To implement own task in SkIDE unit:
- * <ul>
- * <li>create subclass of {@link AbstractSkideUnitTask} - that is implement <code>doXxx()</code> methods;</li>
- * <li>create instance of the task to the argument of the method
- * {@link AbstractSkideUnit#doFillTasks(IStringMapEdit)}.</li>
- * </ul>
- * <p>
- * Implementation note: task option is stored in
  *
  * @author hazard157
  */
@@ -73,7 +64,7 @@ public abstract class AbstractSkideUnitTask
   //
 
   @Override
-  public ITsGuiContext tsContext() {
+  final public ITsGuiContext tsContext() {
     return ownerUnit.tsContext();
   }
 
@@ -82,12 +73,12 @@ public abstract class AbstractSkideUnitTask
   //
 
   @Override
-  public ISkideEnvironment skEnv() {
+  final public ISkideEnvironment skEnv() {
     return ownerUnit.skEnv();
   }
 
   @Override
-  public IPluginEnvironment plEnv() {
+  final public IPluginEnvironment plEnv() {
     return ownerUnit.plEnv();
   }
 
@@ -99,7 +90,7 @@ public abstract class AbstractSkideUnitTask
    *
    * @return {@link ISkUser} - the owner unit
    */
-  public ISkideUnit ownerUnit() {
+  final public ISkideUnit ownerUnit() {
     return ownerUnit;
   }
 
@@ -114,6 +105,9 @@ public abstract class AbstractSkideUnitTask
     IKeepablesStorage unitStorage = plEnv().unitStorage( ownerUnit.id() );
     unitStorage.writeItem( ksItemId, cfgOptionValues(), OptionSetKeeper.KEEPER );
   }
+
+  @Override
+  protected abstract void doRunSync( ITsContextRo aInput, ITsContext aOutput );
 
   @Override
   protected abstract Future<ITsContextRo> doRunAsync( ITsContextRo aInput, ITsContext aOutput );

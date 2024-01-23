@@ -1,14 +1,15 @@
 package org.toxsoft.skide.plugin.sded.tasks.codegen;
 
+import static org.toxsoft.core.tslib.bricks.gentask.IGenericTaskConstants.*;
 import static org.toxsoft.skide.plugin.sded.tasks.codegen.IPackageConstants.*;
-
-import java.util.concurrent.*;
 
 import org.toxsoft.core.tslib.bricks.ctx.*;
 import org.toxsoft.core.tslib.bricks.strid.coll.impl.*;
 import org.toxsoft.core.tslib.bricks.validator.*;
+import org.toxsoft.core.tslib.utils.*;
 import org.toxsoft.core.tslib.utils.errors.*;
 import org.toxsoft.skide.core.api.*;
+import org.toxsoft.skide.core.api.impl.*;
 import org.toxsoft.skide.plugin.sded.main.*;
 import org.toxsoft.skide.task.codegen.main.*;
 
@@ -18,7 +19,7 @@ import org.toxsoft.skide.task.codegen.main.*;
  * @author hazard157
  */
 public class TaskObjectsCodegen
-    extends AbstractSkideUnitTask {
+    extends AbstractSkideUnitTaskSync {
 
   /**
    * Constructor.
@@ -31,25 +32,15 @@ public class TaskObjectsCodegen
   }
 
   // ------------------------------------------------------------------------------------
-  // AbstractGenericTaskRunner
+  // AbstractSkideUnitTaskSync
   //
 
   @Override
-  protected ITsContextRo doRunSync( ITsContextRo aInput ) {
-    // TODO Auto-generated method stub
-    return super.doRunSync( aInput );
-  }
+  protected void doRunSync( ITsContextRo aInput, ITsContext aOutput ) {
+    ILongOpProgressCallback lop = REFDEF_IN_PROGRESS_MONITOR.getRef( aInput );
 
-  @Override
-  protected Future<ITsContextRo> doRunAsync( ITsContextRo aInput, ITsContext aOutput ) {
-    // TODO реализовать TaskObjectsCodegen.doRunAsync()
-    throw new TsUnderDevelopmentRtException( "TaskObjectsCodegen.doRunAsync()" );
-  }
-
-  @Override
-  protected ValidationResult doCanRun( ITsContextRo aInput ) {
     // TODO Auto-generated method stub
-    return ValidationResult.error( "Under development" );
+    lop.finished( ValidationResult.warn( "Sk-object code generation is under deveopment" ) );
   }
 
 }

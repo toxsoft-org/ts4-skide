@@ -12,6 +12,11 @@ public final class CodeWriterSettings
     implements ICodeWriterSettings {
 
   /**
+   * Defaulty settings.
+   */
+  public static final ICodeWriterSettings DEFAULT = new CodeWriterSettings();
+
+  /**
    * Allowed range of the {@link #margin()} value.
    */
   public static final IntRange MARGIN_RANGE = new IntRange( 40, 1024 );

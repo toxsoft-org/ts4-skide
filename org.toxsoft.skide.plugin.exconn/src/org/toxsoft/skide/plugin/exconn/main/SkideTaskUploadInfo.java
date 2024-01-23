@@ -6,6 +6,7 @@ import static org.toxsoft.skide.plugin.exconn.ISkidePluginExconnSharedResources.
 
 import org.toxsoft.core.tslib.av.opset.impl.*;
 import org.toxsoft.core.tslib.bricks.gentask.*;
+import org.toxsoft.skide.core.api.*;
 
 /**
  * Code generation task meta-information.
@@ -19,6 +20,12 @@ public final class SkideTaskUploadInfo
    * The singleton instance
    */
   public static final IGenericTaskInfo INSTANCE = new SkideTaskUploadInfo();
+
+  public static final ISkideTaskInputPreparator INPUT_PREPARATOR = ( aInput, aSkideEnv, aWinContext ) -> {
+
+    // TODO Auto-generated method stub
+
+  };
 
   private SkideTaskUploadInfo() {
     super( SKIDE_TASK_UPLOAD_ID, OptionSetUtils.createOpSet( //

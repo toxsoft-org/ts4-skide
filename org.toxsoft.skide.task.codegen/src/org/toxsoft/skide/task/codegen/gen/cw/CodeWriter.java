@@ -17,10 +17,21 @@ public class CodeWriter
   private final IStrioWriter        sw;
 
   /**
+   * Constructor with default settings.
+   *
+   * @param aCharOut {@link ICharOutputStream} - the character output stream to write ro
+   * @throws TsNullArgumentRtException any argument = <code>null</code>
+   */
+  public CodeWriter( ICharOutputStream aCharOut ) {
+    this( aCharOut, CodeWriterSettings.DEFAULT );
+  }
+
+  /**
    * Constructor.
    *
    * @param aCharOut {@link ICharOutputStream} - the character output stream to write ro
    * @param aSettings {@link ICodeWriterSettings} - formatting settings
+   * @throws TsNullArgumentRtException any argument = <code>null</code>
    */
   public CodeWriter( ICharOutputStream aCharOut, ICodeWriterSettings aSettings ) {
     TsNullArgumentRtException.checkNulls( aCharOut, aSettings );
@@ -59,13 +70,13 @@ public class CodeWriter
   }
 
   @Override
-  public void p( String aFomatString, Object... aArgs ) {
-    sw.p( aFomatString, aArgs );
+  public void p( String aFormatString, Object... aArgs ) {
+    sw.p( aFormatString, aArgs );
   }
 
   @Override
-  public void pl( String aFomatString, Object... aArgs ) {
-    sw.pl( aFomatString, aArgs );
+  public void pl( String aFormatString, Object... aArgs ) {
+    sw.pl( aFormatString, aArgs );
   }
 
   @Override

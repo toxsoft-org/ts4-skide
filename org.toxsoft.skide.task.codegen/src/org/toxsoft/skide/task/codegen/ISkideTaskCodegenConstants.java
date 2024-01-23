@@ -1,7 +1,5 @@
 package org.toxsoft.skide.task.codegen;
 
-import static org.toxsoft.skide.core.ISkideCoreConstants.*;
-
 import org.eclipse.e4.core.contexts.*;
 import org.toxsoft.core.tsgui.graphics.icons.*;
 
@@ -12,8 +10,6 @@ import org.toxsoft.core.tsgui.graphics.icons.*;
  */
 @SuppressWarnings( "javadoc" )
 public interface ISkideTaskCodegenConstants {
-
-  
 
   // ------------------------------------------------------------------------------------
   // Icons

@@ -1,5 +1,6 @@
-package org.toxsoft.skide.task.codegen.gen;
+package org.toxsoft.skide.task.codegen.gen.l10n;
 
+import org.toxsoft.skide.task.codegen.gen.*;
 import org.toxsoft.skide.task.codegen.valed.Messages;
 
 /**

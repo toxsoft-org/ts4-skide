@@ -1,4 +1,4 @@
-package org.toxsoft.skide.task.codegen.gen;
+package org.toxsoft.skide.task.codegen.gen.l10n;
 
 import java.util.*;
 

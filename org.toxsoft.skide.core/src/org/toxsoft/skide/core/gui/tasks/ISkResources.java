@@ -18,7 +18,10 @@ interface ISkResources {
   String STR_TABL_TASK_CONFIG_D  = Messages.getString( "STR_TABL_TASK_CONFIG_D" );  //$NON-NLS-1$
   String STR_TABL_TASK_RESULTS   = Messages.getString( "STR_TABL_TASK_RESULTS" );   //$NON-NLS-1$
   String STR_TABL_TASK_RESULTS_D = Messages.getString( "STR_TABL_TASK_RESULTS_D" ); //$NON-NLS-1$
-  String STR_TASI_INPUT_PARAMS   = Messages.getString( "STR_TASI_INPUT_PARAMS" );   //$NON-NLS-1$
-  String STR_TASI_INPUT_PARAMS_D = Messages.getString( "STR_TASI_INPUT_PARAMS_D" ); //$NON-NLS-1$
+  String STR_TASK_INPUT_PARAMS   = Messages.getString( "STR_TASK_INPUT_PARAMS" );   //$NON-NLS-1$
+  String STR_TASK_INPUT_PARAMS_D = Messages.getString( "STR_TASK_INPUT_PARAMS_D" ); //$NON-NLS-1$
+
+  String MSG_ERR_NO_TASK_TO_RUN   = Messages.getString( "MSG_ERR_NO_TASK_TO_RUN" );   //$NON-NLS-1$
+  String MSG_ERR_NO_CAPABLE_UNITS = Messages.getString( "MSG_ERR_NO_CAPABLE_UNITS" ); //$NON-NLS-1$
 
 }

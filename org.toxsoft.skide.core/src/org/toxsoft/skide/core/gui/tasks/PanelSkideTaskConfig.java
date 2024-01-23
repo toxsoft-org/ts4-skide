@@ -102,8 +102,8 @@ public class PanelSkideTaskConfig
     IStringMapEdit<IOptionSet> mapVals = new StringMap<>();
     // options kit for task itself
     OpsetsKitItemDef kidTaskSelf = new OpsetsKitItemDef( taskInfo.id(), taskInfo.inOps(), taskInfo.params() );
-    DDEF_NAME.setValue( kidTaskSelf.params(), avStr( STR_TASI_INPUT_PARAMS ) );
-    DDEF_DESCRIPTION.setValue( kidTaskSelf.params(), avStr( STR_TASI_INPUT_PARAMS_D ) );
+    DDEF_NAME.setValue( kidTaskSelf.params(), avStr( STR_TASK_INPUT_PARAMS ) );
+    DDEF_DESCRIPTION.setValue( kidTaskSelf.params(), avStr( STR_TASK_INPUT_PARAMS_D ) );
     llKids.add( kidTaskSelf );
     mapVals.put( taskInfo.id(), taskMan.getTaskInputOptions( taskInfo.id() ) );
     // options kits for capable units

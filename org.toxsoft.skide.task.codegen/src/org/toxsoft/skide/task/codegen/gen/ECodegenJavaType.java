@@ -1,6 +1,6 @@
 package org.toxsoft.skide.task.codegen.gen;
 
-import static org.toxsoft.skide.task.codegen.gen.ISkCodegenSharedResources.*;
+import static org.toxsoft.skide.task.codegen.gen.l10n.ISkCodegenSharedResources.*;
 
 import org.toxsoft.core.tslib.bricks.keeper.*;
 import org.toxsoft.core.tslib.bricks.keeper.std.*;

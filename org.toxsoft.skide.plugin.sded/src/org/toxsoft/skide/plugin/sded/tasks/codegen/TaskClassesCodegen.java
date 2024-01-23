@@ -1,16 +1,29 @@
 package org.toxsoft.skide.plugin.sded.tasks.codegen;
 
+import static org.toxsoft.core.tslib.bricks.gentask.IGenericTaskConstants.*;
+import static org.toxsoft.core.tslib.gw.IGwHardConstants.*;
 import static org.toxsoft.skide.plugin.sded.tasks.codegen.IPackageConstants.*;
-
-import java.util.concurrent.*;
+import static org.toxsoft.skide.task.codegen.gen.ICodegenConstants.*;
+import static org.toxsoft.skide.task.codegen.gen.impl.CodegenUtils.*;
 
 import org.toxsoft.core.tslib.bricks.ctx.*;
+import org.toxsoft.core.tslib.bricks.strid.coll.*;
 import org.toxsoft.core.tslib.bricks.strid.coll.impl.*;
+import org.toxsoft.core.tslib.bricks.strid.impl.*;
 import org.toxsoft.core.tslib.bricks.validator.*;
+import org.toxsoft.core.tslib.coll.*;
+import org.toxsoft.core.tslib.coll.impl.*;
+import org.toxsoft.core.tslib.utils.*;
 import org.toxsoft.core.tslib.utils.errors.*;
 import org.toxsoft.skide.core.api.*;
+import org.toxsoft.skide.core.api.impl.*;
 import org.toxsoft.skide.plugin.sded.main.*;
+import org.toxsoft.skide.task.codegen.gen.*;
 import org.toxsoft.skide.task.codegen.main.*;
+import org.toxsoft.uskat.core.api.sysdescr.*;
+import org.toxsoft.uskat.core.api.sysdescr.dto.*;
+import org.toxsoft.uskat.core.connection.*;
+import org.toxsoft.uskat.core.gui.conn.*;
 
 /**
  * SkIDE task {@link SkideTaskCodegenInfo} runner for {@link SkideUnitClasses}.
@@ -18,7 +31,36 @@ import org.toxsoft.skide.task.codegen.main.*;
  * @author hazard157
  */
 public class TaskClassesCodegen
-    extends AbstractSkideUnitTask {
+    extends AbstractSkideUnitTaskSync {
+
+  /**
+   * TODO what to do with prefixes? Maybe as config options?<br>
+   * TODO implement SkIDE v2 behavior - store Java constant names together with SYSDESCR entities<br>
+   * TODO need to check that class generated constant IDs may be duplicated<br>
+   */
+
+  private static final String PREFIX_CLASS   = "CLSID"; //$NON-NLS-1$
+  private static final String PREFIX_ATTR    = "ATRID"; //$NON-NLS-1$
+  private static final String PREFIX_RTDATA  = "RTDID"; //$NON-NLS-1$
+  private static final String PREFIX_RIVET   = "RIVID"; //$NON-NLS-1$
+  private static final String PREFIX_LINK    = "LNKID"; //$NON-NLS-1$
+  private static final String PREFIX_COMMAND = "CMDID"; //$NON-NLS-1$
+  private static final String PREFIX_EVENT   = "EVNID"; //$NON-NLS-1$
+  private static final String PREFIX_CLOB    = "CLBID"; //$NON-NLS-1$
+
+  private static final IMap<ESkClassPropKind, String> PROP_PREFIX_MAP;
+
+  static {
+    IMapEdit<ESkClassPropKind, String> map = new ElemMap<>();
+    map.put( ESkClassPropKind.ATTR, PREFIX_ATTR );
+    map.put( ESkClassPropKind.RTDATA, PREFIX_RTDATA );
+    map.put( ESkClassPropKind.RIVET, PREFIX_RIVET );
+    map.put( ESkClassPropKind.LINK, PREFIX_LINK );
+    map.put( ESkClassPropKind.CMD, PREFIX_COMMAND );
+    map.put( ESkClassPropKind.EVENT, PREFIX_EVENT );
+    map.put( ESkClassPropKind.CLOB, PREFIX_CLOB );
+    PROP_PREFIX_MAP = map;
+  }
 
   /**
    * Constructor.
@@ -31,25 +73,53 @@ public class TaskClassesCodegen
   }
 
   // ------------------------------------------------------------------------------------
-  // AbstractGenericTaskRunner
+  // implementation
+  //
+
+  private static void wroteClassProps( ISkClassProps<?> aProps, IJavaConstantsInterfaceWriter aJw ) {
+    String prefix = PROP_PREFIX_MAP.getByKey( aProps.kind() );
+    for( IDtoClassPropInfoBase prop : aProps.listSelf() ) {
+      String cn = makeJavaConstName( prefix, prop.id() );
+      aJw.addConstString( cn, prop.id(), prop.nmName() );
+    }
+  }
+
+  private static void writeClass( ISkClassInfo aCinf, IJavaConstantsInterfaceWriter aJw ) {
+    aJw.addCommentLine( StridUtils.printf( StridUtils.FORMAT_ID_NAME, aCinf ) );
+    String cn = makeJavaConstName( PREFIX_CLASS, aCinf.id() );
+    aJw.addConstString( cn, aCinf.id() );
+    for( ESkClassPropKind k : ESkClassPropKind.asList() ) {
+      ISkClassProps<?> props = aCinf.props( k );
+      wroteClassProps( props, aJw );
+    }
+  }
+
+  private static void writeConstants( ISkConnection aConn, IJavaConstantsInterfaceWriter aJw ) {
+    ISkSysdescr sysdescr = aConn.coreApi().sysdescr();
+    IStridablesList<ISkClassInfo> llClasses = sysdescr.listClasses();
+    for( ISkClassInfo classInfo : llClasses ) {
+      String claimerId = sysdescr.determineClassClaimingServiceId( classInfo.id() );
+      // write only SYSDESCR claimed classes (and of course, we don't need a root class)
+      if( claimerId.equals( ISkSysdescr.SERVICE_ID ) && !classInfo.id().equals( GW_ROOT_CLASS_ID ) ) {
+        writeClass( classInfo, aJw );
+      }
+    }
+  }
+
+  // ------------------------------------------------------------------------------------
+  // AbstractSkideUnitTaskSync
   //
 
   @Override
-  protected ITsContextRo doRunSync( ITsContextRo aInput ) {
-    // TODO Auto-generated method stub
-    return super.doRunSync( aInput );
-  }
-
-  @Override
-  protected Future<ITsContextRo> doRunAsync( ITsContextRo aInput, ITsContext aOutput ) {
-    // TODO реализовать TaskClassesCodegen.doRunAsync()
-    throw new TsUnderDevelopmentRtException( "TaskClassesCodegen.doRunAsync()" );
-  }
-
-  @Override
-  protected ValidationResult doCanRun( ITsContextRo aInput ) {
-    // TODO Auto-generated method stub
-    return ValidationResult.error( "Under development" );
+  protected void doRunSync( ITsContextRo aInput, ITsContext aOutput ) {
+    ILongOpProgressCallback lop = REFDEF_IN_PROGRESS_MONITOR.getRef( aInput );
+    ICodegenEnvironment codegenEnv = REFDEF_CODEGEN_ENV.getRef( aInput );
+    String interfaceName = OPDEF_GW_CLASSES_INTERFACE_NAME.getValue( aInput.params() ).asString();
+    IJavaConstantsInterfaceWriter jw = codegenEnv.createJavaInterfaceWriter( interfaceName );
+    ISkConnectionSupplier cs = tsContext().get( ISkConnectionSupplier.class );
+    writeConstants( cs.defConn(), jw );
+    jw.writeFile();
+    lop.finished( ValidationResult.info( "Java interface '%s' was generated", interfaceName ) );
   }
 
 }

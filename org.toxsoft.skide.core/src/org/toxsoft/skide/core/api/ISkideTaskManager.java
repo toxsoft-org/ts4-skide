@@ -4,12 +4,14 @@ import org.toxsoft.core.tslib.av.opset.*;
 import org.toxsoft.core.tslib.bricks.ctx.*;
 import org.toxsoft.core.tslib.bricks.gentask.*;
 import org.toxsoft.core.tslib.bricks.strid.coll.*;
+import org.toxsoft.core.tslib.bricks.validator.*;
 import org.toxsoft.core.tslib.bricks.validator.impl.*;
 import org.toxsoft.core.tslib.coll.primtypes.*;
 import org.toxsoft.core.tslib.utils.errors.*;
+import org.toxsoft.skide.core.api.impl.*;
 
 /**
- * Manages the tasks to be executed by SkIDE units {@link ISkideUnit#listTaskRunners()}.
+ * Manages the tasks to be executed by SkIDE units.
  *
  * @author hazard157
  */
@@ -23,20 +25,40 @@ public interface ISkideTaskManager {
   IStridablesList<IGenericTaskInfo> listTasks();
 
   /**
-   * Runs (starts) the task for all SkIDE units.
+   * Returns the registered input prepartor for the specified task.
+   *
+   * @param aTaskId String - the ID of the task to run
+   * @return {@link ISkideTaskInputPreparator} - input preparator
+   * @throws TsNullArgumentRtException any argument = <code>null</code>
+   * @throws TsItemNotFoundRtException no such registered task found
+   */
+  ISkideTaskInputPreparator getInputPreparator( String aTaskId );
+
+  /**
+   * Checks if task can be started.
    * <p>
-   * Runs task for all units sequentially one after another, starting next unit only when previous is finished. Units
-   * with {@link IGenericTask#canRun(ITsContextRo)} returning error are omitted. Method may return an empty map if no
-   * unit declares specified task or if all declaring units can not run the task.
+   * Checks that task ID is registered, there is at least on unit in {@link #listCapableUnits(String)}, and no capable
+   * unit method {@link AbstractSkideUnitTask#canRun(ITsContextRo)} returns error.
    *
    * @param aTaskId String - the ID of the task to run
    * @param aInput {@link ITsContextRo} - the task input (options and references)
-   * @return {@link IStringMap}&lt;{@link IGenericTask}&gt; - map "unit ID" - "finished task"
+   * @return {@link ValidationResult} - the check result
    * @throws TsNullArgumentRtException any argument = <code>null</code>
-   * @throws TsItemNotFoundRtException the task with the specified ID is not registered
-   * @throws TsValidationFailedRtException failed {@link GenericTaskUtils#validateInput(IGenericTaskInfo, ITsContextRo)}
    */
-  IStringMap<IGenericTask> runSyncSequentially( String aTaskId, ITsContextRo aInput );
+  ValidationResult canRun( String aTaskId, ITsContextRo aInput );
+
+  /**
+   * Runs (starts) the task for all SkIDE units.
+   * <p>
+   * Runs task for all units sequentially one after another, starting next unit only when previous is finished
+   *
+   * @param aTaskId String - the ID of the task to run
+   * @param aInput {@link ITsContextRo} - the task input (options and references)
+   * @return {@link IStringMap}&lt;{@link ITsContextRo}&gt; - map "unit ID" - "finished task result"
+   * @throws TsNullArgumentRtException any argument = <code>null</code>
+   * @throws TsValidationFailedRtException failed {@link #canRun(String, ITsContextRo)}
+   */
+  IStringMap<ITsContextRo> runSyncSequentially( String aTaskId, ITsContextRo aInput );
 
   // TODO IStringMap<ITsContextRo> runAsyncSequentially( String aTaskId, ITsContextRo aInput );
 
@@ -54,10 +76,11 @@ public interface ISkideTaskManager {
    * Registers the task.
    *
    * @param aTaskInfo {@link IGenericTaskInfo} - the task to register
+   * @param aInputPreparator {@link ISkideTaskInputPreparator} - the means to prepare task input
    * @throws TsNullArgumentRtException any argument = <code>null</code>
    * @throws TsItemAlreadyExistsRtException the task with the same ID is already registered
    */
-  void registerTask( IGenericTaskInfo aTaskInfo );
+  void registerTask( IGenericTaskInfo aTaskInfo, ISkideTaskInputPreparator aInputPreparator );
 
   /**
    * Returns saved input parameters of the specified task.

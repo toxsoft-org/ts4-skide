@@ -1,6 +1,7 @@
 package org.toxsoft.skide.core.api.impl;
 
 import static org.toxsoft.skide.core.ISkideCoreConstants.*;
+import static org.toxsoft.skide.core.api.impl.ISkResources.*;
 
 import org.toxsoft.core.tslib.av.opset.*;
 import org.toxsoft.core.tslib.av.opset.impl.*;
@@ -35,8 +36,10 @@ public class SkideTaskManager
    */
   private static final String SECTID_TASK_INPUT_PARAMS_MAP = SKIDE_ID + ".Enivironment.TaskManager.TaskInputs"; //$NON-NLS-1$
 
-  private final SkideEnvironment                      skideEnv;
-  private final IStridablesListEdit<IGenericTaskInfo> registeredTasks = new StridablesList<>();
+  private final SkideEnvironment skideEnv;
+
+  private final IStridablesListEdit<IGenericTaskInfo>     registeredTasks = new StridablesList<>();
+  private final IStringMapEdit<ISkideTaskInputPreparator> preparatorsMap  = new StringMap<>();
 
   /**
    * Constructor.
@@ -63,29 +66,48 @@ public class SkideTaskManager
   }
 
   @Override
-  public IStringMap<IGenericTask> runSyncSequentially( String aTaskId, ITsContextRo aInput ) {
-    // check preconditions
+  public ISkideTaskInputPreparator getInputPreparator( String aTaskId ) {
+    return preparatorsMap.getByKey( aTaskId );
+  }
+
+  @Override
+  public ValidationResult canRun( String aTaskId, ITsContextRo aInput ) {
     TsNullArgumentRtException.checkNulls( aTaskId, aInput );
-    IGenericTaskInfo taskInfo = registeredTasks.getByKey( aTaskId );
-    TsValidationFailedRtException.checkError( GenericTaskUtils.validateInput( taskInfo, aInput ) );
-    // run only for capable items that can run the task
-    IStridablesListEdit<ISkideUnit> unitsToRun = new StridablesList<>();
-    for( ISkideUnit u : listCapableUnits( aTaskId ) ) {
+    // check for registered task
+    IGenericTaskInfo taskInfo = registeredTasks.findByKey( aTaskId );
+    if( taskInfo == null ) {
+      return ValidationResult.error( STR_UNKNOWN_TASK_ID, aTaskId );
+    }
+    ValidationResult vr = GenericTaskUtils.validateInput( taskInfo, aInput );
+    if( vr.isError() ) {
+      return vr;
+    }
+    // check there is at least one capable unit
+    IStridablesList<ISkideUnit> capableUnits = listCapableUnits( aTaskId );
+    if( capableUnits.isEmpty() ) {
+      return ValidationResult.error( STR_NO_TASK_CAPABLE_UNITS, taskInfo.nmName() );
+    }
+    // check units can run task
+    for( ISkideUnit u : capableUnits ) {
       IGenericTask task = u.listSupportedTasks().getByKey( aTaskId );
-      ValidationResult vr = task.canRun( aInput );
-      if( !vr.isError() ) {
-        unitsToRun.add( u );
+      vr = ValidationResult.firstNonOk( vr, task.canRun( aInput ) );
+      if( vr.isError() ) {
+        return vr;
       }
     }
-    if( unitsToRun.isEmpty() ) {
-      return IStringMap.EMPTY;
+    return ValidationResult.SUCCESS;
+  }
+
+  @Override
+  public IStringMap<ITsContextRo> runSyncSequentially( String aTaskId, ITsContextRo aInput ) {
+    TsValidationFailedRtException.checkError( canRun( aTaskId, aInput ) );
+    IStringMapEdit<ITsContextRo> resultsMap = new StringMap<>();
+    for( ISkideUnit skUnit : listCapableUnits( aTaskId ) ) {
+      IGenericTask task = skUnit.listSupportedTasks().getByKey( aTaskId );
+      ITsContextRo output = task.runSync( aInput );
+      resultsMap.put( aTaskId, output );
     }
-
-    // TODO run tasks sequentially
-
-    // TODO Auto-generated method stub
-
-    return null;
+    return resultsMap;
   }
 
   @Override
@@ -101,10 +123,11 @@ public class SkideTaskManager
   }
 
   @Override
-  public void registerTask( IGenericTaskInfo aTaskInfo ) {
-    TsNullArgumentRtException.checkNull( aTaskInfo );
+  public void registerTask( IGenericTaskInfo aTaskInfo, ISkideTaskInputPreparator aInputPreparator ) {
+    TsNullArgumentRtException.checkNulls( aTaskInfo, aInputPreparator );
     TsItemAlreadyExistsRtException.checkTrue( registeredTasks.hasKey( aTaskInfo.id() ) );
     registeredTasks.add( aTaskInfo );
+    preparatorsMap.put( aTaskInfo.id(), aInputPreparator );
   }
 
   @Override
