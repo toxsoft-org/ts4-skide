@@ -1,5 +1,6 @@
 package org.toxsoft.skide.core.api;
 
+import org.toxsoft.core.tsgui.bricks.ctx.*;
 import org.toxsoft.core.tslib.av.opset.*;
 import org.toxsoft.core.tslib.bricks.ctx.*;
 import org.toxsoft.core.tslib.bricks.gentask.*;
@@ -7,6 +8,7 @@ import org.toxsoft.core.tslib.bricks.strid.coll.*;
 import org.toxsoft.core.tslib.bricks.validator.*;
 import org.toxsoft.core.tslib.bricks.validator.impl.*;
 import org.toxsoft.core.tslib.coll.primtypes.*;
+import org.toxsoft.core.tslib.utils.*;
 import org.toxsoft.core.tslib.utils.errors.*;
 import org.toxsoft.skide.core.api.impl.*;
 
@@ -25,27 +27,17 @@ public interface ISkideTaskManager {
   IStridablesList<IGenericTaskInfo> listTasks();
 
   /**
-   * Returns the registered input prepartor for the specified task.
-   *
-   * @param aTaskId String - the ID of the task to run
-   * @return {@link ISkideTaskInputPreparator} - input preparator
-   * @throws TsNullArgumentRtException any argument = <code>null</code>
-   * @throws TsItemNotFoundRtException no such registered task found
-   */
-  ISkideTaskInputPreparator getInputPreparator( String aTaskId );
-
-  /**
    * Checks if task can be started.
    * <p>
    * Checks that task ID is registered, there is at least on unit in {@link #listCapableUnits(String)}, and no capable
    * unit method {@link AbstractSkideUnitTask#canRun(ITsContextRo)} returns error.
    *
    * @param aTaskId String - the ID of the task to run
-   * @param aInput {@link ITsContextRo} - the task input (options and references)
+   * @param aWinContext {@link ITsGuiContext} - windows level application context
    * @return {@link ValidationResult} - the check result
    * @throws TsNullArgumentRtException any argument = <code>null</code>
    */
-  ValidationResult canRun( String aTaskId, ITsContextRo aInput );
+  ValidationResult canRun( String aTaskId, ITsGuiContext aWinContext );
 
   /**
    * Runs (starts) the task for all SkIDE units.
@@ -53,12 +45,14 @@ public interface ISkideTaskManager {
    * Runs task for all units sequentially one after another, starting next unit only when previous is finished
    *
    * @param aTaskId String - the ID of the task to run
-   * @param aInput {@link ITsContextRo} - the task input (options and references)
+   * @param aWinContext {@link ITsGuiContext} - windows level application context
+   * @param aCallback {@link ILongOpProgressCallback} - execution process visualizer
    * @return {@link IStringMap}&lt;{@link ITsContextRo}&gt; - map "unit ID" - "finished task result"
    * @throws TsNullArgumentRtException any argument = <code>null</code>
-   * @throws TsValidationFailedRtException failed {@link #canRun(String, ITsContextRo)}
+   * @throws TsValidationFailedRtException failed {@link #canRun(String, ITsGuiContext)}
    */
-  IStringMap<ITsContextRo> runSyncSequentially( String aTaskId, ITsContextRo aInput );
+  IStringMap<ITsContextRo> runSyncSequentially( String aTaskId, ITsGuiContext aWinContext,
+      ILongOpProgressCallback aCallback );
 
   // TODO IStringMap<ITsContextRo> runAsyncSequentially( String aTaskId, ITsContextRo aInput );
 

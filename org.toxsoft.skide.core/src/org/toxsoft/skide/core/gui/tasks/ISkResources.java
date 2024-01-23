@@ -21,7 +21,9 @@ interface ISkResources {
   String STR_TASK_INPUT_PARAMS   = Messages.getString( "STR_TASK_INPUT_PARAMS" );   //$NON-NLS-1$
   String STR_TASK_INPUT_PARAMS_D = Messages.getString( "STR_TASK_INPUT_PARAMS_D" ); //$NON-NLS-1$
 
-  String MSG_ERR_NO_TASK_TO_RUN   = Messages.getString( "MSG_ERR_NO_TASK_TO_RUN" );   //$NON-NLS-1$
-  String MSG_ERR_NO_CAPABLE_UNITS = Messages.getString( "MSG_ERR_NO_CAPABLE_UNITS" ); //$NON-NLS-1$
+  String MSG_ERR_NO_TASK_TO_RUN = Messages.getString( "MSG_ERR_NO_TASK_TO_RUN" ); //$NON-NLS-1$
+  String FMT_TASK_STARTED       = Messages.getString( "FMT_TASK_STARTED" );       //$NON-NLS-1$
+  String MSG_TASK_FINISHED      = Messages.getString( "MSG_TASK_FINISHED" );      //$NON-NLS-1$
+  String FMT_TASK_FAILED        = Messages.getString( "FMT_TASK_FAILED" );        //$NON-NLS-1$
 
 }

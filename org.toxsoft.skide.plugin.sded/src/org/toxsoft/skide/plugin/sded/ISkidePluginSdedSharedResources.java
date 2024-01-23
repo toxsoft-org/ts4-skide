@@ -20,4 +20,6 @@ public interface ISkidePluginSdedSharedResources {
   String STR_OPDEF_GW_OBJECTS_INTERFACE_NAME   = Messages.getString( "STR_OPDEF_GW_OBJECTS_INTERFACE_NAME" );   //$NON-NLS-1$
   String STR_OPDEF_GW_OBJECTS_INTERFACE_NAME_D = Messages.getString( "STR_OPDEF_GW_OBJECTS_INTERFACE_NAME_D" ); //$NON-NLS-1$
 
+  String FMT_INFO_JAVA_INTERFACE_WAS_GENERATED = Messages.getString( "FMT_INFO_JAVA_INTERFACE_WAS_GENERATED" ); //$NON-NLS-1$
+
 }

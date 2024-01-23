@@ -2,6 +2,7 @@ package org.toxsoft.skide.plugin.sded.tasks.codegen;
 
 import static org.toxsoft.core.tslib.bricks.gentask.IGenericTaskConstants.*;
 import static org.toxsoft.core.tslib.gw.IGwHardConstants.*;
+import static org.toxsoft.skide.plugin.sded.ISkidePluginSdedSharedResources.*;
 import static org.toxsoft.skide.plugin.sded.tasks.codegen.IPackageConstants.*;
 import static org.toxsoft.skide.task.codegen.gen.ICodegenConstants.*;
 import static org.toxsoft.skide.task.codegen.gen.impl.CodegenUtils.*;
@@ -119,7 +120,7 @@ public class TaskClassesCodegen
     ISkConnectionSupplier cs = tsContext().get( ISkConnectionSupplier.class );
     writeConstants( cs.defConn(), jw );
     jw.writeFile();
-    lop.finished( ValidationResult.info( "Java interface '%s' was generated", interfaceName ) );
+    lop.finished( ValidationResult.info( FMT_INFO_JAVA_INTERFACE_WAS_GENERATED, interfaceName ) );
   }
 
 }

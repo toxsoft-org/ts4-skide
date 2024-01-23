@@ -7,8 +7,8 @@ import org.toxsoft.core.tslib.bricks.gentask.*;
 /**
  * The means to prepare task input.
  * <p>
- * Each registered need own means to prepare task specific options and references of the input context. This interface
- * is provided by the task declarer when registering the task by the method
+ * Each registered task needs own means to prepare task specific options and references of the input context. This
+ * interface is provided by the task declarer when registering the task by the method
  * {@link ISkideTaskManager#registerTask(IGenericTaskInfo, ISkideTaskInputPreparator)}.
  *
  * @author hazard157
@@ -29,7 +29,7 @@ public interface ISkideTaskInputPreparator {
    * <li>user-configured options as declared by {@link IGenericTaskInfo#inOps()};</li>
    * <li>all SkIDE specific options and references.</li>
    * </ul>
-   * Main purpose of theis method is to fill input with references because options are already filled.
+   * Main purpose of this method is to fill input with references because options are already filled.
    *
    * @param aInput {@link ITsContext} - the task input to edit
    * @param aSkideEnv {@link ISkideEnvironment} - the SkIDE environment

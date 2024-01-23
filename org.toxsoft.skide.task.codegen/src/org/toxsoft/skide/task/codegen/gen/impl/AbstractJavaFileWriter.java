@@ -81,7 +81,7 @@ public abstract class AbstractJavaFileWriter
       return false;
     }
     for( String s : staticImportNames ) {
-      aCw.pl( "static import %s.*;", s );
+      aCw.pl( "import static %s.*;", s );
     }
     return true;
   }
@@ -91,7 +91,7 @@ public abstract class AbstractJavaFileWriter
       return false;
     }
     for( String s : importNames ) {
-      aCw.pl( "static import %s.*;", s );
+      aCw.pl( "import %s.*;", s );
     }
     return true;
   }
@@ -199,7 +199,7 @@ public abstract class AbstractJavaFileWriter
       cw.println( "/**" );
       cw.pl( " * %s", typeComment.replace( '\n', ' ' ) );
       cw.println( " */" );
-      cw.println( "@SuppressWarnings( \"javadoc\" )" );
+      cw.println( "@SuppressWarnings( { \"javadoc\", \"nls\" } )" );
       cw.p( "public interface %s", typeName );
       // TODO process #implementsTypes and #extendsTypes
       cw.pl( " {" );

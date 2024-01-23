@@ -27,6 +27,10 @@ public interface IJavaConstantsInterfaceWriter
 
   void addCommentLine( String aCommentLine );
 
+  void addConstOther( String aType, String aConstName, String aRawValue, String aCommentLine );
+
+  void addRawLine( String aLine );
+
   // ------------------------------------------------------------------------------------
   // inline methods for convenience
 
@@ -52,6 +56,10 @@ public interface IJavaConstantsInterfaceWriter
 
   default void addConstDouble( String aConstName, double aConstantValue ) {
     addConstDouble( aConstName, aConstantValue, EMPTY_STRING );
+  }
+
+  default void addConstOther( String aType, String aConstName, String aRawValue ) {
+    addConstOther( aType, aConstName, aRawValue, EMPTY_STRING );
   }
 
 }

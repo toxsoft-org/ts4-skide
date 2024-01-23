@@ -78,12 +78,10 @@ public class SkideUnitTaskPanel
     tiResults.setToolTipText( STR_TABL_TASK_RESULTS_D );
     tiResults.setImage( iconManager().loadStdIcon( ICONID_TASK_RESULTS, TAB_ICON_SIZE ) );
     tiResults.setControl( resultsPanel );
-
-    // TODO setup
+    // setup
     runnerPanel.setSkideTaskId( taskInfo.id() );
     configPanel.setSkideTaskId( taskInfo.id() );
     resultsPanel.setSkideTaskId( taskInfo.id() );
-
     return tfMain;
   }
 

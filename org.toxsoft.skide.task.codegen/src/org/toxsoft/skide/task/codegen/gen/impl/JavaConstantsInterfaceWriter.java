@@ -48,9 +48,9 @@ public class JavaConstantsInterfaceWriter
   @Override
   public void addConstString( String aConstName, String aConstantValue, String aCommentLine ) {
     StringBuilder sb = new StringBuilder();
-    sb.append( String.format( "String %s = \"%s\"; //$NON-NLS-1$", aConstName, aConstantValue ) );
+    sb.append( String.format( "String %s = \"%s\";", aConstName, aConstantValue ) );
     if( !aCommentLine.isBlank() ) {
-      sb.append( " " ).append( aCommentLine );
+      sb.append( " // " ).append( aCommentLine );
     }
     constDefLines.add( sb.toString() );
   }
@@ -113,6 +113,21 @@ public class JavaConstantsInterfaceWriter
   @Override
   public void addCommentLine( String aCommentLine ) {
     constDefLines.add( String.format( "// %s", aCommentLine ) );
+  }
+
+  @Override
+  public void addConstOther( String aType, String aConstName, String aRawValue, String aCommentLine ) {
+    StringBuilder sb = new StringBuilder();
+    sb.append( String.format( "%s %s = %s;", aType, aConstName, aRawValue ) );
+    if( !aCommentLine.isBlank() ) {
+      sb.append( " // " ).append( aCommentLine );
+    }
+    constDefLines.add( sb.toString() );
+  }
+
+  @Override
+  public void addRawLine( String aLine ) {
+    constDefLines.add( aLine );
   }
 
   // ------------------------------------------------------------------------------------

@@ -37,7 +37,7 @@ public class PanelSkideTaskResults
     taskMan = skideEnv.taskManager();
     this.setLayout( new BorderLayout() );
 
-    // TODO PanelSkideTaskRunner.PanelSkideTaskRunner()
+    // TODO PanelSkideTaskResults.PanelSkideTaskResults()
 
   }
 
@@ -46,7 +46,7 @@ public class PanelSkideTaskResults
   //
 
   private void refreshPanel() {
-    // TODO PanelSkideTaskRunner.refreshPanel()
+    // TODO PanelSkideTaskResults.refreshPanel()
   }
 
   // ------------------------------------------------------------------------------------

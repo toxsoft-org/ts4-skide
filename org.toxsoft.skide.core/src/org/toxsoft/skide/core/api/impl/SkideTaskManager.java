@@ -1,8 +1,11 @@
 package org.toxsoft.skide.core.api.impl;
 
+import static org.toxsoft.core.tslib.bricks.gentask.IGenericTaskConstants.*;
 import static org.toxsoft.skide.core.ISkideCoreConstants.*;
 import static org.toxsoft.skide.core.api.impl.ISkResources.*;
 
+import org.toxsoft.core.tsgui.bricks.ctx.*;
+import org.toxsoft.core.tsgui.bricks.ctx.impl.*;
 import org.toxsoft.core.tslib.av.opset.*;
 import org.toxsoft.core.tslib.av.opset.impl.*;
 import org.toxsoft.core.tslib.bricks.ctx.*;
@@ -14,6 +17,7 @@ import org.toxsoft.core.tslib.bricks.validator.*;
 import org.toxsoft.core.tslib.bricks.validator.impl.*;
 import org.toxsoft.core.tslib.coll.primtypes.*;
 import org.toxsoft.core.tslib.coll.primtypes.impl.*;
+import org.toxsoft.core.tslib.utils.*;
 import org.toxsoft.core.tslib.utils.errors.*;
 import org.toxsoft.core.txtproj.lib.storage.*;
 import org.toxsoft.core.txtproj.lib.workroom.*;
@@ -56,6 +60,17 @@ public class SkideTaskManager
   // implementation
   //
 
+  private ITsContext createPreparedITaskInput( String aTaskId, ITsGuiContext aWinContext ) {
+    IGenericTaskInfo taskInfo = registeredTasks.getByKey( aTaskId );
+    ITsGuiContext input = new TsGuiContext( aWinContext );
+    input.params().setAll( getTaskInputOptions( taskInfo.id() ) );
+    REFDEF_IN_PROGRESS_MONITOR.setRef( input, ILongOpProgressCallback.CONSOLE );
+    ISkideTaskInputPreparator inputPreparator = preparatorsMap.getByKey( aTaskId );
+    inputPreparator.prepareTaskInput( input, skideEnv, aWinContext );
+    return input;
+
+  }
+
   // ------------------------------------------------------------------------------------
   // ISkideGenericTaskManager
   //
@@ -66,19 +81,16 @@ public class SkideTaskManager
   }
 
   @Override
-  public ISkideTaskInputPreparator getInputPreparator( String aTaskId ) {
-    return preparatorsMap.getByKey( aTaskId );
-  }
-
-  @Override
-  public ValidationResult canRun( String aTaskId, ITsContextRo aInput ) {
-    TsNullArgumentRtException.checkNulls( aTaskId, aInput );
+  public ValidationResult canRun( String aTaskId, ITsGuiContext aWinContext ) {
+    TsNullArgumentRtException.checkNulls( aTaskId, aWinContext );
     // check for registered task
     IGenericTaskInfo taskInfo = registeredTasks.findByKey( aTaskId );
     if( taskInfo == null ) {
       return ValidationResult.error( STR_UNKNOWN_TASK_ID, aTaskId );
     }
-    ValidationResult vr = GenericTaskUtils.validateInput( taskInfo, aInput );
+    // create and check input
+    ITsContext input = createPreparedITaskInput( aTaskId, aWinContext );
+    ValidationResult vr = GenericTaskUtils.validateInput( taskInfo, input );
     if( vr.isError() ) {
       return vr;
     }
@@ -90,7 +102,7 @@ public class SkideTaskManager
     // check units can run task
     for( ISkideUnit u : capableUnits ) {
       IGenericTask task = u.listSupportedTasks().getByKey( aTaskId );
-      vr = ValidationResult.firstNonOk( vr, task.canRun( aInput ) );
+      vr = ValidationResult.firstNonOk( vr, task.canRun( input ) );
       if( vr.isError() ) {
         return vr;
       }
@@ -99,12 +111,16 @@ public class SkideTaskManager
   }
 
   @Override
-  public IStringMap<ITsContextRo> runSyncSequentially( String aTaskId, ITsContextRo aInput ) {
-    TsValidationFailedRtException.checkError( canRun( aTaskId, aInput ) );
+  public IStringMap<ITsContextRo> runSyncSequentially( String aTaskId, ITsGuiContext aWinContext,
+      ILongOpProgressCallback aCallback ) {
+    TsNullArgumentRtException.checkNull( aCallback );
+    TsValidationFailedRtException.checkError( canRun( aTaskId, aWinContext ) );
+    ITsContext input = createPreparedITaskInput( aTaskId, aWinContext );
+    REFDEF_IN_PROGRESS_MONITOR.setRef( input, aCallback );
     IStringMapEdit<ITsContextRo> resultsMap = new StringMap<>();
     for( ISkideUnit skUnit : listCapableUnits( aTaskId ) ) {
       IGenericTask task = skUnit.listSupportedTasks().getByKey( aTaskId );
-      ITsContextRo output = task.runSync( aInput );
+      ITsContextRo output = task.runSync( input );
       resultsMap.put( aTaskId, output );
     }
     return resultsMap;

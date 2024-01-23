@@ -12,13 +12,10 @@ import org.eclipse.swt.widgets.*;
 import org.toxsoft.core.tsgui.bricks.actions.*;
 import org.toxsoft.core.tsgui.bricks.actions.asp.*;
 import org.toxsoft.core.tsgui.bricks.ctx.*;
-import org.toxsoft.core.tsgui.bricks.ctx.impl.*;
 import org.toxsoft.core.tsgui.panels.*;
 import org.toxsoft.core.tsgui.panels.toolbar.*;
 import org.toxsoft.core.tsgui.utils.layout.*;
-import org.toxsoft.core.tslib.bricks.ctx.*;
 import org.toxsoft.core.tslib.bricks.gentask.*;
-import org.toxsoft.core.tslib.bricks.strid.coll.*;
 import org.toxsoft.core.tslib.bricks.validator.*;
 import org.toxsoft.core.tslib.utils.*;
 import org.toxsoft.core.tslib.utils.errors.*;
@@ -33,6 +30,11 @@ import org.toxsoft.skide.core.api.*;
 public class PanelSkideTaskRunner
     extends TsPanel {
 
+  /**
+   * {@link ILongOpProgressCallback} to show task execution process in {@link PanelSkideTaskRunner#logText}.
+   *
+   * @author hazard157
+   */
   private class TaskCallback
       implements ILongOpProgressCallback {
 
@@ -44,7 +46,7 @@ public class PanelSkideTaskRunner
 
     @Override
     public boolean startWork( String aName, boolean aUndefined ) {
-      String s = String.format( "\n%s" );
+      String s = String.format( "\n%s" ); //$NON-NLS-1$
       logText.append( s );
       undefined = aUndefined;
       return false;
@@ -54,10 +56,10 @@ public class PanelSkideTaskRunner
     public boolean updateWorkProgress( String aName, double aWorkedPercents ) {
       String s;
       if( undefined ) {
-        s = String.format( "\n%s", aName, aWorkedPercents );
+        s = String.format( "\n%s", aName, Double.valueOf( aWorkedPercents ) ); //$NON-NLS-1$
       }
       else {
-        s = String.format( "\n%s - %.2f", aName, aWorkedPercents );
+        s = String.format( "\n%s - %.2f", aName, Double.valueOf( aWorkedPercents ) ); //$NON-NLS-1$
       }
       logText.append( s );
       return false;
@@ -65,7 +67,13 @@ public class PanelSkideTaskRunner
 
     @Override
     public void finished( ValidationResult aStatus ) {
-      String s = String.format( "\n%s %s", aStatus.type().nmName(), aStatus.message() );
+      String s;
+      if( aStatus.isOk() ) {
+        s = "\n" + aStatus.message(); //$NON-NLS-1$
+      }
+      else {
+        s = String.format( "\n%s: %s", aStatus.type().nmName(), aStatus.message() ); //$NON-NLS-1$
+      }
       logText.append( s );
     }
 
@@ -86,16 +94,19 @@ public class PanelSkideTaskRunner
 
     void doRun() {
       TsIllegalStateRtException.checkFalse( doCanRun() );
-      ITsContextRo input = createTaskInput();
-      logText.append( String.format( "\nSTARTED TASK: %s", taskInfo.nmName() ) );
+      logText.append( "\n" ); //$NON-NLS-1$
+      logText.append( String.format( FMT_TASK_STARTED, taskInfo.nmName() ) );
       try {
-        taskMan.runSyncSequentially( taskInfo.id(), input );
-        logText.append( String.format( "\nTASK FINISHED.\n\n" ) );
+        taskMan.runSyncSequentially( taskInfo.id(), tsContext(), new TaskCallback() );
+        logText.append( "\n" ); //$NON-NLS-1$
+        logText.append( String.format( MSG_TASK_FINISHED ) );
       }
       catch( Exception ex ) {
         LoggerUtils.errorLogger().error( ex );
-        logText.append( String.format( "\nTASK FAILED: %s.\n\n", ex.getMessage() ) );
+        logText.append( "\n" ); //$NON-NLS-1$
+        logText.append( String.format( FMT_TASK_FAILED, ex.getMessage() ) );
       }
+      logText.append( "\n" ); //$NON-NLS-1$
       updateActionsState();
     }
 
@@ -157,7 +168,6 @@ public class PanelSkideTaskRunner
       toolbar.setActionEnabled( aid, aspLocal.isActionEnabled( aid ) );
       toolbar.setActionChecked( aid, aspLocal.isActionChecked( aid ) );
     }
-    // TODO maybe place this code comwhere else?
     ValidationResult vr = validateCanRun();
     if( !vr.isOk() ) {
       logText.append( vr.message() );
@@ -168,25 +178,7 @@ public class PanelSkideTaskRunner
     if( taskInfo == null ) {
       return ValidationResult.error( MSG_ERR_NO_TASK_TO_RUN );
     }
-    IStridablesList<ISkideUnit> units = taskMan.listCapableUnits( taskInfo.id() );
-    if( units.isEmpty() ) {
-      return ValidationResult.error( MSG_ERR_NO_CAPABLE_UNITS );
-    }
-    ITsContextRo input = createTaskInput();
-    ValidationResult vr = GenericTaskUtils.validateInput( taskInfo, input );
-    if( vr.isError() ) {
-      return vr;
-    }
-    return ValidationResult.SUCCESS;
-  }
-
-  private ITsContextRo createTaskInput() {
-    ITsGuiContext input = new TsGuiContext( tsContext() );
-    input.params().setAll( taskMan.getTaskInputOptions( taskInfo.id() ) );
-    IGenericTaskConstants.REFDEF_IN_PROGRESS_MONITOR.setRef( input, new TaskCallback() );
-    ISkideTaskInputPreparator inputPreparator = taskMan.getInputPreparator( taskInfo.id() );
-    inputPreparator.prepareTaskInput( input, skideEnv, tsContext() );
-    return input;
+    return taskMan.canRun( taskInfo.id(), tsContext() );
   }
 
   private void refreshPanel() {
