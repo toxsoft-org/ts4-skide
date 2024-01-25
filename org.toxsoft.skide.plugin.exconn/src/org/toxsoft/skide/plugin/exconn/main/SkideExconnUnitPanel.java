@@ -31,7 +31,7 @@ import org.toxsoft.skide.core.api.impl.*;
 import org.toxsoft.skide.plugin.exconn.*;
 import org.toxsoft.skide.plugin.exconn.service.*;
 import org.toxsoft.uskat.core.gui.conn.cfg.*;
-import org.toxsoft.uskat.core.gui.conn.cfg.m5.*;
+import org.toxsoft.uskat.core.gui.conn.m5.*;
 
 /**
  * {@link AbstractSkideUnitPanel} implementation.
@@ -76,21 +76,11 @@ class SkideExconnUnitPanel
         new MultiPaneComponentModown<>( ctx, model, lm.itemsProvider(), lm ) {
 
           @Override
-          protected ITsToolbar doCreateToolbar( @SuppressWarnings( "hiding" ) ITsGuiContext aContext, String aName,
-              EIconSize aIconSize, IListEdit<ITsActionDef> aActs ) {
+          protected ITsToolbar doCreateToolbar( ITsGuiContext aContext, String aName, EIconSize aIconSize,
+              IListEdit<ITsActionDef> aActs ) {
             aActs.add( ITsStdActionDefs.ACDEF_SEPARATOR );
             aActs.add( ACDEF_EXPORT_SYSDESCR );
-
-            ITsToolbar toolbar =
-
-                super.doCreateToolbar( aContext, aName, aIconSize, aActs );
-
-            toolbar.addListener( aActionId -> {
-              // TODO Auto-generated method stub
-
-            } );
-
-            return toolbar;
+            return super.doCreateToolbar( aContext, aName, aIconSize, aActs );
           }
 
           @Override

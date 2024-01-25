@@ -10,6 +10,7 @@ import org.toxsoft.core.tslib.av.opset.impl.*;
 import org.toxsoft.core.tslib.coll.primtypes.*;
 import org.toxsoft.skide.core.api.*;
 import org.toxsoft.skide.core.api.impl.*;
+import org.toxsoft.skide.core.api.tasks.*;
 import org.toxsoft.skide.plugin.sded.*;
 import org.toxsoft.skide.plugin.sded.tasks.codegen.*;
 

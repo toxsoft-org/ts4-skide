@@ -21,6 +21,8 @@ import org.toxsoft.core.tslib.utils.*;
 import org.toxsoft.core.tslib.utils.errors.*;
 import org.toxsoft.core.tslib.utils.logs.impl.*;
 import org.toxsoft.skide.core.api.*;
+import org.toxsoft.skide.core.api.impl.*;
+import org.toxsoft.skide.core.api.tasks.*;
 
 /**
  * Panel to run and monitor the execution of the specified task.
@@ -209,7 +211,7 @@ public class PanelSkideTaskRunner
     if( Objects.equals( aTaskId, getSkideTaskId() ) ) {
       return;
     }
-    taskInfo = taskMan.listTasks().getByKey( aTaskId );
+    taskInfo = taskMan.listRegisteredSkideTasks().getByKey( aTaskId );
     refreshPanel();
   }
 

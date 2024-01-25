@@ -22,6 +22,7 @@ import org.toxsoft.core.tslib.utils.errors.*;
 import org.toxsoft.core.txtproj.lib.storage.*;
 import org.toxsoft.core.txtproj.lib.workroom.*;
 import org.toxsoft.skide.core.api.*;
+import org.toxsoft.skide.core.api.tasks.*;
 
 /**
  * {@link ISkideTaskManager} implementation.
@@ -76,7 +77,7 @@ public class SkideTaskManager
   //
 
   @Override
-  public IStridablesList<IGenericTaskInfo> listTasks() {
+  public IStridablesList<IGenericTaskInfo> listRegisteredSkideTasks() {
     return registeredTasks;
   }
 

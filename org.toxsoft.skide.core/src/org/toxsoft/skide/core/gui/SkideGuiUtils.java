@@ -18,6 +18,8 @@ import org.toxsoft.core.tslib.bricks.gentask.*;
 import org.toxsoft.core.tslib.utils.*;
 import org.toxsoft.core.tslib.utils.errors.*;
 import org.toxsoft.skide.core.api.*;
+import org.toxsoft.skide.core.api.impl.*;
+import org.toxsoft.skide.core.api.tasks.*;
 
 /**
  * Statis helper methods for SkIDE GUI.
@@ -27,7 +29,7 @@ import org.toxsoft.skide.core.api.*;
 public class SkideGuiUtils {
 
   /**
-   * Invokes dialog to select the task to run from the {@link ISkideTaskManager#listTasks()}.
+   * Invokes dialog to select the task to run from the {@link ISkideTaskManager#listRegisteredSkideTasks()}.
    * <p>
    * If no task is registered displays the warning message and returns <code>null</code>.
    *
@@ -38,7 +40,7 @@ public class SkideGuiUtils {
   public static String selectTask( IEclipseContext aEclipseContext ) {
     TsNullArgumentRtException.checkNull( aEclipseContext );
     ISkideEnvironment skideEnv = aEclipseContext.get( ISkideEnvironment.class );
-    if( skideEnv.taskManager().listTasks().isEmpty() ) {
+    if( skideEnv.taskManager().listRegisteredSkideTasks().isEmpty() ) {
       TsDialogUtils.warn( aEclipseContext.get( Shell.class ), MSG_NO_REGISTERED_SKIDE_TASK );
       return null;
     }
@@ -49,7 +51,7 @@ public class SkideGuiUtils {
     IM5Domain m5 = aEclipseContext.get( IM5Domain.class );
     IM5Model<IGenericTaskInfo> model = m5.getModel( GenericTaskInfoM5Model.MODEL_ID, IGenericTaskInfo.class );
     IM5LifecycleManager<IGenericTaskInfo> lm =
-        model.getLifecycleManager( (ITsItemsProvider<IGenericTaskInfo>)() -> skideEnv.taskManager().listTasks() );
+        model.getLifecycleManager( (ITsItemsProvider<IGenericTaskInfo>)() -> skideEnv.taskManager().listRegisteredSkideTasks() );
     IGenericTaskInfo taskInfo = M5GuiUtils.askSelectItem( di, model, null, lm.itemsProvider(), null );
     if( taskInfo != null ) {
       return taskInfo.id();

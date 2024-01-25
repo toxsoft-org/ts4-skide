@@ -6,6 +6,7 @@ import org.toxsoft.core.tslib.bricks.strid.*;
 import org.toxsoft.core.tslib.bricks.strid.coll.*;
 import org.toxsoft.core.tslib.coll.primtypes.*;
 import org.toxsoft.skide.core.api.impl.*;
+import org.toxsoft.skide.core.api.tasks.*;
 
 /**
  * SkIDE project unit is visual representation of the functionality contributed by the plugin.

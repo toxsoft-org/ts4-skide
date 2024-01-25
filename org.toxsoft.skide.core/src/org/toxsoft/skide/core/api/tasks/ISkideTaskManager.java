@@ -1,4 +1,4 @@
-package org.toxsoft.skide.core.api;
+package org.toxsoft.skide.core.api.tasks;
 
 import org.toxsoft.core.tsgui.bricks.ctx.*;
 import org.toxsoft.core.tslib.av.opset.*;
@@ -10,7 +10,7 @@ import org.toxsoft.core.tslib.bricks.validator.impl.*;
 import org.toxsoft.core.tslib.coll.primtypes.*;
 import org.toxsoft.core.tslib.utils.*;
 import org.toxsoft.core.tslib.utils.errors.*;
-import org.toxsoft.skide.core.api.impl.*;
+import org.toxsoft.skide.core.api.*;
 
 /**
  * Manages the tasks to be executed by SkIDE units.
@@ -24,7 +24,7 @@ public interface ISkideTaskManager {
    *
    * @return {@link IStridablesList}&lt;{@link IGenericTaskInfo}&gt; - list of registered tasks
    */
-  IStridablesList<IGenericTaskInfo> listTasks();
+  IStridablesList<IGenericTaskInfo> listRegisteredSkideTasks();
 
   /**
    * Checks if task can be started.
@@ -84,7 +84,7 @@ public interface ISkideTaskManager {
    * @param aTaskId String - the task ID
    * @return {@link IOptionSet} - the task input parameters
    * @throws TsNullArgumentRtException any argument = <code>null</code>
-   * @throws TsItemNotFoundRtException no such task is registered in {@link #listTasks()}
+   * @throws TsItemNotFoundRtException no such task is registered in {@link #listRegisteredSkideTasks()}
    */
   IOptionSet getTaskInputOptions( String aTaskId );
 
@@ -94,7 +94,7 @@ public interface ISkideTaskManager {
    * @param aTaskId String - the task ID
    * @param aTaskInputOps {@link IOptionSet} - the task input parameters
    * @throws TsNullArgumentRtException any argument = <code>null</code>
-   * @throws TsItemNotFoundRtException no such task is registered in {@link #listTasks()}
+   * @throws TsItemNotFoundRtException no such task is registered in {@link #listRegisteredSkideTasks()}
    * @throws TsValidationFailedRtException failed check of input options vs {@link IGenericTaskInfo#inOps()}
    */
   void setTaskInputOptions( String aTaskId, IOptionSet aTaskInputOps );

@@ -21,11 +21,12 @@ import org.toxsoft.core.tslib.coll.primtypes.*;
 import org.toxsoft.core.tslib.coll.primtypes.impl.*;
 import org.toxsoft.core.tslib.utils.errors.*;
 import org.toxsoft.skide.core.api.*;
+import org.toxsoft.skide.core.api.tasks.*;
 
 /**
  * Specified SkIDE task configuration panel.
  * <p>
- * Configures one of the tasks listed in {@link ISkideTaskManager#listTasks()}. The configured task is determined by
+ * Configures one of the tasks listed in {@link ISkideTaskManager#listRegisteredSkideTasks()}. The configured task is determined by
  * {@link #getSkideTaskId()}.
  * <p>
  * Task configuration includes:
@@ -108,7 +109,7 @@ public class PanelSkideTaskConfig
     mapVals.put( taskInfo.id(), taskMan.getTaskInputOptions( taskInfo.id() ) );
     // options kits for capable units
     for( ISkideUnit unit : taskMan.listCapableUnits( taskInfo.id() ) ) {
-      IGenericTask uTask = unit.listSupportedTasks().getByKey( taskInfo.id() );
+      AbstractSkideUnitTask uTask = unit.listSupportedTasks().getByKey( taskInfo.id() );
       llKids.add( new OpsetsKitItemDef( unit.id(), uTask.cfgOptionDefs(), unit.params() ) );
     }
     // init panel
@@ -126,7 +127,7 @@ public class PanelSkideTaskConfig
     }
     // unit options changed
     ISkideUnit unit = skideEnv.pluginsRegistrator().listUnits().getByKey( aKitItemId );
-    IGenericTask task = unit.listSupportedTasks().getByKey( taskInfo.id() );
+    AbstractSkideUnitTask task = unit.listSupportedTasks().getByKey( taskInfo.id() );
     task.setCfgOptionValues( newVals );
   }
 
@@ -153,7 +154,7 @@ public class PanelSkideTaskConfig
     if( Objects.equals( aTaskId, getSkideTaskId() ) ) {
       return;
     }
-    taskInfo = taskMan.listTasks().getByKey( aTaskId );
+    taskInfo = taskMan.listRegisteredSkideTasks().getByKey( aTaskId );
     refreshPanel();
   }
 

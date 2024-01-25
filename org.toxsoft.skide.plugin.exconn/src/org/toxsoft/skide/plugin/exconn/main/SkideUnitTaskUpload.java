@@ -36,7 +36,7 @@ public class SkideUnitTaskUpload
 
   @Override
   protected AbstractSkideUnitPanel doCreateUnitPanel( ITsGuiContext aContext ) {
-    return new SkideUnitTaskPanel( aContext, this, SkideTaskUploadInfo.TASK_ID );
+    return new SkideUnitTaskPanel( aContext, this, UploadToServerTaskInfo.TASK_ID );
   }
 
 }

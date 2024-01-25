@@ -11,6 +11,7 @@ import org.toxsoft.core.tslib.bricks.gentask.*;
 import org.toxsoft.core.tslib.utils.errors.*;
 import org.toxsoft.skide.core.api.*;
 import org.toxsoft.skide.core.api.impl.*;
+import org.toxsoft.skide.core.api.tasks.*;
 
 /**
  * Right panel for {@link ISkideUnit} to configure and run the specified task.
@@ -43,11 +44,11 @@ public class SkideUnitTaskPanel
    * @param aUnit {@link ISkideUnit} - the project unit, creator of the panel
    * @param aTaskId String - the ID of the task to configure and run
    * @throws TsNullArgumentRtException any argument = <code>null</code>
-   * @throws TsItemNotFoundRtException there is no such task in {@link ISkideTaskManager#listTasks()}
+   * @throws TsItemNotFoundRtException there is no such task in {@link ISkideTaskManager#listRegisteredSkideTasks()}
    */
   public SkideUnitTaskPanel( ITsGuiContext aContext, ISkideUnit aUnit, String aTaskId ) {
     super( aContext, aUnit );
-    taskInfo = skEnv().taskManager().listTasks().getByKey( aTaskId );
+    taskInfo = skEnv().taskManager().listRegisteredSkideTasks().getByKey( aTaskId );
   }
 
   // ------------------------------------------------------------------------------------

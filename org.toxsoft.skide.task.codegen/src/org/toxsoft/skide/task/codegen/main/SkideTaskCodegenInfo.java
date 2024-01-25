@@ -13,6 +13,8 @@ import org.toxsoft.core.tslib.av.metainfo.*;
 import org.toxsoft.core.tslib.av.opset.impl.*;
 import org.toxsoft.core.tslib.bricks.gentask.*;
 import org.toxsoft.skide.core.api.*;
+import org.toxsoft.skide.core.api.impl.*;
+import org.toxsoft.skide.core.api.tasks.*;
 import org.toxsoft.skide.task.codegen.gen.*;
 import org.toxsoft.skide.task.codegen.gen.impl.*;
 
@@ -47,6 +49,9 @@ public final class SkideTaskCodegenInfo
    */
   public static final IGenericTaskInfo INSTANCE = new SkideTaskCodegenInfo();
 
+  /**
+   * {@link ISkideTaskInputPreparator} implementation for this task.
+   */
   public static final ISkideTaskInputPreparator INPUT_PREPARATOR = ( aInput, aSkideEnv, aWinContext ) -> {
     File outDir = INOP_DERECTORY.getValue( aInput.params() ).asValobj();
     String packageName = INOP_JAVA_PACKAGE.getValue( aInput.params() ).asString();

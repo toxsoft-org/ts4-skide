@@ -16,9 +16,11 @@ import org.toxsoft.core.tslib.bricks.gentask.*;
 import org.toxsoft.core.tslib.bricks.strid.coll.*;
 import org.toxsoft.core.tslib.utils.errors.*;
 import org.toxsoft.skide.core.api.*;
+import org.toxsoft.skide.core.api.impl.*;
+import org.toxsoft.skide.core.api.tasks.*;
 
 /**
- * Adds GUI items of the registered tasks {@link ISkideTaskManager#listTasks()}.
+ * Adds GUI items of the registered tasks {@link ISkideTaskManager#listRegisteredSkideTasks()}.
  *
  * @author hazard157
  */
@@ -47,7 +49,7 @@ public class AddonSkideUnitTasksGui
     MMenu tasksMenu = e4Helper.findElement( mainWindow, MMNUID_SKIDE_TASKS, MMenu.class, EModelService.IN_MAIN_MENU );
     TsInternalErrorRtException.checkNull( tasksMenu );
     ITsIconManager iconManager = aWinContext.get( ITsIconManager.class );
-    IStridablesList<IGenericTaskInfo> taskInfos = skideEnv.taskManager().listTasks();
+    IStridablesList<IGenericTaskInfo> taskInfos = skideEnv.taskManager().listRegisteredSkideTasks();
     if( taskInfos.isEmpty() ) {
       return;
     }

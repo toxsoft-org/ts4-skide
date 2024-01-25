@@ -59,7 +59,7 @@ public class CmdSkideTasksConfig {
 
   @CanExecute
   boolean canExec( ISkideEnvironment aSkideEnv ) {
-    return !aSkideEnv.taskManager().listTasks().isEmpty();
+    return !aSkideEnv.taskManager().listRegisteredSkideTasks().isEmpty();
   }
 
 }

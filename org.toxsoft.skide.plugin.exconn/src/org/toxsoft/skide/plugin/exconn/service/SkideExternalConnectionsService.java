@@ -19,7 +19,7 @@ import org.toxsoft.core.tslib.utils.logs.impl.*;
 import org.toxsoft.uskat.core.connection.*;
 import org.toxsoft.uskat.core.gui.conn.*;
 import org.toxsoft.uskat.core.gui.conn.cfg.*;
-import org.toxsoft.uskat.core.gui.conn.cfg.m5.*;
+import org.toxsoft.uskat.core.gui.conn.m5.*;
 import org.toxsoft.uskat.core.impl.*;
 import org.toxsoft.uskat.s5.client.*;
 import org.toxsoft.uskat.s5.utils.threads.impl.*;

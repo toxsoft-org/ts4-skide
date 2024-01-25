@@ -16,6 +16,7 @@ import org.toxsoft.core.tslib.utils.*;
 import org.toxsoft.core.tslib.utils.errors.*;
 import org.toxsoft.skide.core.api.*;
 import org.toxsoft.skide.core.api.impl.*;
+import org.toxsoft.skide.core.api.tasks.*;
 import org.toxsoft.skide.plugin.sded.main.*;
 import org.toxsoft.skide.task.codegen.gen.*;
 import org.toxsoft.skide.task.codegen.gen.impl.*;

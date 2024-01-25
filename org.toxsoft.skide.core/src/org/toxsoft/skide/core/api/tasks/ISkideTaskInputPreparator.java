@@ -1,8 +1,9 @@
-package org.toxsoft.skide.core.api;
+package org.toxsoft.skide.core.api.tasks;
 
 import org.toxsoft.core.tsgui.bricks.ctx.*;
 import org.toxsoft.core.tslib.bricks.ctx.*;
 import org.toxsoft.core.tslib.bricks.gentask.*;
+import org.toxsoft.skide.core.api.*;
 
 /**
  * The means to prepare task input.

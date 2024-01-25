@@ -18,7 +18,7 @@ import org.toxsoft.core.tslib.coll.impl.*;
 import org.toxsoft.core.tslib.utils.*;
 import org.toxsoft.core.tslib.utils.errors.*;
 import org.toxsoft.skide.core.api.*;
-import org.toxsoft.skide.core.api.impl.*;
+import org.toxsoft.skide.core.api.tasks.*;
 import org.toxsoft.skide.plugin.sded.main.*;
 import org.toxsoft.skide.task.codegen.gen.*;
 import org.toxsoft.skide.task.codegen.main.*;
@@ -104,6 +104,7 @@ public class TaskClassesCodegen
       // write only SYSDESCR claimed classes (and of course, we don't need a root class)
       if( claimerId.equals( ISkSysdescr.SERVICE_ID ) && !classInfo.id().equals( GW_ROOT_CLASS_ID ) ) {
         writeClass( classInfo, aJw );
+        aJw.addSeparatorLine();
       }
     }
   }

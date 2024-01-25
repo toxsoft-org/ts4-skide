@@ -21,6 +21,8 @@ import org.toxsoft.core.tslib.bricks.strid.impl.*;
 import org.toxsoft.core.tslib.coll.*;
 import org.toxsoft.skide.core.*;
 import org.toxsoft.skide.core.api.*;
+import org.toxsoft.skide.core.api.impl.*;
+import org.toxsoft.skide.core.api.tasks.*;
 import org.toxsoft.skide.core.gui.*;
 import org.toxsoft.skide.core.gui.m5.*;
 
@@ -71,7 +73,7 @@ public class CmdSkideRunTask {
 
   @CanExecute
   boolean canExec( ISkideEnvironment aSkideEnv ) {
-    return !aSkideEnv.taskManager().listTasks().isEmpty();
+    return !aSkideEnv.taskManager().listRegisteredSkideTasks().isEmpty();
   }
 
   // ------------------------------------------------------------------------------------

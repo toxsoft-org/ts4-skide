@@ -1,4 +1,4 @@
-package org.toxsoft.skide.core.api.impl;
+package org.toxsoft.skide.core.api.tasks;
 
 import java.util.concurrent.*;
 
@@ -11,12 +11,12 @@ import org.toxsoft.core.tslib.utils.errors.*;
 import org.toxsoft.skide.core.api.*;
 
 /**
- * {@link AbstractSkideUnitTask} to implement task run only synchronously.
+ * {@link AbstractSkideUnitTask} implementing only the task synchronous running.
  * <p>
  * {@link #doRunAsync(ITsContextRo, ITsContext)} is implemented by calling {@link #doRunSync(ITsContextRo, ITsContext)}.
  * <p>
- * Important: this class could be used only when task execution is guaranteed to take a very small time (not more than
- * 0.1-0.3 second.
+ * Important: this class could be used only when task execution is guaranteed to take a very short time (no more than a
+ * few seconds).
  *
  * @author hazard157
  */
@@ -34,7 +34,6 @@ public abstract class AbstractSkideUnitTaskSync
   protected AbstractSkideUnitTaskSync( AbstractSkideUnit aOwnerUnit, IGenericTaskInfo aInfo,
       IStridablesList<IDataDef> aCfgOptionDefs ) {
     super( aOwnerUnit, aInfo, aCfgOptionDefs );
-    // TODO Auto-generated constructor stub
   }
 
   @Override

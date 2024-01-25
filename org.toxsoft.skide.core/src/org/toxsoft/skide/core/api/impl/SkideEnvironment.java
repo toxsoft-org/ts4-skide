@@ -5,6 +5,7 @@ import static org.toxsoft.skide.core.ISkideCoreConstants.*;
 import org.eclipse.e4.core.contexts.*;
 import org.toxsoft.core.txtproj.lib.workroom.*;
 import org.toxsoft.skide.core.api.*;
+import org.toxsoft.skide.core.api.tasks.*;
 
 /**
  * {@link ISkideEnvironment} implementation.

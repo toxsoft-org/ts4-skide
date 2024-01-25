@@ -19,6 +19,7 @@ import org.toxsoft.skide.plugin.exconn.service.*;
 import org.toxsoft.uskat.backend.memtext.*;
 import org.toxsoft.uskat.backend.s5.gui.*;
 import org.toxsoft.uskat.backend.s5.gui.utils.*;
+import org.toxsoft.uskat.backend.sqlite.*;
 import org.toxsoft.uskat.core.gui.conn.cfg.*;
 
 /**
@@ -57,6 +58,10 @@ public class AddonSkidePluginExconn
     if( !ccService.listProviders().hasKey( S5ConnectionConfigProvider.INSTANCE.id() ) ) {
       ccService.registerPovider( S5ConnectionConfigProvider.INSTANCE );
     }
+    IConnectionConfigProvider p2 = new ConnectionConfigProvider( SkBackendSqlite.PROVIDER, IOptionSet.NULL );
+    if( !ccService.listProviders().hasKey( p2.id() ) ) {
+      ccService.registerPovider( p2 );
+    }
     // load configs
     ITsWorkroom workroom = aAppContext.get( ITsWorkroom.class );
     TsInternalErrorRtException.checkNull( workroom );
@@ -92,7 +97,7 @@ public class AddonSkidePluginExconn
     // register SkIDE plugin and upload task
     ISkideEnvironment skideEnv = aAppContext.get( ISkideEnvironment.class );
     skideEnv.pluginsRegistrator().registerPlugin( SkidePluginExconn.INSTANCE );
-    skideEnv.taskManager().registerTask( SkideTaskUploadInfo.INSTANCE, SkideTaskUploadInfo.INPUT_PREPARATOR );
+    skideEnv.taskManager().registerTask( UploadToServerTaskInfo.INSTANCE, UploadToServerTaskInfo.INPUT_PREPARATOR );
     //
     ISkideExternalConnectionsService exConnService = new SkideExternalConnectionsService();
     aAppContext.set( ISkideExternalConnectionsService.class, exConnService );
