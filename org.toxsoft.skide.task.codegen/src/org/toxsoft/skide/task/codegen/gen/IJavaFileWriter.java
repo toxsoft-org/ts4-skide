@@ -13,12 +13,12 @@ public interface IJavaFileWriter {
   /**
    * Returns the created Java type.
    *
-   * @return {@link ECodegenJavaType} - the Java tyoe
+   * @return {@link ECodegenJavaType} - the Java type
    */
   ECodegenJavaType javaType();
 
   /**
-   * Returns name of the created Java type, that is tha name of the created file.
+   * Returns name of the created Java type, that is the name of the created file.
    *
    * @return String - the type (file) name
    */
