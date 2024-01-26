@@ -28,7 +28,7 @@ import org.toxsoft.uskat.core.connection.*;
 import org.toxsoft.uskat.core.gui.conn.*;
 
 /**
- * SkIDE task {@link SkideTaskCodegenInfo} runner for {@link SkideUnitClasses}.
+ * SkIDE task {@link CodegenTaskProcessor} runner for {@link SkideUnitClasses}.
  *
  * @author hazard157
  */
@@ -71,7 +71,8 @@ public class TaskClassesCodegen
    * @throws TsNullArgumentRtException any argument = <code>null</code>
    */
   public TaskClassesCodegen( AbstractSkideUnit aOwnerUnit ) {
-    super( aOwnerUnit, SkideTaskCodegenInfo.INSTANCE, new StridablesList<>( OPDEF_GW_CLASSES_INTERFACE_NAME ) );
+    super( aOwnerUnit, CodegenTaskProcessor.INSTANCE.taskInfo(),
+        new StridablesList<>( OPDEF_GW_CLASSES_INTERFACE_NAME ) );
   }
 
   // ------------------------------------------------------------------------------------

@@ -21,7 +21,6 @@ import org.toxsoft.core.tslib.bricks.strid.impl.*;
 import org.toxsoft.core.tslib.coll.*;
 import org.toxsoft.skide.core.*;
 import org.toxsoft.skide.core.api.*;
-import org.toxsoft.skide.core.api.impl.*;
 import org.toxsoft.skide.core.api.tasks.*;
 import org.toxsoft.skide.core.gui.*;
 import org.toxsoft.skide.core.gui.m5.*;
@@ -49,7 +48,7 @@ public class CmdSkideRunTask {
       }
     }
     // select units to run
-    IStridablesList<ISkideUnit> capableUnits = aSkideEnv.taskManager().listCapableUnits( taskId );
+    IStridablesList<ISkideUnit> capableUnits = aSkideEnv.taskRegistrator().listCapableUnits( taskId );
     if( capableUnits.isEmpty() ) {
       TsDialogUtils.warn( shell, FMT_WARN_NO_UNITS_TO_RUN_TASK, taskId );
       return;
@@ -57,7 +56,7 @@ public class CmdSkideRunTask {
     IM5Domain m5 = aEclipseContext.get( IM5Domain.class );
     IM5Model<ISkideUnit> unitModel = m5.getModel( SkideUnitM5Model.MODEL_ID, ISkideUnit.class );
     IM5LifecycleManager<ISkideUnit> lm =
-        new SkideUnitOfTaskM5LifecycleManager( unitModel, aSkideEnv.taskManager(), taskId );
+        new SkideUnitOfTaskM5LifecycleManager( unitModel, aSkideEnv.taskRegistrator(), taskId );
     ITsGuiContext ctx = new TsGuiContext( aEclipseContext );
     TsDialogInfo di = new TsDialogInfo( ctx, DLG_SELECT_TASK_UNITS, DLG_SELECT_TASK_UNITS_D );
     IList<ISkideUnit> unitsList =
@@ -73,7 +72,7 @@ public class CmdSkideRunTask {
 
   @CanExecute
   boolean canExec( ISkideEnvironment aSkideEnv ) {
-    return !aSkideEnv.taskManager().listRegisteredSkideTasks().isEmpty();
+    return !aSkideEnv.taskRegistrator().getRegisteredProcessors().isEmpty();
   }
 
   // ------------------------------------------------------------------------------------
@@ -86,11 +85,11 @@ public class CmdSkideRunTask {
    * @author hazard157
    */
   static class SkideUnitOfTaskM5LifecycleManager
-      extends M5LifecycleManager<ISkideUnit, ISkideTaskManager> {
+      extends M5LifecycleManager<ISkideUnit, ISkideTaskRegistrator> {
 
     private final String taskId;
 
-    public SkideUnitOfTaskM5LifecycleManager( IM5Model<ISkideUnit> aModel, ISkideTaskManager aMaster, String aTaskId ) {
+    public SkideUnitOfTaskM5LifecycleManager( IM5Model<ISkideUnit> aModel, ISkideTaskRegistrator aMaster, String aTaskId ) {
       super( aModel, false, false, false, true, aMaster );
       taskId = StridUtils.checkValidIdPath( aTaskId );
     }

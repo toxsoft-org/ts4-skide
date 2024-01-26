@@ -13,14 +13,13 @@ import org.toxsoft.core.tsgui.mws.*;
 import org.toxsoft.core.tsgui.mws.bases.*;
 import org.toxsoft.core.tsgui.mws.services.e4helper.*;
 import org.toxsoft.core.tslib.bricks.gentask.*;
-import org.toxsoft.core.tslib.bricks.strid.coll.*;
+import org.toxsoft.core.tslib.coll.primtypes.*;
 import org.toxsoft.core.tslib.utils.errors.*;
 import org.toxsoft.skide.core.api.*;
-import org.toxsoft.skide.core.api.impl.*;
 import org.toxsoft.skide.core.api.tasks.*;
 
 /**
- * Adds GUI items of the registered tasks {@link ISkideTaskManager#listRegisteredSkideTasks()}.
+ * Adds GUI items of the registered tasks {@link ISkideTaskRegistrator#getRegisteredProcessors()}.
  *
  * @author hazard157
  */
@@ -49,8 +48,8 @@ public class AddonSkideUnitTasksGui
     MMenu tasksMenu = e4Helper.findElement( mainWindow, MMNUID_SKIDE_TASKS, MMenu.class, EModelService.IN_MAIN_MENU );
     TsInternalErrorRtException.checkNull( tasksMenu );
     ITsIconManager iconManager = aWinContext.get( ITsIconManager.class );
-    IStridablesList<IGenericTaskInfo> taskInfos = skideEnv.taskManager().listRegisteredSkideTasks();
-    if( taskInfos.isEmpty() ) {
+    IStringMap<SkideTaskProcessor> processorsMap = skideEnv.taskRegistrator().getRegisteredProcessors();
+    if( processorsMap.isEmpty() ) {
       return;
     }
     // initialize tasks menu
@@ -60,7 +59,8 @@ public class AddonSkideUnitTasksGui
     tasksMenu.getChildren().add( separator );
     // menu items - one per registered task
     int counter = 0;
-    for( IGenericTaskInfo taskInfo : taskInfos ) {
+    for( SkideTaskProcessor processor : processorsMap ) {
+      IGenericTaskInfo taskInfo = processor.taskInfo();
       MHandledMenuItem mItem = modelService.createModelElement( MHandledMenuItem.class );
       mItem.setLabel( taskInfo.nmName() );
       mItem.setTooltip( taskInfo.description() );

@@ -15,7 +15,6 @@ import org.toxsoft.core.tslib.coll.primtypes.impl.*;
 import org.toxsoft.core.tslib.utils.*;
 import org.toxsoft.core.tslib.utils.errors.*;
 import org.toxsoft.skide.core.api.*;
-import org.toxsoft.skide.core.api.impl.*;
 import org.toxsoft.skide.core.api.tasks.*;
 import org.toxsoft.skide.plugin.sded.main.*;
 import org.toxsoft.skide.task.codegen.gen.*;
@@ -27,7 +26,7 @@ import org.toxsoft.uskat.core.connection.*;
 import org.toxsoft.uskat.core.gui.conn.*;
 
 /**
- * SkIDE task {@link SkideTaskCodegenInfo} runner for {@link SkideUnitObjects}.
+ * SkIDE task {@link CodegenTaskProcessor} runner for {@link SkideUnitObjects}.
  *
  * @author hazard157
  */
@@ -41,7 +40,8 @@ public class TaskObjectsCodegen
    * @throws TsNullArgumentRtException any argument = <code>null</code>
    */
   public TaskObjectsCodegen( AbstractSkideUnit aOwnerUnit ) {
-    super( aOwnerUnit, SkideTaskCodegenInfo.INSTANCE, new StridablesList<>( OPDEF_GW_OBJECTS_INTERFACE_NAME ) );
+    super( aOwnerUnit, CodegenTaskProcessor.INSTANCE.taskInfo(),
+        new StridablesList<>( OPDEF_GW_OBJECTS_INTERFACE_NAME ) );
   }
 
   // ------------------------------------------------------------------------------------

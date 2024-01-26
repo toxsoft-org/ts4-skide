@@ -97,7 +97,7 @@ public class AddonSkidePluginExconn
     // register SkIDE plugin and upload task
     ISkideEnvironment skideEnv = aAppContext.get( ISkideEnvironment.class );
     skideEnv.pluginsRegistrator().registerPlugin( SkidePluginExconn.INSTANCE );
-    skideEnv.taskManager().registerTask( UploadToServerTaskInfo.INSTANCE, UploadToServerTaskInfo.INPUT_PREPARATOR );
+    skideEnv.taskRegistrator().registerTaskProcessor( UploadToServerTaskProcessor.INSTANCE );
     //
     ISkideExternalConnectionsService exConnService = new SkideExternalConnectionsService();
     aAppContext.set( ISkideExternalConnectionsService.class, exConnService );

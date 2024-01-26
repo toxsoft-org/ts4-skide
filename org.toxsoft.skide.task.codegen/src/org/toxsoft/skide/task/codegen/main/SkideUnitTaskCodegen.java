@@ -36,7 +36,7 @@ public class SkideUnitTaskCodegen
 
   @Override
   protected AbstractSkideUnitPanel doCreateUnitPanel( ITsGuiContext aContext ) {
-    return new SkideUnitTaskPanel( aContext, this, SkideTaskCodegenInfo.TASK_ID );
+    return new SkideUnitTaskPanel( aContext, this, CodegenTaskProcessor.TASK_ID );
   }
 
 }

@@ -43,9 +43,8 @@ public class QuantSkide030Environment
     // Initialize plugins
     ITsGuiContext ctx = new TsGuiContext( aWinContext );
     ITsWorkroom wr = aWinContext.get( ITsWorkroom.class );
-    ISkideEnvironment skEnv = aWinContext.get( ISkideEnvironment.class );
-    SkidePluginsRegistrator plugReg = (SkidePluginsRegistrator)skEnv.pluginsRegistrator();
-    plugReg.papiInitPlugins( ctx, skEnv, wr );
+    SkideEnvironment skEnv = (SkideEnvironment)aWinContext.get( ISkideEnvironment.class );
+    skEnv.papiInitialize( ctx, skEnv, wr );
     // M5
     IM5Domain m5 = aWinContext.get( IM5Domain.class );
     m5.addModel( new SkideUnitM5Model() );
@@ -53,9 +52,8 @@ public class QuantSkide030Environment
 
   @Override
   protected void doCloseWin( MWindow aWindow ) {
-    ISkideEnvironment skEnv = aWindow.getContext().get( ISkideEnvironment.class );
-    SkidePluginsRegistrator plugReg = (SkidePluginsRegistrator)skEnv.pluginsRegistrator();
-    plugReg.close();
+    SkideEnvironment skEnv = (SkideEnvironment)aWindow.getContext().get( ISkideEnvironment.class );
+    skEnv.close();
   }
 
 }

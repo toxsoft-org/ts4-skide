@@ -36,7 +36,7 @@ public class AddonSkideTaskCodegen
     ISkideEnvironment skideEnv = aAppContext.get( ISkideEnvironment.class );
     TsInternalErrorRtException.checkNull( skideEnv );
     skideEnv.pluginsRegistrator().registerPlugin( SkidePluginTaskCodegen.INSTANCE );
-    skideEnv.taskManager().registerTask( SkideTaskCodegenInfo.INSTANCE, SkideTaskCodegenInfo.INPUT_PREPARATOR );
+    skideEnv.taskRegistrator().registerTaskProcessor( CodegenTaskProcessor.INSTANCE );
   }
 
   @Override

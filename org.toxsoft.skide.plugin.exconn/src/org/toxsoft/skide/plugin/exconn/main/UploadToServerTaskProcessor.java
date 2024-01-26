@@ -11,8 +11,6 @@ import org.toxsoft.core.tslib.av.metainfo.*;
 import org.toxsoft.core.tslib.av.opset.impl.*;
 import org.toxsoft.core.tslib.bricks.gentask.*;
 import org.toxsoft.core.tslib.bricks.strid.more.*;
-import org.toxsoft.skide.core.api.*;
-import org.toxsoft.skide.core.api.impl.*;
 import org.toxsoft.skide.core.api.tasks.*;
 
 /**
@@ -20,8 +18,8 @@ import org.toxsoft.skide.core.api.tasks.*;
  *
  * @author hazard157
  */
-public final class UploadToServerTaskInfo
-    extends GenericTaskInfo {
+public final class UploadToServerTaskProcessor
+    extends SkideTaskProcessor {
 
   /**
    * The task ID.
@@ -38,26 +36,25 @@ public final class UploadToServerTaskInfo
   // FIXME OPDEF_EDITOR_FACTORY_NAME, ValedAvValedExconnIdchain.EDITOR //
   );
 
-  /**
-   * The singleton instance
-   */
-  public static final IGenericTaskInfo INSTANCE = new UploadToServerTaskInfo();
+  private static final IGenericTaskInfo TASK_INFO = new GenericTaskInfo( TASK_ID, OptionSetUtils.createOpSet( //
+      TSID_NAME, STR_TASK_UPLOAD, //
+      TSID_DESCRIPTION, STR_TASK_UPLOAD_D, //
+      TSID_ICON_ID, ICONID_TASK_UPLOAD //
+  ) ) {
 
-  /**
-   * {@link ISkideTaskInputPreparator} implementation for this task.
-   */
-  public static final ISkideTaskInputPreparator INPUT_PREPARATOR = ( aInput, aSkideEnv, aWinContext ) -> {
-
-    // TODO Auto-generated method stub
+    {
+      // nop
+    }
 
   };
 
-  private UploadToServerTaskInfo() {
-    super( TASK_ID, OptionSetUtils.createOpSet( //
-        TSID_NAME, STR_TASK_UPLOAD, //
-        TSID_DESCRIPTION, STR_TASK_UPLOAD_D, //
-        TSID_ICON_ID, ICONID_TASK_UPLOAD //
-    ) );
+  /**
+   * The singleton instance
+   */
+  public static final SkideTaskProcessor INSTANCE = new UploadToServerTaskProcessor();
+
+  private UploadToServerTaskProcessor() {
+    super( TASK_INFO );
   }
 
 }

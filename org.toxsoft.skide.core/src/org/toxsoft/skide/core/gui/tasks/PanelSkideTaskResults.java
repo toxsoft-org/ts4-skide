@@ -6,10 +6,8 @@ import org.eclipse.swt.widgets.*;
 import org.toxsoft.core.tsgui.bricks.ctx.*;
 import org.toxsoft.core.tsgui.panels.*;
 import org.toxsoft.core.tsgui.utils.layout.*;
-import org.toxsoft.core.tslib.bricks.gentask.*;
 import org.toxsoft.core.tslib.utils.errors.*;
 import org.toxsoft.skide.core.api.*;
-import org.toxsoft.skide.core.api.impl.*;
 import org.toxsoft.skide.core.api.tasks.*;
 
 /**
@@ -20,9 +18,10 @@ import org.toxsoft.skide.core.api.tasks.*;
 public class PanelSkideTaskResults
     extends TsPanel {
 
-  private final ISkideEnvironment skideEnv;
-  private final ISkideTaskManager taskMan;
-  private IGenericTaskInfo        taskInfo = null;
+  private final ISkideEnvironment     skideEnv;
+  private final ISkideTaskRegistrator taskReg;
+
+  private SkideTaskProcessor taskProcessor = null;
 
   /**
    * Constructor.
@@ -36,7 +35,7 @@ public class PanelSkideTaskResults
   public PanelSkideTaskResults( Composite aParent, ITsGuiContext aContext ) {
     super( aParent, aContext );
     skideEnv = tsContext().get( ISkideEnvironment.class );
-    taskMan = skideEnv.taskManager();
+    taskReg = skideEnv.taskRegistrator();
     this.setLayout( new BorderLayout() );
 
     // TODO PanelSkideTaskResults.PanelSkideTaskResults()
@@ -61,7 +60,7 @@ public class PanelSkideTaskResults
    * @return String - the task ID or <code>null</code>
    */
   public String getSkideTaskId() {
-    return taskInfo != null ? taskInfo.id() : null;
+    return taskProcessor != null ? taskProcessor.taskInfo().id() : null;
   }
 
   /**
@@ -74,7 +73,7 @@ public class PanelSkideTaskResults
     if( Objects.equals( aTaskId, getSkideTaskId() ) ) {
       return;
     }
-    taskInfo = taskMan.listRegisteredSkideTasks().getByKey( aTaskId );
+    taskProcessor = taskReg.getRegisteredProcessors().getByKey( aTaskId );
     refreshPanel();
   }
 

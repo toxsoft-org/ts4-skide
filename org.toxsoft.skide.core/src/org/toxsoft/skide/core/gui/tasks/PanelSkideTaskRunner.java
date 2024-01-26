@@ -15,13 +15,12 @@ import org.toxsoft.core.tsgui.bricks.ctx.*;
 import org.toxsoft.core.tsgui.panels.*;
 import org.toxsoft.core.tsgui.panels.toolbar.*;
 import org.toxsoft.core.tsgui.utils.layout.*;
-import org.toxsoft.core.tslib.bricks.gentask.*;
 import org.toxsoft.core.tslib.bricks.validator.*;
+import org.toxsoft.core.tslib.coll.primtypes.*;
 import org.toxsoft.core.tslib.utils.*;
 import org.toxsoft.core.tslib.utils.errors.*;
 import org.toxsoft.core.tslib.utils.logs.impl.*;
 import org.toxsoft.skide.core.api.*;
-import org.toxsoft.skide.core.api.impl.*;
 import org.toxsoft.skide.core.api.tasks.*;
 
 /**
@@ -97,9 +96,10 @@ public class PanelSkideTaskRunner
     void doRun() {
       TsIllegalStateRtException.checkFalse( doCanRun() );
       logText.append( "\n" ); //$NON-NLS-1$
-      logText.append( String.format( FMT_TASK_STARTED, taskInfo.nmName() ) );
+      logText.append( String.format( FMT_TASK_STARTED, taskProcessor.taskInfo().nmName() ) );
       try {
-        taskMan.runSyncSequentially( taskInfo.id(), tsContext(), new TaskCallback() );
+        IStringList unitIds = taskReg.listCapableUnits( taskProcessor.taskInfo().id() ).ids();
+        taskProcessor.runSyncSequentially( tsContext(), unitIds, new TaskCallback() );
         logText.append( "\n" ); //$NON-NLS-1$
         logText.append( String.format( MSG_TASK_FINISHED ) );
       }
@@ -131,9 +131,10 @@ public class PanelSkideTaskRunner
   private final TsToolbar toolbar;
   private final Text      logText;
 
-  private final ISkideEnvironment skideEnv;
-  private final ISkideTaskManager taskMan;
-  private IGenericTaskInfo        taskInfo = null;
+  private final ISkideEnvironment     skideEnv;
+  private final ISkideTaskRegistrator taskReg;
+
+  private SkideTaskProcessor taskProcessor = null;
 
   /**
    * Constructor.
@@ -147,7 +148,7 @@ public class PanelSkideTaskRunner
   public PanelSkideTaskRunner( Composite aParent, ITsGuiContext aContext ) {
     super( aParent, aContext );
     skideEnv = tsContext().get( ISkideEnvironment.class );
-    taskMan = skideEnv.taskManager();
+    taskReg = skideEnv.taskRegistrator();
     this.setLayout( new BorderLayout() );
     // toolbar
     toolbar = TsToolbar.create( this, tsContext(), aspLocal.listAllActionDefs() );
@@ -177,10 +178,11 @@ public class PanelSkideTaskRunner
   }
 
   private ValidationResult validateCanRun() {
-    if( taskInfo == null ) {
+    if( taskProcessor == null ) {
       return ValidationResult.error( MSG_ERR_NO_TASK_TO_RUN );
     }
-    return taskMan.canRun( taskInfo.id(), tsContext() );
+    IStringList unitIds = taskReg.listCapableUnits( taskProcessor.taskInfo().id() ).ids();
+    return taskProcessor.canRun( tsContext(), unitIds );
   }
 
   private void refreshPanel() {
@@ -198,7 +200,7 @@ public class PanelSkideTaskRunner
    * @return String - the task ID or <code>null</code>
    */
   public String getSkideTaskId() {
-    return taskInfo != null ? taskInfo.id() : null;
+    return taskProcessor != null ? taskProcessor.taskInfo().id() : null;
   }
 
   /**
@@ -211,7 +213,7 @@ public class PanelSkideTaskRunner
     if( Objects.equals( aTaskId, getSkideTaskId() ) ) {
       return;
     }
-    taskInfo = taskMan.listRegisteredSkideTasks().getByKey( aTaskId );
+    taskProcessor = taskReg.getRegisteredProcessors().getByKey( aTaskId );
     refreshPanel();
   }
 

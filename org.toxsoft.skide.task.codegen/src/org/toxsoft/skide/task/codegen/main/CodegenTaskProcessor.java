@@ -11,9 +11,8 @@ import java.io.*;
 import org.toxsoft.core.tslib.av.impl.*;
 import org.toxsoft.core.tslib.av.metainfo.*;
 import org.toxsoft.core.tslib.av.opset.impl.*;
+import org.toxsoft.core.tslib.bricks.ctx.*;
 import org.toxsoft.core.tslib.bricks.gentask.*;
-import org.toxsoft.skide.core.api.*;
-import org.toxsoft.skide.core.api.impl.*;
 import org.toxsoft.skide.core.api.tasks.*;
 import org.toxsoft.skide.task.codegen.gen.*;
 import org.toxsoft.skide.task.codegen.gen.impl.*;
@@ -23,8 +22,8 @@ import org.toxsoft.skide.task.codegen.gen.impl.*;
  *
  * @author hazard157
  */
-public final class SkideTaskCodegenInfo
-    extends GenericTaskInfo {
+public final class CodegenTaskProcessor
+    extends SkideTaskProcessor {
 
   /**
    * The task ID.
@@ -44,29 +43,34 @@ public final class SkideTaskCodegenInfo
       TSID_DESCRIPTION, "" //
   );
 
+  private static final IGenericTaskInfo TASK_INFO = new GenericTaskInfo( TASK_ID, OptionSetUtils.createOpSet( //
+      TSID_NAME, STR_TASK_CODEGEN, //
+      TSID_DESCRIPTION, STR_TASK_CODEGEN_D//
+  ) ) {
+
+    {
+      inOps().add( INOP_DERECTORY );
+      inOps().add( INOP_JAVA_PACKAGE );
+      inRefs().put( REFDEF_CODEGEN_ENV.refKey(), REFDEF_CODEGEN_ENV );
+    }
+
+  };
+
   /**
    * The singleton instance
    */
-  public static final IGenericTaskInfo INSTANCE = new SkideTaskCodegenInfo();
+  public static final SkideTaskProcessor INSTANCE = new CodegenTaskProcessor();
 
-  /**
-   * {@link ISkideTaskInputPreparator} implementation for this task.
-   */
-  public static final ISkideTaskInputPreparator INPUT_PREPARATOR = ( aInput, aSkideEnv, aWinContext ) -> {
+  private CodegenTaskProcessor() {
+    super( TASK_INFO );
+  }
+
+  @Override
+  protected void doBeforeRunTask( ITsContext aInput ) {
     File outDir = INOP_DERECTORY.getValue( aInput.params() ).asValobj();
     String packageName = INOP_JAVA_PACKAGE.getValue( aInput.params() ).asString();
     ICodegenEnvironment codegenEnv = new CodegenEnvironment( outDir, packageName );
     ICodegenConstants.REFDEF_CODEGEN_ENV.setRef( aInput, codegenEnv );
-  };
-
-  private SkideTaskCodegenInfo() {
-    super( SkideTaskCodegenInfo.TASK_ID, OptionSetUtils.createOpSet( //
-        TSID_NAME, STR_TASK_CODEGEN, //
-        TSID_DESCRIPTION, STR_TASK_CODEGEN_D//
-    ) );
-    inOps().add( INOP_DERECTORY );
-    inOps().add( INOP_JAVA_PACKAGE );
-    inRefs().put( REFDEF_CODEGEN_ENV.refKey(), REFDEF_CODEGEN_ENV );
   }
 
 }

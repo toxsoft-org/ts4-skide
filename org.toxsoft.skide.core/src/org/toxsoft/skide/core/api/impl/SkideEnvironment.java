@@ -3,6 +3,8 @@ package org.toxsoft.skide.core.api.impl;
 import static org.toxsoft.skide.core.ISkideCoreConstants.*;
 
 import org.eclipse.e4.core.contexts.*;
+import org.toxsoft.core.tsgui.bricks.ctx.*;
+import org.toxsoft.core.tslib.utils.*;
 import org.toxsoft.core.txtproj.lib.workroom.*;
 import org.toxsoft.skide.core.api.*;
 import org.toxsoft.skide.core.api.tasks.*;
@@ -16,17 +18,17 @@ import org.toxsoft.skide.core.api.tasks.*;
  * @author hazard157
  */
 public class SkideEnvironment
-    implements ISkideEnvironment {
+    implements ISkideEnvironment, ICloseable {
 
   /**
    * This is the subsystem ID to retrieve SkIDE core storage.
    */
   private static final String WORKROOM_SUBSYSTEM_ID_SKIDE_CORE = SKIDE_FULL_ID + ".core"; //$NON-NLS-1$
 
-  private final ITsWorkroom              workroom;
-  private final ISkidePluginsRegistrator plugReg;
-  private final ISkideProjectProperties  projProps;
-  private final ISkideTaskManager        taskManager;
+  private final ITsWorkroom             workroom;
+  private final SkidePluginsRegistrator plugReg;
+  private final SkideTaskRegistrator    taskReg;
+  private final ISkideProjectProperties projProps;
 
   /**
    * Constructor.
@@ -37,14 +39,31 @@ public class SkideEnvironment
     plugReg = new SkidePluginsRegistrator();
     workroom = aAppContext.get( ITsWorkroom.class );
     projProps = new SkideProjectProperties( workroom.getApplicationStorage() );
-    taskManager = new SkideTaskManager( this );
+    taskReg = new SkideTaskRegistrator( this );
   }
 
   // ------------------------------------------------------------------------------------
-  // Package API
+  // ICloseable
   //
 
-  ITsWorkroomStorage getSkideCoreStorage() {
+  @Override
+  public void close() {
+    plugReg.close();
+    taskReg.close();
+  }
+
+  // ------------------------------------------------------------------------------------
+  // Internal API
+  //
+
+  @SuppressWarnings( "javadoc" )
+  public void papiInitialize( ITsGuiContext aContext, ISkideEnvironment aSkEnv, ITsWorkroom aWorkroom ) {
+    plugReg.papiInitialize( aContext, aSkEnv, aWorkroom );
+    taskReg.papiInitialize( aContext, aSkEnv );
+  }
+
+  @SuppressWarnings( "javadoc" )
+  public ITsWorkroomStorage papiGetSkideCoreStorage() {
     return workroom.getStorage( WORKROOM_SUBSYSTEM_ID_SKIDE_CORE );
   }
 
@@ -63,8 +82,8 @@ public class SkideEnvironment
   }
 
   @Override
-  public ISkideTaskManager taskManager() {
-    return taskManager;
+  public ISkideTaskRegistrator taskRegistrator() {
+    return taskReg;
   }
 
 }

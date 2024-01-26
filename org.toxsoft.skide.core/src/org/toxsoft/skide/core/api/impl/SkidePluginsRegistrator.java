@@ -35,11 +35,10 @@ public final class SkidePluginsRegistrator
   }
 
   // ------------------------------------------------------------------------------------
-  // package API
+  // internal API
   //
 
-  @SuppressWarnings( "javadoc" )
-  public void papiInitPlugins( ITsGuiContext aContext, ISkideEnvironment aSkEnv, ITsWorkroom aWorkroom ) {
+  void papiInitialize( ITsGuiContext aContext, ISkideEnvironment aSkEnv, ITsWorkroom aWorkroom ) {
     TsNullArgumentRtException.checkNulls( aContext, aSkEnv, aWorkroom );
     // init plugins
     for( AbstractSkidePlugin p : registeredPlugins ) {

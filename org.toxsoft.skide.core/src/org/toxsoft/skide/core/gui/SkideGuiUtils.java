@@ -15,10 +15,11 @@ import org.toxsoft.core.tsgui.m5.gui.*;
 import org.toxsoft.core.tsgui.m5.model.*;
 import org.toxsoft.core.tsgui.m5.std.models.misc.*;
 import org.toxsoft.core.tslib.bricks.gentask.*;
+import org.toxsoft.core.tslib.coll.*;
+import org.toxsoft.core.tslib.coll.impl.*;
 import org.toxsoft.core.tslib.utils.*;
 import org.toxsoft.core.tslib.utils.errors.*;
 import org.toxsoft.skide.core.api.*;
-import org.toxsoft.skide.core.api.impl.*;
 import org.toxsoft.skide.core.api.tasks.*;
 
 /**
@@ -28,8 +29,29 @@ import org.toxsoft.skide.core.api.tasks.*;
  */
 public class SkideGuiUtils {
 
+  static class TaskInfosProvider
+      implements ITsItemsProvider<IGenericTaskInfo> {
+
+    private final ISkideTaskRegistrator taskRegistrator;
+
+    TaskInfosProvider( ISkideTaskRegistrator aTaskRegistrator ) {
+      TsNullArgumentRtException.checkNull( aTaskRegistrator );
+      taskRegistrator = aTaskRegistrator;
+    }
+
+    @Override
+    public IList<IGenericTaskInfo> listItems() {
+      IListEdit<IGenericTaskInfo> ll = new ElemArrayList<>();
+      for( SkideTaskProcessor p : taskRegistrator.getRegisteredProcessors() ) {
+        ll.add( p.taskInfo() );
+      }
+      return ll;
+    }
+
+  }
+
   /**
-   * Invokes dialog to select the task to run from the {@link ISkideTaskManager#listRegisteredSkideTasks()}.
+   * Invokes dialog to select the task to run from the {@link ISkideTaskRegistrator#getRegisteredProcessors()}.
    * <p>
    * If no task is registered displays the warning message and returns <code>null</code>.
    *
@@ -40,7 +62,7 @@ public class SkideGuiUtils {
   public static String selectTask( IEclipseContext aEclipseContext ) {
     TsNullArgumentRtException.checkNull( aEclipseContext );
     ISkideEnvironment skideEnv = aEclipseContext.get( ISkideEnvironment.class );
-    if( skideEnv.taskManager().listRegisteredSkideTasks().isEmpty() ) {
+    if( skideEnv.taskRegistrator().getRegisteredProcessors().isEmpty() ) {
       TsDialogUtils.warn( aEclipseContext.get( Shell.class ), MSG_NO_REGISTERED_SKIDE_TASK );
       return null;
     }
@@ -51,7 +73,7 @@ public class SkideGuiUtils {
     IM5Domain m5 = aEclipseContext.get( IM5Domain.class );
     IM5Model<IGenericTaskInfo> model = m5.getModel( GenericTaskInfoM5Model.MODEL_ID, IGenericTaskInfo.class );
     IM5LifecycleManager<IGenericTaskInfo> lm =
-        model.getLifecycleManager( (ITsItemsProvider<IGenericTaskInfo>)() -> skideEnv.taskManager().listRegisteredSkideTasks() );
+        model.getLifecycleManager( new TaskInfosProvider( skideEnv.taskRegistrator() ) );
     IGenericTaskInfo taskInfo = M5GuiUtils.askSelectItem( di, model, null, lm.itemsProvider(), null );
     if( taskInfo != null ) {
       return taskInfo.id();
