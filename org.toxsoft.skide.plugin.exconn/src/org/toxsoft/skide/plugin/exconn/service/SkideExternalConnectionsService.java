@@ -15,6 +15,7 @@ import org.toxsoft.core.tslib.bricks.ctx.impl.*;
 import org.toxsoft.core.tslib.bricks.geometry.impl.*;
 import org.toxsoft.core.tslib.bricks.strid.idgen.*;
 import org.toxsoft.core.tslib.bricks.strid.more.*;
+import org.toxsoft.core.tslib.utils.*;
 import org.toxsoft.core.tslib.utils.errors.*;
 import org.toxsoft.core.tslib.utils.login.*;
 import org.toxsoft.core.tslib.utils.logs.impl.*;
@@ -23,6 +24,7 @@ import org.toxsoft.uskat.core.gui.conn.*;
 import org.toxsoft.uskat.core.gui.conn.cfg.*;
 import org.toxsoft.uskat.core.gui.conn.m5.*;
 import org.toxsoft.uskat.core.impl.*;
+import org.toxsoft.uskat.s5.client.*;
 
 /**
  * {@link ISkideExternalConnectionsService} implementation.
@@ -89,6 +91,13 @@ public class SkideExternalConnectionsService
     ISkConnectionConstants.ARGDEF_LOGIN.setValue( args.params(), avStr( aLoginInfo.login() ) );
     ISkConnectionConstants.ARGDEF_PASSWORD.setValue( args.params(), avStr( aLoginInfo.password() ) );
     ISkConnectionConstants.ARGDEF_ROLE.setValue( args.params(), avStr( aLoginInfo.role() ) );
+
+    // FIXME temporary code
+    IS5ConnectionParams.OP_USERNAME.setValue( args.params(), avStr( aLoginInfo.login() ) );
+    IS5ConnectionParams.OP_PASSWORD.setValue( args.params(), avStr( aLoginInfo.password() ) );
+    TsTestUtils.pl( " ==== LoginInfo = %s", aLoginInfo.toString() );
+    // ---
+
     // create connection
     ISkConnectionSupplier conSup = aContext.get( ISkConnectionSupplier.class );
     IdChain connId = new IdChain( conConf.id(), idGen.nextId() );
