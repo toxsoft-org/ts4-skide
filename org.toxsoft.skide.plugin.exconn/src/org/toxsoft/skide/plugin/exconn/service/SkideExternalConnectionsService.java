@@ -86,7 +86,7 @@ public class SkideExternalConnectionsService
     if( ccProvider == null ) {
       throw new TsItemNotFoundRtException( FMT_ERR_UNREGISTERED_PROVIDER, conConf.id() );
     }
-    ccProvider.fillArgs( args, conConf.opValues() );
+
     // fill LoginInfo even (this is harmless operation for connection that does not need login)
     ISkConnectionConstants.ARGDEF_LOGIN.setValue( args.params(), avStr( aLoginInfo.login() ) );
     ISkConnectionConstants.ARGDEF_PASSWORD.setValue( args.params(), avStr( aLoginInfo.password() ) );
@@ -97,6 +97,8 @@ public class SkideExternalConnectionsService
     IS5ConnectionParams.OP_PASSWORD.setValue( args.params(), avStr( aLoginInfo.password() ) );
     TsTestUtils.pl( " ==== LoginInfo = %s", aLoginInfo.toString() );
     // ---
+
+    ccProvider.fillArgs( args, conConf.opValues() );
 
     // create connection
     ISkConnectionSupplier conSup = aContext.get( ISkConnectionSupplier.class );
