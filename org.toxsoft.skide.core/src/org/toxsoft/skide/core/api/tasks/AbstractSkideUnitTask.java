@@ -15,6 +15,9 @@ import org.toxsoft.core.tslib.utils.errors.*;
 import org.toxsoft.core.txtproj.lib.storage.*;
 import org.toxsoft.skide.core.api.*;
 import org.toxsoft.uskat.core.api.users.*;
+import org.toxsoft.uskat.core.connection.*;
+import org.toxsoft.uskat.core.gui.conn.*;
+import org.toxsoft.uskat.core.utils.*;
 
 /**
  * {@link IGenericTask} implementation for SkIDE units to be provided by {@link ISkideUnit#listSupportedTasks()}.
@@ -23,7 +26,7 @@ import org.toxsoft.uskat.core.api.users.*;
  */
 public abstract class AbstractSkideUnitTask
     extends AbstractGenericTask
-    implements ITsGuiContextable, ISkidePluginRelated {
+    implements ITsGuiContextable, ISkidePluginRelated, ISkConnected {
 
   private static final String FMT_KEEPABLES_STORAGE_ITEM_ID = "task_config__%s"; //$NON-NLS-1$
 
@@ -85,6 +88,16 @@ public abstract class AbstractSkideUnitTask
   @Override
   final public IPluginEnvironment plEnv() {
     return ownerUnit.plEnv();
+  }
+
+  // ------------------------------------------------------------------------------------
+  // ISkConnected
+  //
+
+  @Override
+  public ISkConnection skConn() {
+    ISkConnectionSupplier cs = tsContext().get( ISkConnectionSupplier.class );
+    return cs.defConn();
   }
 
   // ------------------------------------------------------------------------------------

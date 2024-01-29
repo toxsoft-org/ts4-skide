@@ -99,7 +99,7 @@ public class PanelSkideTaskRunner
       logText.append( String.format( FMT_TASK_STARTED, taskProcessor.taskInfo().nmName() ) );
       try {
         IStringList unitIds = taskReg.listCapableUnits( taskProcessor.taskInfo().id() ).ids();
-        taskProcessor.runSyncSequentially( tsContext(), unitIds, new TaskCallback() );
+        taskProcessor.runSyncSequentially( unitIds, new TaskCallback() );
         logText.append( "\n" ); //$NON-NLS-1$
         logText.append( String.format( MSG_TASK_FINISHED ) );
       }
@@ -182,7 +182,7 @@ public class PanelSkideTaskRunner
       return ValidationResult.error( MSG_ERR_NO_TASK_TO_RUN );
     }
     IStringList unitIds = taskReg.listCapableUnits( taskProcessor.taskInfo().id() ).ids();
-    return taskProcessor.canRun( tsContext(), unitIds );
+    return taskProcessor.canRun( unitIds );
   }
 
   private void refreshPanel() {

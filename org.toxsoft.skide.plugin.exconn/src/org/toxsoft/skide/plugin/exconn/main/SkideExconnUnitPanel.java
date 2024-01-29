@@ -22,7 +22,6 @@ import org.toxsoft.core.tsgui.panels.toolbar.*;
 import org.toxsoft.core.tsgui.utils.layout.*;
 import org.toxsoft.core.tsgui.widgets.*;
 import org.toxsoft.core.tslib.av.impl.*;
-import org.toxsoft.core.tslib.bricks.strid.idgen.*;
 import org.toxsoft.core.tslib.coll.*;
 import org.toxsoft.core.tslib.utils.errors.*;
 import org.toxsoft.core.tslib.utils.logs.impl.*;
@@ -42,8 +41,7 @@ import org.toxsoft.uskat.core.gui.conn.m5.*;
 class SkideExconnUnitPanel
     extends AbstractSkideUnitPanel {
 
-  private final IStridGenerator idGen = new SimpleStridGenerator( SimpleStridGenerator.DEFAULT_INITIAL_STATE );
-  private TsComposite           backplane;
+  private TsComposite backplane;
 
   final static String ACTID_EXPORT_SYSDESCR = SK_ID + ".org.toxsoft.skide.plugin.exconn.ExportSysdescr"; //$NON-NLS-1$
 

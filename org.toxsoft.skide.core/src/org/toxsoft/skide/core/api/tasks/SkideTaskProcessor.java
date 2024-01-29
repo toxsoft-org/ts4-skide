@@ -134,17 +134,15 @@ public class SkideTaskProcessor
    * <p>
    * Runs task for all units sequentially one after another, starting next unit only when previous is finished
    *
-   * @param aWinContext {@link ITsGuiContext} - windows level application context
    * @param aUnitIds {@link IStringList} - list of SkIDE unit IDs to run task for
    * @param aCallback {@link ILongOpProgressCallback} - execution process visualizer
    * @return {@link IStringMap}&lt;{@link ITsContextRo}&gt; - map "unit ID" - "finished task result"
    * @throws TsNullArgumentRtException any argument = <code>null</code>
-   * @throws TsValidationFailedRtException failed {@link #canRun(ITsGuiContext, IStringList)}
+   * @throws TsValidationFailedRtException failed {@link #canRun(IStringList)}
    */
-  final public IStringMap<ITsContextRo> runSyncSequentially( ITsGuiContext aWinContext, IStringList aUnitIds,
-      ILongOpProgressCallback aCallback ) {
-    TsNullArgumentRtException.checkNulls( aWinContext, aUnitIds, aCallback );
-    TsValidationFailedRtException.checkError( canRun( aWinContext, aUnitIds ) );
+  final public IStringMap<ITsContextRo> runSyncSequentially( IStringList aUnitIds, ILongOpProgressCallback aCallback ) {
+    TsNullArgumentRtException.checkNulls( aUnitIds, aCallback );
+    TsValidationFailedRtException.checkError( canRun( aUnitIds ) );
     ITsContext input = new TsContext();
     input.params().setAll( getTaskInputOptions() );
     REFDEF_IN_PROGRESS_MONITOR.setRef( input, aCallback );
@@ -170,13 +168,12 @@ public class SkideTaskProcessor
    * Checks that task ID is registered, there is at least one unit in
    * {@link ISkideTaskRegistrator#listCapableUnits(String)} and inout options (not references!) are valid.
    *
-   * @param aWinContext {@link ITsGuiContext} - windows level application context
    * @param aUnitIds {@link IStringList} - list of SkIDE unit IDs to run task for
    * @return {@link ValidationResult} - the check result
    * @throws TsNullArgumentRtException any argument = <code>null</code>
    */
-  final public ValidationResult canRun( ITsGuiContext aWinContext, IStringList aUnitIds ) {
-    TsNullArgumentRtException.checkNulls( aWinContext, aUnitIds );
+  final public ValidationResult canRun( IStringList aUnitIds ) {
+    TsNullArgumentRtException.checkNull( aUnitIds );
     // create and check input
     ITsContext input = new TsContext();
     input.params().setAll( getTaskInputOptions() );
@@ -203,7 +200,7 @@ public class SkideTaskProcessor
     if( runTasks.isEmpty() ) {
       return ValidationResult.error( STR_NO_TASK_CAPABLE_UNITS, taskInfo.nmName() );
     }
-    return ValidationResult.SUCCESS;
+    return doCanRun( input );
   }
 
   /**
@@ -299,6 +296,21 @@ public class SkideTaskProcessor
    */
   protected void doClose() {
     // nop
+  }
+
+  /**
+   * Subclass may perform additional checks for method {@link #canRun(IStringList)}.
+   * <p>
+   * Note: input is prepared with input options, but it does <b>not</b> contains the options and references added before
+   * actual task run in {@link #doBeforeRunTask(ITsContext)}.
+   * <p>
+   * In base class returns {@link ValidationResult#SUCCESS}, there is no need to call superclass method when overriding.
+   *
+   * @param aInput {@link ITsContextRo} - input prepared with options
+   * @return {@link ValidationResult} - the check result
+   */
+  protected ValidationResult doCanRun( ITsContextRo aInput ) {
+    return ValidationResult.SUCCESS;
   }
 
 }
