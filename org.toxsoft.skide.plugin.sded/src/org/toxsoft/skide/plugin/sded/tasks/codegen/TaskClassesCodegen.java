@@ -79,10 +79,10 @@ public class TaskClassesCodegen
   // implementation
   //
 
-  private static void writeClassProps( ISkClassProps<?> aProps, IJavaConstantsInterfaceWriter aJw ) {
+  private static void writeClassProps( String aClassId, ISkClassProps<?> aProps, IJavaConstantsInterfaceWriter aJw ) {
     String prefix = PROP_PREFIX_MAP.getByKey( aProps.kind() );
     for( IDtoClassPropInfoBase prop : aProps.listSelf() ) {
-      String cn = makeJavaConstName( prefix, prop.id() );
+      String cn = makeJavaConstName2( prefix, aClassId, prop.id() );
       aJw.addConstString( cn, prop.id(), prop.nmName() );
     }
   }
@@ -93,7 +93,7 @@ public class TaskClassesCodegen
     aJw.addConstString( cn, aCinf.id(), EMPTY_STRING );
     for( ESkClassPropKind k : PROP_PREFIX_MAP.keys() ) {
       ISkClassProps<?> props = aCinf.props( k );
-      writeClassProps( props, aJw );
+      writeClassProps( aCinf.id(), props, aJw );
     }
   }
 

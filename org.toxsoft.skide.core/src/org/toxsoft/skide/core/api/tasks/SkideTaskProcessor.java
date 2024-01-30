@@ -25,9 +25,9 @@ import org.toxsoft.skide.core.api.*;
 import org.toxsoft.skide.core.api.impl.*;
 
 /**
- * The SkIDE task processor provided by {@link ISkideTaskRegistrator#getRegisteredProcessors()}.
+ * The SkIDE task processor implementation base class.
  * <p>
- * TODO comment about SkIDE tasks
+ * Registered task processor implementations are provided by {@link ISkideTaskRegistrator#getRegisteredProcessors()}.
  * <p>
  * TODO comment about SkIDE tasks
  *
@@ -150,7 +150,8 @@ public class SkideTaskProcessor
     IStringMapEdit<ITsContextRo> resultsMap;
     try {
       resultsMap = new StringMap<>();
-      for( ISkideUnit skUnit : skEnv().taskRegistrator().listCapableUnits( taskInfo.id() ) ) {
+      for( String unitId : aUnitIds ) {
+        ISkideUnit skUnit = skEnv().pluginsRegistrator().listUnits().getByKey( unitId );
         IGenericTask task = skUnit.listSupportedTasks().getByKey( taskInfo.id() );
         ITsContextRo output = task.runSync( input );
         resultsMap.put( skUnit.id(), output );

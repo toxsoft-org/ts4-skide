@@ -1,7 +1,5 @@
 package org.toxsoft.skide.task.codegen.gen.impl;
 
-import static org.toxsoft.core.tslib.bricks.strid.impl.StridUtils.*;
-
 import org.toxsoft.core.tslib.bricks.strid.impl.*;
 import org.toxsoft.core.tslib.bricks.validator.impl.*;
 import org.toxsoft.core.tslib.utils.errors.*;
@@ -33,9 +31,7 @@ public class CodegenUtils {
     String strid = aObject.skid().strid();
     String rawConstValue = String.format( "new Skid( \"%s\", \"%s\" )", classId, strid ); //$NON-NLS-1$
     // name of the constant is "SKID_CLASS_ID___OBJ_STRID"
-    String nClassId = classId.replace( CHAR_ID_PATH_DELIMITER, '_' ).toUpperCase();
-    String nStrid = strid.replace( CHAR_ID_PATH_DELIMITER, '_' ).toUpperCase();
-    String cnObj = String.format( "%s_%s___%s", PREFIX_OBJECT, nClassId, nStrid ); //$NON-NLS-1$
+    String cnObj = makeJavaConstName2( PREFIX_OBJECT, classId, strid );
     // write line "Skid SKID_CLASS_ID___OBJ_STRID = new Skid( classId, strid )".
     aJw.addConstOther( "Skid", cnObj, rawConstValue, aObject.nmName() ); //$NON-NLS-1$
   }
@@ -80,6 +76,27 @@ public class CodegenUtils {
     String right = idpath2ConstName( aIdPath );
     String left = aPrefix.toUpperCase() + '_';
     return left + right;
+  }
+
+  /**
+   * Creates a Java constant name from two entity ID.
+   * <p>
+   * This method may be used when making constant name for class property (ClassID and PropID) or and object SKID name
+   * (ClassID and ObjStrid).
+   *
+   * @param aPrefix String - the ID prefix (an IDname)
+   * @param aIdPath1 String - the identifier 1 (an IDpath)
+   * @param aIdPath2 String - the identifier 2 (an IDpath)
+   * @return String - upper-case Java constant name
+   * @throws TsNullArgumentRtException any argument = <code>null</code>
+   * @throws TsIllegalArgumentRtException prefix is not an IDname
+   * @throws TsIllegalArgumentRtException any identifier is not an IDpath
+   */
+  public static String makeJavaConstName2( String aPrefix, String aIdPath1, String aIdPath2 ) {
+    StridUtils.checkValidIdName( aPrefix );
+    String p1 = idpath2ConstName( aIdPath1 );
+    String p2 = idpath2ConstName( aIdPath2 );
+    return aPrefix + "__" + p1 + "__" + p2; //$NON-NLS-1$//$NON-NLS-2$
   }
 
   /**
