@@ -55,7 +55,7 @@ public class AddonSkideExe
   protected void initWin( IEclipseContext aWinContext ) {
     Display d = aWinContext.get( Display.class );
     ITsE4Helper e4Helper = aWinContext.get( ITsE4Helper.class );
-    d.asyncExec( () -> e4Helper.switchToPerspective( PERPSID_SKIDE_PROJECT, null ) );
+    d.asyncExec( () -> e4Helper.switchToPerspective( PERSPID_SKIDE_PROJECT, null ) );
   }
 
 }

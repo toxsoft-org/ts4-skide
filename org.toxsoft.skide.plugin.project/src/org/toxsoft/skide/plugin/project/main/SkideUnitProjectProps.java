@@ -4,6 +4,7 @@ import static org.toxsoft.core.tsgui.bricks.actions.ITsStdActionDefs.*;
 import static org.toxsoft.core.tsgui.graphics.icons.ITsStdIconIds.*;
 import static org.toxsoft.core.tslib.av.metainfo.IAvMetaConstants.*;
 import static org.toxsoft.skide.core.ISkideCoreConstants.*;
+import static org.toxsoft.skide.core.api.ucateg.ISkideUnitCategoryConstants.*;
 import static org.toxsoft.skide.plugin.project.ISkidePluginProjectSharedResources.*;
 
 import org.toxsoft.core.tsgui.bricks.ctx.*;
@@ -32,6 +33,7 @@ public class SkideUnitProjectProps
     super( UNIT_ID, OptionSetUtils.createOpSet( //
         TSID_NAME, STR_SKIDE_PROJECT_PROPS, //
         TSID_DESCRIPTION, STR_SKIDE_PROJECT_PROPS_D, //
+        OPDEF_SKIDE_UNIT_CATEGORY, UCATEGID_DELPOYMENT, //
         TSID_ICON_ID, ICONID_ARROW_RIGHT //
     ), aContext, aCreator );
     unitActions().add( ACDEF_ABOUT );

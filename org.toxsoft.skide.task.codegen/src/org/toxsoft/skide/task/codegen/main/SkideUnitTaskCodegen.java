@@ -3,6 +3,7 @@ package org.toxsoft.skide.task.codegen.main;
 import static org.toxsoft.core.tsgui.bricks.actions.ITsStdActionDefs.*;
 import static org.toxsoft.core.tslib.av.metainfo.IAvMetaConstants.*;
 import static org.toxsoft.skide.core.ISkideCoreConstants.*;
+import static org.toxsoft.skide.core.api.ucateg.ISkideUnitCategoryConstants.*;
 import static org.toxsoft.skide.task.codegen.ISkideTaskCodegenConstants.*;
 import static org.toxsoft.skide.task.codegen.ISkideTaskCodegenSharedResources.*;
 
@@ -29,6 +30,7 @@ public class SkideUnitTaskCodegen
     super( UNIT_ID, OptionSetUtils.createOpSet( //
         TSID_NAME, STR_TASK_CODEGEN, //
         TSID_DESCRIPTION, STR_TASK_CODEGEN_D, //
+        OPDEF_SKIDE_UNIT_CATEGORY, UCATEGID_DEVELOPMENT_DEBUG, //
         TSID_ICON_ID, ICONID_TASK_CODEGEN //
     ), aContext, aCreator );
     unitActions().add( ACDEF_ABOUT );

@@ -3,6 +3,7 @@ package org.toxsoft.skide.plugin.sded.main;
 import static org.toxsoft.core.tsgui.bricks.actions.ITsStdActionDefs.*;
 import static org.toxsoft.core.tslib.av.metainfo.IAvMetaConstants.*;
 import static org.toxsoft.skide.core.ISkideCoreConstants.*;
+import static org.toxsoft.skide.core.api.ucateg.ISkideUnitCategoryConstants.*;
 import static org.toxsoft.skide.plugin.sded.ISkidePluginSdedSharedResources.*;
 
 import org.toxsoft.core.tsgui.bricks.ctx.*;
@@ -31,6 +32,7 @@ public class SkideUnitObjects
     super( UNIT_ID, OptionSetUtils.createOpSet( //
         TSID_NAME, STR_SKIDE_OBJECTS_EDITOR, //
         TSID_DESCRIPTION, STR_SKIDE_OBJECTS_EDITOR_D, //
+        OPDEF_SKIDE_UNIT_CATEGORY, UCATEGID_SYSDESCR, //
         TSID_ICON_ID, ISkidePluginSdedConstants.ICONID_OBJS_EDITOR //
     ), aContext, aCreator );
     unitActions().add( ACDEF_ABOUT );
