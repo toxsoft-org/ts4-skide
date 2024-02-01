@@ -27,6 +27,10 @@ import org.toxsoft.skide.core.api.tasks.*;
 public class SkideUnitTaskPanel
     extends AbstractSkideUnitPanel {
 
+  /**
+   * FIXME add one morte tab - for unitIDs
+   */
+
   // TODO use settings from ITsHdpiService
   private static final EIconSize TAB_ICON_SIZE = EIconSize.IS_24X24;
 

@@ -32,7 +32,7 @@ import org.toxsoft.skide.core.api.tasks.*;
  * Task configuration includes:
  * <ul>
  * <li>specifying the input parameters of the task as defined by {@link IGenericTaskInfo#inOps()};</li>
- * <li>setting configuration options {@link AbstractSkideUnitTask#cfgOptionValues()} for each task in
+ * <li>setting configuration options {@link AbstractSkideUnitTask#getCfgOptionValues()} for each task in
  * {@link ISkideTaskRegistrator#listCapableUnits(String)} of the specified task.</li>
  * </ul>
  * <p>
@@ -112,7 +112,7 @@ public class PanelSkideTaskConfig
     // options kits for capable units
     for( ISkideUnit unit : taskReg.listCapableUnits( taskInfo.id() ) ) {
       AbstractSkideUnitTask uTask = unit.listSupportedTasks().getByKey( taskInfo.id() );
-      llKids.add( new OpsetsKitItemDef( unit.id(), uTask.cfgOptionDefs(), unit.params() ) );
+      llKids.add( new OpsetsKitItemDef( unit.id(), uTask.getCfgOptionDefs(), unit.params() ) );
     }
     // init panel
     opKitPanel.setKitItemDefs( llKids );

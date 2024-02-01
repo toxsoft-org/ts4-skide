@@ -121,25 +121,25 @@ public abstract class AbstractSkideUnitTask
    *
    * @return {@link IStridablesList}&lt;{@link IDataDef}&gt; - options definitions, may be an empty list
    */
-  final public IStridablesList<IDataDef> cfgOptionDefs() {
+  final public IStridablesList<IDataDef> getCfgOptionDefs() {
     return opDefs;
   }
 
   /**
    * Returns the configuration options values.
    * <p>
-   * Options may contain only subset of the options defined by {@link #cfgOptionDefs()}.
+   * Options may contain only subset of the options defined by {@link #getCfgOptionDefs()}.
    *
    * @return {@link IOptionSet} - a configuration
    */
-  final public IOptionSet cfgOptionValues() {
+  final public IOptionSet getCfgOptionValues() {
     return opVals;
   }
 
   /**
    * Sets the configuration option values.
    * <p>
-   * Argument may contain only subset of the options defined by {@link #cfgOptionDefs()}.
+   * Argument may contain only subset of the options defined by {@link #getCfgOptionDefs()}.
    *
    * @param aValues {@link IOptionSet} - new configuration option values
    * @throws TsNullArgumentRtException any argument = <code>null</code>
@@ -151,7 +151,7 @@ public abstract class AbstractSkideUnitTask
     // save options to the permanent storage
     String ksItemId = makeKeepablesStorageItemId( taskInfo().id() );
     IKeepablesStorage unitStorage = plEnv().unitStorage( ownerUnit.id() );
-    unitStorage.writeItem( ksItemId, cfgOptionValues(), OptionSetKeeper.KEEPER );
+    unitStorage.writeItem( ksItemId, getCfgOptionValues(), OptionSetKeeper.KEEPER );
   }
 
   // ------------------------------------------------------------------------------------

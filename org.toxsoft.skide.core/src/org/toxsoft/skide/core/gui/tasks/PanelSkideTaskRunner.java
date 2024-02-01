@@ -15,6 +15,8 @@ import org.toxsoft.core.tsgui.bricks.ctx.*;
 import org.toxsoft.core.tsgui.panels.*;
 import org.toxsoft.core.tsgui.panels.toolbar.*;
 import org.toxsoft.core.tsgui.utils.layout.*;
+import org.toxsoft.core.tslib.av.opset.*;
+import org.toxsoft.core.tslib.bricks.ctx.*;
 import org.toxsoft.core.tslib.bricks.validator.*;
 import org.toxsoft.core.tslib.coll.primtypes.*;
 import org.toxsoft.core.tslib.utils.*;
@@ -80,17 +82,28 @@ public class PanelSkideTaskRunner
 
   }
 
-  private static final String ACTID_RUN_SKIDE_TASK = SKIDE_FULL_ID + ".act.runTask"; //$NON-NLS-1$
+  private static final String ACTID_RUN_SKIDE_TASK       = SKIDE_FULL_ID + ".act.runTask";       //$NON-NLS-1$
+  private static final String ACTID_CONFIGURE_SKIDE_TASK = SKIDE_FULL_ID + ".act.configureTask"; //$NON-NLS-1$
 
   private static final ITsActionDef ACDEF_RUN_SKIDE_TASK =
       TsActionDef.ofPush2( ACTID_RUN_SKIDE_TASK, STR_RUN_SKIDE_TASK, STR_RUN_SKIDE_TASK_D, ICONID_TASK_RUN );
 
+  private static final ITsActionDef ACDEF_CONFIGURE_SKIDE_TASK = TsActionDef.ofPush2( ACTID_CONFIGURE_SKIDE_TASK,
+      STR_CONFIGURE_SKIDE_TASK, STR_CONFIGURE_SKIDE_TASK_D, ICONID_TASK_CONFIG );
+
+  /**
+   * Toolbar actions.
+   *
+   * @author hazard157
+   */
   class AspLocalActions
       extends MethodPerActionTsActionSetProvider {
 
     public AspLocalActions() {
       defineAction( ACDEF_RUN_SKIDE_TASK, this::doRun, this::doCanRun );
-      defineAction( ACDEF_CLEAR, this::doClear, this::doCanClear );
+      defineAction( ACDEF_CONFIGURE_SKIDE_TASK, this::doConfigure, this::canConfigure );
+      defineSeparator();
+      defineAction( ACDEF_CLEAR, this::doClear, this::canClear );
     }
 
     void doRun() {
@@ -98,10 +111,14 @@ public class PanelSkideTaskRunner
       logText.append( "\n" ); //$NON-NLS-1$
       logText.append( String.format( FMT_TASK_STARTED, taskProcessor.taskInfo().nmName() ) );
       try {
-        IStringList unitIds = taskReg.listCapableUnits( taskProcessor.taskInfo().id() ).ids();
-        taskProcessor.runSyncSequentially( unitIds, new TaskCallback() );
+        IStringMap<ITsContextRo> result = taskProcessor.runSyncSequentially( new TaskCallback(), false );
         logText.append( "\n" ); //$NON-NLS-1$
-        logText.append( String.format( MSG_TASK_FINISHED ) );
+        if( result == null ) {
+          logText.append( String.format( MSG_TASK_CANCELED ) );
+        }
+        else {
+          logText.append( String.format( MSG_TASK_FINISHED ) );
+        }
       }
       catch( Exception ex ) {
         LoggerUtils.errorLogger().error( ex );
@@ -116,11 +133,19 @@ public class PanelSkideTaskRunner
       return !validateCanRun().isError();
     }
 
+    void doConfigure() {
+      DialogTaskRunConfiguration.edit( tsContext(), taskProcessor, true );
+    }
+
+    boolean canConfigure() {
+      return taskProcessor != null;
+    }
+
     void doClear() {
       logText.setText( EMPTY_STRING );
     }
 
-    boolean doCanClear() {
+    boolean canClear() {
       return !logText.getText().isEmpty();
     }
 
@@ -181,8 +206,9 @@ public class PanelSkideTaskRunner
     if( taskProcessor == null ) {
       return ValidationResult.error( MSG_ERR_NO_TASK_TO_RUN );
     }
-    IStringList unitIds = taskReg.listCapableUnits( taskProcessor.taskInfo().id() ).ids();
-    return taskProcessor.canRun( unitIds );
+    IStringList unitIds = taskProcessor.getTaskUnitIds();
+    IOptionSet inOps = taskProcessor.getTaskInputOptions();
+    return taskProcessor.canRun( unitIds, inOps );
   }
 
   private void refreshPanel() {
