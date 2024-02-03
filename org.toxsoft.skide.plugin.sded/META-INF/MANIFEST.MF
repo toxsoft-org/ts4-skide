@@ -7,7 +7,9 @@ Bundle-Activator: org.toxsoft.skide.plugin.sded.Activator
 Bundle-Vendor: toxsoft.org
 Export-Package: org.toxsoft.skide.plugin.sded,
  org.toxsoft.skide.plugin.sded.e4.addons,
- org.toxsoft.skide.plugin.sded.main
+ org.toxsoft.skide.plugin.sded.main,
+ org.toxsoft.skide.plugin.sded.tasks.codegen,
+ org.toxsoft.skide.plugin.sded.tasks.upload
 Require-Bundle: javax.annotation,
  javax.inject,
  org.eclipse.core.runtime,
@@ -24,7 +26,8 @@ Require-Bundle: javax.annotation,
  org.toxsoft.uskat.core,
  org.toxsoft.uskat.core.gui,
  org.toxsoft.skide.core,
- org.toxsoft.skide.task.codegen
+ org.toxsoft.skide.task.codegen,
+ org.toxsoft.skide.plugin.exconn
 Bundle-RequiredExecutionEnvironment: JavaSE-17
 Automatic-Module-Name: org.toxsoft.skide.plugin.sded
 Bundle-ActivationPolicy: lazy

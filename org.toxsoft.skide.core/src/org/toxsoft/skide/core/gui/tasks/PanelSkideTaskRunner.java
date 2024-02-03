@@ -111,7 +111,7 @@ public class PanelSkideTaskRunner
       logText.append( "\n" ); //$NON-NLS-1$
       logText.append( String.format( FMT_TASK_STARTED, taskProcessor.taskInfo().nmName() ) );
       try {
-        IStringMap<ITsContextRo> result = taskProcessor.runSyncSequentially( new TaskCallback(), false );
+        IStringMap<ITsContextRo> result = taskProcessor.runSyncSequentially( new TaskCallback() );
         logText.append( "\n" ); //$NON-NLS-1$
         if( result == null ) {
           logText.append( String.format( MSG_TASK_CANCELED ) );

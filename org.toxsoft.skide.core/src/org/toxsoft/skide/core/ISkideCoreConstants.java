@@ -85,8 +85,15 @@ public interface ISkideCoreConstants {
       TSID_DEFAULT_VALUE, avValobj( EIconSize.IS_48X48 ) //
   );
 
+  IDataDef APPREF_NO_TASK_CFG_DLG_BEFORE_RUN = DataDef.create( SKIDE_ID + ".NoTaskConfigDialogBeforeRun", BOOLEAN, //$NON-NLS-1$
+      TSID_NAME, STR_NO_TASK_CFG_DLG_BEFORE_RUN, //
+      TSID_DESCRIPTION, STR_NO_TASK_CFG_DLG_BEFORE_RUN_D, //
+      TSID_DEFAULT_VALUE, AV_FALSE //
+  );
+
   IStridablesList<IDataDef> ALL_APREFS = new StridablesList<>( //
-      APPREF_UNITS_LIST_ICON_SIZE //
+      APPREF_UNITS_LIST_ICON_SIZE, //
+      APPREF_NO_TASK_CFG_DLG_BEFORE_RUN //
   );
 
   /**

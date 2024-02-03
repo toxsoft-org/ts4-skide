@@ -24,6 +24,7 @@ import org.toxsoft.core.tslib.utils.*;
 import org.toxsoft.core.tslib.utils.errors.*;
 import org.toxsoft.core.txtproj.lib.storage.*;
 import org.toxsoft.core.txtproj.lib.workroom.*;
+import org.toxsoft.skide.core.*;
 import org.toxsoft.skide.core.api.*;
 import org.toxsoft.skide.core.api.impl.*;
 import org.toxsoft.skide.core.gui.tasks.*;
@@ -146,8 +147,8 @@ public class SkideTaskProcessor
    * Runs (starts) the task for the specified SkIDE units.
    * <p>
    * Before task will started the confirmation dialog will appear. Dialog allows to edit list of units to run and to
-   * change task input options. Edited values will be saved. Confirmation dialog may be bypassed if argument
-   * <code>aDontAskConfig</code> is set to <code>true</code>.
+   * change task input options. Edited values will be saved. Confirmation dialog may be bypassed if application
+   * preference {@link ISkideCoreConstants#APPREF_NO_TASK_CFG_DLG_BEFORE_RUN} is set to <code>true</code>.
    * <p>
    * If {@link #canRun(IStringList, IOptionSet)} fails, this method invokes message dialog and returns
    * <code>null</code>.
@@ -157,16 +158,15 @@ public class SkideTaskProcessor
    * If user does not starts the task (cancel confirmation dialog) then method returns <code>null</code>.
    *
    * @param aCallback {@link ILongOpProgressCallback} - execution process visualizer
-   * @param aDontAskConfig boolean - <code>true</code> to bypass unit IDs and input options editing
    * @return {@link IStringMap}&lt;{@link ITsContextRo}&gt; - map "unit ID" - "finished task result" or
    *         <code>null</code>
    * @throws TsNullArgumentRtException any argument = <code>null</code>
    */
-  final public IStringMap<ITsContextRo> runSyncSequentially( ILongOpProgressCallback aCallback,
-      boolean aDontAskConfig ) {
+  final public IStringMap<ITsContextRo> runSyncSequentially( ILongOpProgressCallback aCallback ) {
     TsNullArgumentRtException.checkNull( aCallback );
     // ask run confirmation and edit units and input if needed
-    if( !aDontAskConfig ) {
+    boolean noConfirm = APPREF_NO_TASK_CFG_DLG_BEFORE_RUN.getValue( prefBundle( PBID_SKIDE_MAIN ).prefs() ).asBool();
+    if( !noConfirm ) {
       PanelTaskRunConfiguration.Config cfg = DialogTaskRunConfiguration.edit( tsContext, this, true );
       if( cfg == null ) {
         return null;
