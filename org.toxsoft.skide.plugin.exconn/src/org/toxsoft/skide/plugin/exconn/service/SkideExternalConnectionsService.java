@@ -3,28 +3,34 @@ package org.toxsoft.skide.plugin.exconn.service;
 import static org.toxsoft.core.tslib.av.impl.AvUtils.*;
 import static org.toxsoft.skide.plugin.exconn.ISkidePluginExconnSharedResources.*;
 
-import org.eclipse.swt.widgets.*;
-import org.toxsoft.core.tsgui.bricks.ctx.*;
-import org.toxsoft.core.tsgui.dialogs.*;
-import org.toxsoft.core.tsgui.dialogs.datarec.*;
-import org.toxsoft.core.tsgui.m5.*;
-import org.toxsoft.core.tsgui.m5.gui.*;
-import org.toxsoft.core.tsgui.m5.model.*;
-import org.toxsoft.core.tslib.bricks.ctx.*;
-import org.toxsoft.core.tslib.bricks.ctx.impl.*;
-import org.toxsoft.core.tslib.bricks.geometry.impl.*;
-import org.toxsoft.core.tslib.bricks.strid.idgen.*;
-import org.toxsoft.core.tslib.bricks.strid.more.*;
-import org.toxsoft.core.tslib.utils.*;
-import org.toxsoft.core.tslib.utils.errors.*;
-import org.toxsoft.core.tslib.utils.login.*;
-import org.toxsoft.core.tslib.utils.logs.impl.*;
-import org.toxsoft.uskat.core.connection.*;
-import org.toxsoft.uskat.core.gui.conn.*;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
+import org.toxsoft.core.tsgui.bricks.ctx.ITsGuiContext;
+import org.toxsoft.core.tsgui.dialogs.TsDialogUtils;
+import org.toxsoft.core.tsgui.dialogs.datarec.TsDialogInfo;
+import org.toxsoft.core.tsgui.m5.IM5Domain;
+import org.toxsoft.core.tsgui.m5.IM5Model;
+import org.toxsoft.core.tsgui.m5.gui.M5GuiUtils;
+import org.toxsoft.core.tsgui.m5.model.IM5LifecycleManager;
+import org.toxsoft.core.tslib.bricks.ctx.ITsContext;
+import org.toxsoft.core.tslib.bricks.ctx.impl.TsContext;
+import org.toxsoft.core.tslib.bricks.geometry.impl.TsPoint;
+import org.toxsoft.core.tslib.bricks.strid.idgen.IStridGenerator;
+import org.toxsoft.core.tslib.bricks.strid.idgen.SimpleStridGenerator;
+import org.toxsoft.core.tslib.bricks.strid.more.IdChain;
+import org.toxsoft.core.tslib.utils.TsTestUtils;
+import org.toxsoft.core.tslib.utils.errors.TsItemNotFoundRtException;
+import org.toxsoft.core.tslib.utils.errors.TsNullArgumentRtException;
+import org.toxsoft.core.tslib.utils.login.ILoginInfo;
+import org.toxsoft.core.tslib.utils.logs.impl.LoggerUtils;
+import org.toxsoft.uskat.core.connection.ISkConnection;
+import org.toxsoft.uskat.core.connection.ISkConnectionConstants;
+import org.toxsoft.uskat.core.gui.conn.ISkConnectionSupplier;
+import org.toxsoft.uskat.core.gui.conn.SkGuiThreadExecutor;
 import org.toxsoft.uskat.core.gui.conn.cfg.*;
-import org.toxsoft.uskat.core.gui.conn.m5.*;
-import org.toxsoft.uskat.core.impl.*;
-import org.toxsoft.uskat.s5.client.*;
+import org.toxsoft.uskat.core.gui.conn.m5.IConnectionConfigM5Constants;
+import org.toxsoft.uskat.core.impl.ISkCoreConfigConstants;
+import org.toxsoft.uskat.s5.client.IS5ConnectionParams;
 
 /**
  * {@link ISkideExternalConnectionsService} implementation.
@@ -78,9 +84,8 @@ public class SkideExternalConnectionsService
     }
     // fill arguments with the GUI-specific references
     ITsContext args = new TsContext();
-    ISkCoreConfigConstants.REFDEF_THREAD_SEPARATOR.setRef( args, SwtThreadSeparatorService.CREATOR );
     Display display = aContext.get( Display.class );
-    SwtThreadSeparatorService.REF_DISPLAY.setRef( args, display );
+    ISkCoreConfigConstants.REFDEF_THREAD_EXECUTOR.setRef( args, new SkGuiThreadExecutor( display ) );
     // fill opening arguments with the connection kind specific options and references
     IConnectionConfigProvider ccProvider = ccService.listProviders().findByKey( conConf.providerId() );
     if( ccProvider == null ) {
