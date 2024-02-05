@@ -66,7 +66,7 @@ public class TaskClassesUpload
    */
   public TaskClassesUpload( AbstractSkideUnit aOwnerUnit ) {
     super( aOwnerUnit, UploadToServerTaskProcessor.INSTANCE.taskInfo(), //
-        new StridablesList<>( /* No inOps */ ) );
+        new StridablesList<>( /* No cfg ops */ ) );
   }
 
   // ------------------------------------------------------------------------------------

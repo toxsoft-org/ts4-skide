@@ -1,5 +1,6 @@
 package org.toxsoft.skide.plugin.sded.tasks.codegen;
 
+import static org.toxsoft.core.tslib.av.metainfo.IAvMetaConstants.*;
 import static org.toxsoft.core.tslib.bricks.gentask.IGenericTaskConstants.*;
 import static org.toxsoft.core.tslib.gw.IGwHardConstants.*;
 import static org.toxsoft.core.tslib.utils.TsLibUtils.*;
@@ -8,6 +9,8 @@ import static org.toxsoft.skide.plugin.sded.tasks.codegen.IPackageConstants.*;
 import static org.toxsoft.skide.task.codegen.gen.ICodegenConstants.*;
 import static org.toxsoft.skide.task.codegen.gen.impl.CodegenUtils.*;
 
+import org.toxsoft.core.tslib.av.*;
+import org.toxsoft.core.tslib.av.metainfo.*;
 import org.toxsoft.core.tslib.bricks.ctx.*;
 import org.toxsoft.core.tslib.bricks.strid.coll.*;
 import org.toxsoft.core.tslib.bricks.strid.coll.impl.*;
@@ -82,8 +85,37 @@ public class TaskClassesCodegen
   private static void writeClassProps( String aClassId, ISkClassProps<?> aProps, IJavaConstantsInterfaceWriter aJw ) {
     String prefix = PROP_PREFIX_MAP.getByKey( aProps.kind() );
     for( IDtoClassPropInfoBase prop : aProps.listSelf() ) {
+      IDataType propDataType = null;
+      switch( aProps.kind() ) {
+        case ATTR: {
+          propDataType = ((IDtoAttrInfo)prop).dataType();
+          break;
+        }
+        case RTDATA: {
+          propDataType = ((IDtoRtdataInfo)prop).dataType();
+          break;
+        }
+        case CLOB:
+        case CMD:
+        case EVENT:
+        case LINK:
+        case RIVET:
+          break;
+        default:
+          throw new TsNotAllEnumsUsedRtException();
+      }
       String cn = makeJavaConstName2( prefix, aClassId, prop.id() );
-      aJw.addConstString( cn, prop.id(), prop.nmName() );
+      String comment = prop.nmName();
+      if( propDataType != null ) {
+        if( propDataType.atomicType() == EAtomicType.VALOBJ ) {
+          String keeperId = propDataType.params().getStr( TSID_KEEPER_ID, "???" ); //$NON-NLS-1$
+          comment = String.format( "[%s - %s] %s", propDataType.atomicType().id(), keeperId, prop.nmName() ); //$NON-NLS-1$
+        }
+        else {
+          comment = String.format( "[%s] %s", propDataType.atomicType().id(), prop.nmName() ); //$NON-NLS-1$
+        }
+      }
+      aJw.addConstString( cn, prop.id(), comment );
     }
   }
 
@@ -118,7 +150,7 @@ public class TaskClassesCodegen
   protected void doRunSync( ITsContextRo aInput, ITsContext aOutput ) {
     ILongOpProgressCallback lop = REFDEF_IN_PROGRESS_MONITOR.getRef( aInput );
     ICodegenEnvironment codegenEnv = REFDEF_CODEGEN_ENV.getRef( aInput );
-    String interfaceName = OPDEF_GW_CLASSES_INTERFACE_NAME.getValue( aInput.params() ).asString();
+    String interfaceName = OPDEF_GW_CLASSES_INTERFACE_NAME.getValue( getCfgOptionValues() ).asString();
     IJavaConstantsInterfaceWriter jw = codegenEnv.createJavaInterfaceWriter( interfaceName );
     ISkConnectionSupplier cs = tsContext().get( ISkConnectionSupplier.class );
     writeConstants( cs.defConn(), jw );
