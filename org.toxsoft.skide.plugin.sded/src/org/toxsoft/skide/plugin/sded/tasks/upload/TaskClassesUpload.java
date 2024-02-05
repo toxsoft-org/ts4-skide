@@ -298,7 +298,7 @@ public class TaskClassesUpload
   @Override
   protected void doRunSync( ITsContextRo aInput, ITsContext aOutput ) {
     ILongOpProgressCallback lop = REFDEF_IN_PROGRESS_MONITOR.getRef( aInput );
-    uploadSelectionRules.loadFromOptions( aInput.params() );
+    uploadSelectionRules.loadFromOptions( getCfgOptionValues() );
     ISkConnection srcConn = tsContext().get( ISkConnectionSupplier.class ).defConn();
     srcCoreApi = srcConn.coreApi();
     ISkConnection destConn = REFDEF_IN_OPEN_SK_CONN.getRef( aInput );

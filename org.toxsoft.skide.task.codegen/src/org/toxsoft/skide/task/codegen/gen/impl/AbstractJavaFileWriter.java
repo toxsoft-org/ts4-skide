@@ -71,7 +71,7 @@ public abstract class AbstractJavaFileWriter
   private void internalWritePackage( ICodeWriter aCw ) {
     Long date = Long.valueOf( System.currentTimeMillis() );
     aCw.pl( "/**" );
-    aCw.pl( " * Auto-generated file, %tF %tT", date, date );
+    aCw.pl( " * SkIDE generated file, %tF %tT", date, date );
     aCw.pl( " */" );
     aCw.pl( "package %s;", packageName );
   }
