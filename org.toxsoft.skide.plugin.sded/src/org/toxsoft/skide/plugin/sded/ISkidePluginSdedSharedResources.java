@@ -25,5 +25,9 @@ public interface ISkidePluginSdedSharedResources {
   String MSG_ASK_CONTINUE_CLASSES_UPLOAD_ON_WARN   = Messages.getString( "MSG_ASK_CONTINUE_CLASSES_UPLOAD_ON_WARN" );   //$NON-NLS-1$
   String FMT_ERR_DEST_CLASS_ID_SOURCE_CODE_DEFINED = Messages.getString( "FMT_ERR_DEST_CLASS_ID_SOURCE_CODE_DEFINED" ); //$NON-NLS-1$
   String FMT_ERR_DEST_CLASS_ID_NON_GW              = Messages.getString( "FMT_ERR_DEST_CLASS_ID_NON_GW" );              //$NON-NLS-1$
+  String MSG_OBJECTS_UPLOAD                        = Messages.getString( "MSG_OBJECTS_UPLOAD" );                        //$NON-NLS-1$
+  String FMT_OBJECTS_UPLOADED                      = Messages.getString( "FMT_OBJECTS_UPLOADED" );                      //$NON-NLS-1$
+  String MSG_ERR_CLASSES_SAMENESS_OBJS_UPLOAD      = Messages.getString( "MSG_ERR_CLASSES_SAMENESS_OBJS_UPLOAD" );      //$NON-NLS-1$
+  String MSG_ASK_CONT_LINKED_OBJS_UPLOAD_ON_WARN   = Messages.getString( "MSG_ASK_CONT_LINKED_OBJS_UPLOAD_ON_WARN" );   //$NON-NLS-1$
 
 }

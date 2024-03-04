@@ -14,6 +14,7 @@ import org.toxsoft.skide.core.api.impl.*;
 import org.toxsoft.skide.core.api.tasks.*;
 import org.toxsoft.skide.plugin.sded.*;
 import org.toxsoft.skide.plugin.sded.tasks.codegen.*;
+import org.toxsoft.skide.plugin.sded.tasks.upload.*;
 
 /**
  * SkiDE unit: USkat users and roles management.
@@ -46,6 +47,8 @@ public class SkideUnitObjects
   @Override
   protected void doFillTasks( IStringMapEdit<AbstractSkideUnitTask> aTaskRunnersMap ) {
     AbstractSkideUnitTask task = new TaskObjectsCodegen( this );
+    aTaskRunnersMap.put( task.taskInfo().id(), task );
+    task = new TaskObjectsUpload( this );
     aTaskRunnersMap.put( task.taskInfo().id(), task );
   }
 

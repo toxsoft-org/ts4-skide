@@ -55,7 +55,7 @@ public class SkideUnitTaskPanel
 
     @Override
     public boolean startWork( String aName, boolean aUndefined ) {
-      String s = String.format( "\n%s" ); //$NON-NLS-1$
+      String s = String.format( "\n%s", aName ); //$NON-NLS-1$
       logText.append( s );
       undefined = aUndefined;
       return false;
