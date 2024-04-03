@@ -17,7 +17,7 @@ import org.toxsoft.skide.plugin.sded.tasks.codegen.*;
 import org.toxsoft.skide.plugin.sded.tasks.upload.*;
 
 /**
- * SkiDE unit: USkat users and roles management.
+ * SkiDE unit: Object service objects editor.
  *
  * @author hazard157
  */

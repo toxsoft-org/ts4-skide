@@ -7,7 +7,7 @@ import org.toxsoft.skide.core.api.impl.*;
 import org.toxsoft.uskat.core.gui.glib.*;
 
 /**
- * {@link AbstractSkideUnitPanel} implementation.
+ * {@link AbstractSkideUnitPanel} implementation for {@link SkideUnitObjects}.
  *
  * @author hazard157
  */

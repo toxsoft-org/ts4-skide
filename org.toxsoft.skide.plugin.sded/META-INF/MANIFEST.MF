@@ -7,6 +7,7 @@ Bundle-Activator: org.toxsoft.skide.plugin.sded.Activator
 Bundle-Vendor: toxsoft.org
 Export-Package: org.toxsoft.skide.plugin.sded,
  org.toxsoft.skide.plugin.sded.e4.addons,
+ org.toxsoft.skide.plugin.sded.incub,
  org.toxsoft.skide.plugin.sded.main,
  org.toxsoft.skide.plugin.sded.tasks.codegen,
  org.toxsoft.skide.plugin.sded.tasks.upload
