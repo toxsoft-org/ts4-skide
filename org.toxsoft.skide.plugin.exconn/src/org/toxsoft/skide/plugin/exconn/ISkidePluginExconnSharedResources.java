@@ -23,7 +23,7 @@ public interface ISkidePluginExconnSharedResources {
   String DLG_SELECT_CFG_AND_OPEN_D               = Messages.getString( "DLG_SELECT_CFG_AND_OPEN_D" );      //$NON-NLS-1$
   String FMT_ERR_UNREGISTERED_PROVIDER           = Messages.getString( "FMT_ERR_UNREGISTERED_PROVIDER" );  //$NON-NLS-1$
   String FMT_ERR_NO_SUCH_CONN_CONF_ID            = Messages.getString( "FMT_ERR_NO_SUCH_CONN_CONF_ID" );   //$NON-NLS-1$
-  String STR_N_EXPORT_SYSDESCR                   = "экспорт системного описания";
+  String STR_N_EXPORT_SYSDESCR                   = "Экспорт системного описания";
   String STR_D_EXPORT_SYSDESCR                   = "Перенос системного описания в выделенное соединение";
   String STR_EXPORT_SYSDESCR                     = "Экспорт системного описания";
   String MSG_OPEN_TARGET_CONN                    = "Подключение к целевому серверу...";
