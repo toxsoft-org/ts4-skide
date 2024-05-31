@@ -29,6 +29,11 @@ import org.toxsoft.skide.core.api.tasks.*;
  */
 public class SkideGuiUtils {
 
+  /**
+   * Adapts {@link ISkideTaskRegistrator} as a {@link ITsItemsProvider} of the task registrators.
+   *
+   * @author hazard157
+   */
   static class TaskInfosProvider
       implements ITsItemsProvider<IGenericTaskInfo> {
 
