@@ -10,6 +10,7 @@ import org.eclipse.swt.widgets.*;
 import org.toxsoft.core.tsgui.bricks.actions.*;
 import org.toxsoft.core.tsgui.bricks.actions.asp.*;
 import org.toxsoft.core.tsgui.bricks.ctx.*;
+import org.toxsoft.core.tsgui.graphics.icons.*;
 import org.toxsoft.core.tsgui.panels.toolbar.*;
 import org.toxsoft.core.tsgui.utils.layout.*;
 import org.toxsoft.core.tsgui.widgets.*;
@@ -91,11 +92,11 @@ public class SkideUnitTaskPanel
   private static final String ACTID_RUN_SKIDE_TASK       = SKIDE_FULL_ID + ".act.runTask";       //$NON-NLS-1$
   private static final String ACTID_CONFIGURE_SKIDE_TASK = SKIDE_FULL_ID + ".act.configureTask"; //$NON-NLS-1$
 
-  private static final ITsActionDef ACDEF_RUN_SKIDE_TASK =
-      TsActionDef.ofPush2( ACTID_RUN_SKIDE_TASK, STR_RUN_SKIDE_TASK, STR_RUN_SKIDE_TASK_D, ICONID_TASK_RUN );
+  private static final ITsActionDef ACDEF_RUN_SKIDE_TASK = TsActionDef.ofPush2( ACTID_RUN_SKIDE_TASK,
+      STR_RUN_SKIDE_TASK, STR_RUN_SKIDE_TASK_D, ITsStdIconIds.ICONID_GO_NEXT_VIEW_PAGE );
 
   private static final ITsActionDef ACDEF_CONFIGURE_SKIDE_TASK = TsActionDef.ofPush2( ACTID_CONFIGURE_SKIDE_TASK,
-      STR_CONFIGURE_SKIDE_TASK, STR_CONFIGURE_SKIDE_TASK_D, ICONID_TASK_CONFIG );
+      STR_CONFIGURE_SKIDE_TASK, STR_CONFIGURE_SKIDE_TASK_D, ITsStdIconIds.ICONID_DOCUMENT_PROPERTIES );
 
   /**
    * Toolbar actions.
