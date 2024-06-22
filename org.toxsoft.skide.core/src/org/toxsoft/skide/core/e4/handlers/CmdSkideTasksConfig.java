@@ -2,15 +2,15 @@ package org.toxsoft.skide.core.e4.handlers;
 
 import static org.toxsoft.skide.core.ISkideCoreConstants.*;
 
-import javax.inject.*;
-
-import org.eclipse.e4.core.contexts.*;
+import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.*;
-import org.eclipse.swt.widgets.*;
-import org.toxsoft.core.tsgui.dialogs.*;
-import org.toxsoft.skide.core.*;
-import org.toxsoft.skide.core.api.*;
-import org.toxsoft.skide.core.gui.*;
+import org.eclipse.swt.widgets.Shell;
+import org.toxsoft.core.tsgui.dialogs.TsDialogUtils;
+import org.toxsoft.skide.core.ISkideCoreConstants;
+import org.toxsoft.skide.core.api.ISkideEnvironment;
+import org.toxsoft.skide.core.gui.SkideGuiUtils;
+
+import jakarta.inject.Named;
 
 /**
  * Command: invoke the specified task configuration dialog or select and configure task if none specified.

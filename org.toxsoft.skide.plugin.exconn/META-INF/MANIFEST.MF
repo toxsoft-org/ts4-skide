@@ -4,8 +4,8 @@ Bundle-Name: SkIDE plugin: external connections
 Bundle-SymbolicName: org.toxsoft.skide.plugin.exconn;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: org.toxsoft.skide.plugin.exconn.Activator
-Require-Bundle: javax.annotation,
- javax.inject,
+Require-Bundle: jakarta.inject.jakarta.inject-api,
+ jakarta.annotation-api,
  org.eclipse.core.runtime,
  org.eclipse.ui,
  org.eclipse.e4.core.contexts,

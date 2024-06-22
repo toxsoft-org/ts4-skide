@@ -2,17 +2,18 @@ package org.toxsoft.tool.sfv.gui.e4.uiparts;
 
 import static org.toxsoft.tool.sfv.gui.IToolSfvGuiConstants.*;
 
-import javax.inject.*;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Text;
+import org.toxsoft.core.tsgui.graphics.fonts.IFontInfo;
+import org.toxsoft.core.tsgui.mws.bases.MwsAbstractPart;
+import org.toxsoft.core.tslib.bricks.apprefs.IPrefBundle;
+import org.toxsoft.core.tslib.bricks.events.change.IGenericChangeListener;
+import org.toxsoft.core.tslib.utils.TsLibUtils;
+import org.toxsoft.tool.sfv.gui.e4.services.ISfvToolService;
 
-import org.eclipse.swt.*;
-import org.eclipse.swt.graphics.*;
-import org.eclipse.swt.widgets.*;
-import org.toxsoft.core.tsgui.graphics.fonts.*;
-import org.toxsoft.core.tsgui.mws.bases.*;
-import org.toxsoft.core.tslib.bricks.apprefs.*;
-import org.toxsoft.core.tslib.bricks.events.change.*;
-import org.toxsoft.core.tslib.utils.*;
-import org.toxsoft.tool.sfv.gui.e4.services.*;
+import jakarta.inject.Inject;
 
 /**
  * SFV tool: view content of the section.

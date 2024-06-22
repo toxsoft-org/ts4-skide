@@ -13,8 +13,8 @@ Export-Package: org.toxsoft.skide.task.codegen,
  org.toxsoft.skide.task.codegen.gen.l10n,
  org.toxsoft.skide.task.codegen.main,
  org.toxsoft.skide.task.codegen.valed
-Require-Bundle: javax.annotation,
- javax.inject,
+Require-Bundle: jakarta.inject.jakarta.inject-api,
+ jakarta.annotation-api,
  org.eclipse.core.runtime,
  org.eclipse.ui,
  org.eclipse.e4.core.contexts,
@@ -29,6 +29,6 @@ Require-Bundle: javax.annotation,
  org.toxsoft.uskat.core,
  org.toxsoft.uskat.core.gui,
  org.toxsoft.skide.core
-Bundle-RequiredExecutionEnvironment: JavaSE-17
+Bundle-RequiredExecutionEnvironment: JavaSE-21
 Automatic-Module-Name: org.toxsoft.skide.task.codegen
 Bundle-ActivationPolicy: lazy

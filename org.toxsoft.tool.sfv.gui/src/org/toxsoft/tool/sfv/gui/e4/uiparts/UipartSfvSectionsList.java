@@ -3,21 +3,22 @@ package org.toxsoft.tool.sfv.gui.e4.uiparts;
 import static org.toxsoft.core.tsgui.m5.gui.mpc.IMultiPaneComponentConstants.*;
 import static org.toxsoft.core.tslib.av.impl.AvUtils.*;
 
-import java.io.*;
+import java.io.File;
 
-import javax.inject.*;
+import org.eclipse.swt.widgets.Composite;
+import org.toxsoft.core.tsgui.bricks.ctx.ITsGuiContext;
+import org.toxsoft.core.tsgui.bricks.ctx.impl.TsGuiContext;
+import org.toxsoft.core.tsgui.m5.IM5Model;
+import org.toxsoft.core.tsgui.m5.gui.mpc.impl.MultiPaneComponentModown;
+import org.toxsoft.core.tsgui.m5.model.IM5ItemsProvider;
+import org.toxsoft.core.tsgui.m5.model.IM5LifecycleManager;
+import org.toxsoft.core.tsgui.mws.bases.MwsAbstractPart;
+import org.toxsoft.core.tslib.bricks.events.change.IGenericChangeListener;
+import org.toxsoft.tool.sfv.gui.e4.services.ISfvToolService;
+import org.toxsoft.tool.sfv.gui.m5.SfvSectionM5Model;
+import org.toxsoft.tool.sfv.gui.main.ISfvSection;
 
-import org.eclipse.swt.widgets.*;
-import org.toxsoft.core.tsgui.bricks.ctx.*;
-import org.toxsoft.core.tsgui.bricks.ctx.impl.*;
-import org.toxsoft.core.tsgui.m5.*;
-import org.toxsoft.core.tsgui.m5.gui.mpc.impl.*;
-import org.toxsoft.core.tsgui.m5.model.*;
-import org.toxsoft.core.tsgui.mws.bases.*;
-import org.toxsoft.core.tslib.bricks.events.change.*;
-import org.toxsoft.tool.sfv.gui.e4.services.*;
-import org.toxsoft.tool.sfv.gui.m5.*;
-import org.toxsoft.tool.sfv.gui.main.*;
+import jakarta.inject.Inject;
 
 /**
  * SFV tool: sections list of the open file.

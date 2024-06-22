@@ -8,8 +8,8 @@ Bundle-Vendor: toxsoft.org
 Export-Package: org.toxsoft.skide.exe;x-internal:=true,
  org.toxsoft.skide.exe.e4.addons,
  org.toxsoft.skide.exe.e4.processors
-Require-Bundle: javax.annotation,
- javax.inject,
+Require-Bundle: jakarta.inject.jakarta.inject-api,
+ jakarta.annotation-api,
  org.eclipse.core.runtime,
  org.eclipse.ui,
  org.eclipse.e4.core.contexts,
@@ -29,6 +29,6 @@ Require-Bundle: javax.annotation,
  org.toxsoft.uskat.core.gui,
  org.toxsoft.skf.users.gui,
  org.toxsoft.skide.core
-Bundle-RequiredExecutionEnvironment: JavaSE-17
+Bundle-RequiredExecutionEnvironment: JavaSE-21
 Automatic-Module-Name: org.toxsoft.skide.exe
 Bundle-ActivationPolicy: lazy

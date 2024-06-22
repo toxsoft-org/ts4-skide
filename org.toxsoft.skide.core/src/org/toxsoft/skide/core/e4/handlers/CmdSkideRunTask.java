@@ -3,27 +3,29 @@ package org.toxsoft.skide.core.e4.handlers;
 import static org.toxsoft.skide.core.ISkideCoreConstants.*;
 import static org.toxsoft.skide.core.l10n.ISkideCoreSharedResources.*;
 
-import javax.inject.*;
-
-import org.eclipse.e4.core.contexts.*;
+import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.*;
-import org.eclipse.swt.widgets.*;
-import org.toxsoft.core.tsgui.bricks.ctx.*;
-import org.toxsoft.core.tsgui.bricks.ctx.impl.*;
-import org.toxsoft.core.tsgui.dialogs.*;
-import org.toxsoft.core.tsgui.dialogs.datarec.*;
-import org.toxsoft.core.tsgui.m5.*;
-import org.toxsoft.core.tsgui.m5.gui.*;
-import org.toxsoft.core.tsgui.m5.model.*;
-import org.toxsoft.core.tsgui.m5.model.impl.*;
-import org.toxsoft.core.tslib.bricks.strid.coll.*;
-import org.toxsoft.core.tslib.bricks.strid.impl.*;
-import org.toxsoft.core.tslib.coll.*;
-import org.toxsoft.skide.core.*;
-import org.toxsoft.skide.core.api.*;
-import org.toxsoft.skide.core.api.tasks.*;
-import org.toxsoft.skide.core.gui.*;
-import org.toxsoft.skide.core.gui.m5.*;
+import org.eclipse.swt.widgets.Shell;
+import org.toxsoft.core.tsgui.bricks.ctx.ITsGuiContext;
+import org.toxsoft.core.tsgui.bricks.ctx.impl.TsGuiContext;
+import org.toxsoft.core.tsgui.dialogs.TsDialogUtils;
+import org.toxsoft.core.tsgui.dialogs.datarec.TsDialogInfo;
+import org.toxsoft.core.tsgui.m5.IM5Domain;
+import org.toxsoft.core.tsgui.m5.IM5Model;
+import org.toxsoft.core.tsgui.m5.gui.M5GuiUtils;
+import org.toxsoft.core.tsgui.m5.model.IM5LifecycleManager;
+import org.toxsoft.core.tsgui.m5.model.impl.M5LifecycleManager;
+import org.toxsoft.core.tslib.bricks.strid.coll.IStridablesList;
+import org.toxsoft.core.tslib.bricks.strid.impl.StridUtils;
+import org.toxsoft.core.tslib.coll.IList;
+import org.toxsoft.skide.core.ISkideCoreConstants;
+import org.toxsoft.skide.core.api.ISkideEnvironment;
+import org.toxsoft.skide.core.api.ISkideUnit;
+import org.toxsoft.skide.core.api.tasks.ISkideTaskRegistrator;
+import org.toxsoft.skide.core.gui.SkideGuiUtils;
+import org.toxsoft.skide.core.gui.m5.SkideUnitM5Model;
+
+import jakarta.inject.Named;
 
 /**
  * Command: Run the specified task or select and run task if none specified.
@@ -89,7 +91,8 @@ public class CmdSkideRunTask {
 
     private final String taskId;
 
-    public SkideUnitOfTaskM5LifecycleManager( IM5Model<ISkideUnit> aModel, ISkideTaskRegistrator aMaster, String aTaskId ) {
+    public SkideUnitOfTaskM5LifecycleManager( IM5Model<ISkideUnit> aModel, ISkideTaskRegistrator aMaster,
+        String aTaskId ) {
       super( aModel, false, false, false, true, aMaster );
       taskId = StridUtils.checkValidIdPath( aTaskId );
     }
