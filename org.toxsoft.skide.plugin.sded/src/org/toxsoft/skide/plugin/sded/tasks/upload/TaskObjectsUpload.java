@@ -152,14 +152,30 @@ public class TaskObjectsUpload
   private int actuallyUpload( IListEdit<Skid> aSrcObjSkidList ) {
 
     int count = 0;
-
+    // dima 01.08.24 new version
+    // разбиваем на два этапа, сначала создаем все объекты без инициализации связей
     for( Skid skid : aSrcObjSkidList ) {
-
       // create DtoFullObject
+      DtoFullObject dto = DtoFullObject.createDtoFullObject( skid, srcCoreApi );
+      dto.links().map().clear();
+      DtoFullObject.defineFullObject( destCoreApi, dto );
+    }
+    // теперь объекты созданы можно и связи инициализировать
+    for( Skid skid : aSrcObjSkidList ) {
       DtoFullObject dto = DtoFullObject.createDtoFullObject( skid, srcCoreApi );
       DtoFullObject.defineFullObject( destCoreApi, dto );
       ++count;
     }
+
+    // old version - падает если в системном описании есть связи
+    // for( Skid skid : aSrcObjSkidList ) {
+    //
+    // // create DtoFullObject
+    // DtoFullObject dto = DtoFullObject.createDtoFullObject( skid, srcCoreApi );
+    // dto.links().map().clear();
+    // DtoFullObject.defineFullObject( destCoreApi, dto );
+    // ++count;
+    // }
 
     return count;
   }
