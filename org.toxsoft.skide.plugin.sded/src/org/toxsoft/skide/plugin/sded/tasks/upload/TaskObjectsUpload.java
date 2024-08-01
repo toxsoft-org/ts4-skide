@@ -158,6 +158,7 @@ public class TaskObjectsUpload
       // create DtoFullObject
       DtoFullObject dto = DtoFullObject.createDtoFullObject( skid, srcCoreApi );
       dto.links().map().clear();
+      dto.rivets().map().clear();
       DtoFullObject.defineFullObject( destCoreApi, dto );
     }
     // теперь объекты созданы можно и связи инициализировать
