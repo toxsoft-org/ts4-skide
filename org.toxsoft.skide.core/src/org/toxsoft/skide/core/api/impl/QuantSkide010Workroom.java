@@ -6,6 +6,7 @@ import java.io.*;
 
 import org.eclipse.e4.core.contexts.*;
 import org.eclipse.e4.ui.model.application.ui.basic.*;
+import org.eclipse.equinox.app.*;
 import org.eclipse.swt.widgets.*;
 import org.toxsoft.core.tsgui.bricks.quant.*;
 import org.toxsoft.core.tsgui.dialogs.*;
@@ -71,6 +72,10 @@ public class QuantSkide010Workroom
       Shell shell = new Shell( display );
       wrDir = TsRcpDialogUtils.askDirOpen( shell, TsLibUtils.EMPTY_STRING );
       if( wrDir == null ) {
+        // splash window must be closed otherwise application hangs!
+        IApplicationContext ac = aAppContext.get( IApplicationContext.class );
+        ac.applicationRunning(); // close splash, finishes splash window thread
+        // exit SkIDE application
         System.exit( 1 );
         return;
       }
