@@ -19,17 +19,17 @@ public interface ISkidePluginExconnSharedResources {
   String STR_OP_IN_EXCONN_ID   = Messages.getString( "STR_OP_IN_EXCONN_ID" );   //$NON-NLS-1$
   String STR_OP_IN_EXCONN_ID_D = Messages.getString( "STR_OP_IN_EXCONN_ID_D" ); //$NON-NLS-1$
 
-  String DLG_SELECT_CFG_AND_OPEN                 = Messages.getString( "DLG_SELECT_CFG_AND_OPEN" );        //$NON-NLS-1$
-  String DLG_SELECT_CFG_AND_OPEN_D               = Messages.getString( "DLG_SELECT_CFG_AND_OPEN_D" );      //$NON-NLS-1$
-  String FMT_ERR_UNREGISTERED_PROVIDER           = Messages.getString( "FMT_ERR_UNREGISTERED_PROVIDER" );  //$NON-NLS-1$
-  String FMT_ERR_NO_SUCH_CONN_CONF_ID            = Messages.getString( "FMT_ERR_NO_SUCH_CONN_CONF_ID" );   //$NON-NLS-1$
-  String STR_N_EXPORT_SYSDESCR                   = "Экспорт системного описания";
-  String STR_D_EXPORT_SYSDESCR                   = "Перенос системного описания в выделенное соединение";
-  String STR_EXPORT_SYSDESCR                     = "Экспорт системного описания";
-  String MSG_OPEN_TARGET_CONN                    = "Подключение к целевому серверу...";
-  String MSG_EXPORTING                           = "Экпортиуем сущности";
-  String MSG_ERR_EXPORT                          = "Ошибка операции экспорта!\nОписание ошибки:\n%s ";
-  String MSG_EXPORT_PROCESS_COMPLETED_ERROR_FREE = "Процесс завершился без ошибок, данные перенесены в %s";
-  String MSG_EXPORT_PROCESS_FAILED               = "Ошибка при работе с %s, обновление не прошло!";
+  String DLG_SELECT_CFG_AND_OPEN                 = Messages.getString( "DLG_SELECT_CFG_AND_OPEN" );                 //$NON-NLS-1$
+  String DLG_SELECT_CFG_AND_OPEN_D               = Messages.getString( "DLG_SELECT_CFG_AND_OPEN_D" );               //$NON-NLS-1$
+  String FMT_ERR_UNREGISTERED_PROVIDER           = Messages.getString( "FMT_ERR_UNREGISTERED_PROVIDER" );           //$NON-NLS-1$
+  String FMT_ERR_NO_SUCH_CONN_CONF_ID            = Messages.getString( "FMT_ERR_NO_SUCH_CONN_CONF_ID" );            //$NON-NLS-1$
+  String STR_N_EXPORT_SYSDESCR                   = Messages.getString( "STR_N_EXPORT_SYSDESCR" );                   //$NON-NLS-1$
+  String STR_D_EXPORT_SYSDESCR                   = Messages.getString( "STR_D_EXPORT_SYSDESCR" );                   //$NON-NLS-1$
+  String STR_EXPORT_SYSDESCR                     = Messages.getString( "STR_EXPORT_SYSDESCR" );                     //$NON-NLS-1$
+  String MSG_OPEN_TARGET_CONN                    = Messages.getString( "MSG_OPEN_TARGET_CONN" );                    //$NON-NLS-1$
+  String MSG_EXPORTING                           = Messages.getString( "MSG_EXPORTING" );                           //$NON-NLS-1$
+  String MSG_ERR_EXPORT                          = Messages.getString( "MSG_ERR_EXPORT" );                          //$NON-NLS-1$
+  String MSG_EXPORT_PROCESS_COMPLETED_ERROR_FREE = Messages.getString( "MSG_EXPORT_PROCESS_COMPLETED_ERROR_FREE" ); //$NON-NLS-1$
+  String MSG_EXPORT_PROCESS_FAILED               = Messages.getString( "MSG_EXPORT_PROCESS_FAILED" );               //$NON-NLS-1$
 
 }
