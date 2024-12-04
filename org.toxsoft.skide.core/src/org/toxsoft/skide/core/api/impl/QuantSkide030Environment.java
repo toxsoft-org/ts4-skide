@@ -13,7 +13,7 @@ import org.toxsoft.skide.core.gui.m5.*;
 /**
  * SkIDE environment initialization.
  * <p>
- * Creates and {@link ISkideEnvironment} instance an places it in the application level context. Initializes registered
+ * Creates {@link ISkideEnvironment} instance and places it in the application level context. Initializes registered
  * plugins with the window level context, closes plugins when application quits.
  *
  * @author hazard157

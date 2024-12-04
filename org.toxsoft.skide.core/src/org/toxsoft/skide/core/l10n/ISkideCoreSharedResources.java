@@ -34,6 +34,11 @@ public interface ISkideCoreSharedResources {
   String STR_SPP_COPYRIGHT_D   = Messages.getString( "STR_SPP_COPYRIGHT_D" );   //$NON-NLS-1$
 
   /**
+   * {@link QuantSkide010Workroom}
+   */
+  String STR_DLG_SELECT_WORKROOM_DIR = Messages.getString( "STR_DLG_SELECT_WORKROOM_DIR" ); //$NON-NLS-1$
+
+  /**
    * {@link QuantSkide020SkConnection}
    */
   String LOG_FMT_INFO_TEXTUAL_SYSDB = Messages.getString( "LOG_FMT_INFO_TEXTUAL_SYSDB" ); //$NON-NLS-1$

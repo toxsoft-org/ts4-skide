@@ -1,6 +1,7 @@
 package org.toxsoft.skide.core.api.impl;
 
 import static org.toxsoft.skide.core.ISkideCoreConstants.*;
+import static org.toxsoft.skide.core.l10n.ISkideCoreSharedResources.*;
 
 import java.io.*;
 
@@ -10,7 +11,6 @@ import org.eclipse.equinox.app.*;
 import org.eclipse.swt.widgets.*;
 import org.toxsoft.core.tsgui.bricks.quant.*;
 import org.toxsoft.core.tsgui.dialogs.*;
-import org.toxsoft.core.tsgui.rcp.utils.*;
 import org.toxsoft.core.tslib.utils.*;
 import org.toxsoft.core.tslib.utils.errors.*;
 import org.toxsoft.core.tslib.utils.logs.impl.*;
@@ -70,13 +70,9 @@ public class QuantSkide010Workroom
     if( wrPath.isEmpty() ) {
       // ask user for SkIDE directory if not specified in command line
       Shell shell = new Shell( display );
-      wrDir = TsRcpDialogUtils.askDirOpen( shell, TsLibUtils.EMPTY_STRING );
+      wrDir = askWorkroomDirOpen( shell, TsLibUtils.EMPTY_STRING );
       if( wrDir == null ) {
-        // splash window must be closed otherwise application hangs!
-        IApplicationContext ac = aAppContext.get( IApplicationContext.class );
-        ac.applicationRunning(); // close splash, finishes splash window thread
-        // exit SkIDE application
-        System.exit( 1 );
+        quitSkideOnStartupError( aAppContext );
         return;
       }
     }
@@ -91,13 +87,34 @@ public class QuantSkide010Workroom
       Shell shell = new Shell( display );
       TsDialogUtils.error( shell, ex );
       LoggerUtils.errorLogger().error( ex );
-      System.exit( 1 );
+      quitSkideOnStartupError( aAppContext );
+      return;
     }
+  }
+
+  private static void quitSkideOnStartupError( IEclipseContext aAppContext ) {
+    // splash window must be closed otherwise application hangs!
+    IApplicationContext ac = aAppContext.get( IApplicationContext.class );
+    ac.applicationRunning(); // close splash, finishes splash window thread
+    // exit SkIDE application
+    System.exit( 1 );
   }
 
   // ------------------------------------------------------------------------------------
   // implementation
   //
+
+  private static File askWorkroomDirOpen( Shell aShell, String aDefaultPath ) {
+    TsNullArgumentRtException.checkNulls( aShell, aDefaultPath );
+    DirectoryDialog dd = new DirectoryDialog( aShell, 0 );
+    dd.setFilterPath( aDefaultPath );
+    dd.setText( STR_DLG_SELECT_WORKROOM_DIR );
+    String dirName = dd.open();
+    if( dirName != null ) {
+      return new File( dirName );
+    }
+    return null;
+  }
 
   /**
    * Update main windows title reflecting project properties and workroom name.
