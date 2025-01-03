@@ -3,7 +3,6 @@ package org.toxsoft.skide.core.e4.addons;
 import org.eclipse.e4.core.contexts.*;
 import org.toxsoft.core.tsgui.bricks.quant.*;
 import org.toxsoft.core.tsgui.mws.bases.*;
-import org.toxsoft.skf.users.gui.*;
 import org.toxsoft.skide.core.*;
 import org.toxsoft.skide.core.Activator;
 import org.toxsoft.skide.core.api.impl.*;
@@ -31,7 +30,7 @@ public class AddonSkideCore
   @Override
   protected void doRegisterQuants( IQuantRegistrator aQuantRegistrator ) {
     aQuantRegistrator.registerQuant( new QuantSkCoreGui() );
-    aQuantRegistrator.registerQuant( new QuantSkUsersGui() );
+    // aQuantRegistrator.registerQuant( new QuantSkUsersGui() );
     aQuantRegistrator.registerQuant( new QuantSkide010Workroom() );
     aQuantRegistrator.registerQuant( new QuantSkide020SkConnection() );
     aQuantRegistrator.registerQuant( new QuantSkide030Environment() );
