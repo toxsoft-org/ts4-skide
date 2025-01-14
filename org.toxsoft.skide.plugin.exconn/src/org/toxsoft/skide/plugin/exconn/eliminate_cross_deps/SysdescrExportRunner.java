@@ -1,4 +1,4 @@
-package org.toxsoft.skide.plugin.exconn.service;
+package org.toxsoft.skide.plugin.exconn.eliminate_cross_deps;
 
 import static org.toxsoft.skide.plugin.exconn.ISkidePluginExconnSharedResources.*;
 
