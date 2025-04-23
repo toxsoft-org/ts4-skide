@@ -41,7 +41,7 @@ public class SkideUnitTaskPanel
     extends AbstractSkideUnitPanel {
 
   /**
-   * {@link ILongOpProgressCallback} to show task execution process in {@link PanelSkideTaskRunner#logText}.
+   * {@link ILongOpProgressCallback} to show task execution process in {@link AspLocalActions#doRun()}.
    *
    * @author hazard157
    */

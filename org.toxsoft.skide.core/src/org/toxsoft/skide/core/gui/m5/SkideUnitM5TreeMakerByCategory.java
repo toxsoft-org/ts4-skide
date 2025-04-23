@@ -38,13 +38,28 @@ public class SkideUnitM5TreeMakerByCategory
   // implementation
   //
 
-  private static IStringMap<DefaultTsNode<IStridableParameterized>> makeCategoryNodesMap( ITsNode aRootNode ) {
+  private static IStringMap<DefaultTsNode<IStridableParameterized>> makeCategoryNodesMap( ITsNode aRootNode,
+      IList<ISkideUnit> aItems ) {
+    // list only used categories
+    IStringListEdit usedCaregories = new StringArrayList();
+    for( ISkideUnit u : aItems ) {
+      String categId = OPDEF_SKIDE_UNIT_CATEGORY.getValue( u.params() ).asString();
+      if( !ALL_UNIT_CATEGORIES.hasKey( categId ) ) {
+        categId = OPDEF_SKIDE_UNIT_CATEGORY.defaultValue().asString();
+      }
+      if( !usedCaregories.hasElem( categId ) ) {
+        usedCaregories.add( categId );
+      }
+    }
+    // make map of used categories
     IStringMapEdit<DefaultTsNode<IStridableParameterized>> map = new StringMap<>();
     for( IStridableParameterized p : ALL_UNIT_CATEGORIES ) {
-      DefaultTsNode<IStridableParameterized> node = new DefaultTsNode<>( NK_CATEGORY, aRootNode, p );
-      node.setName( p.nmName() );
-      node.setIconId( p.iconId() );
-      map.put( p.id(), node );
+      if( usedCaregories.hasElem( p.id() ) ) {
+        DefaultTsNode<IStridableParameterized> node = new DefaultTsNode<>( NK_CATEGORY, aRootNode, p );
+        node.setName( p.nmName() );
+        node.setIconId( p.iconId() );
+        map.put( p.id(), node );
+      }
     }
     return map;
   }
@@ -56,7 +71,7 @@ public class SkideUnitM5TreeMakerByCategory
   @SuppressWarnings( { "rawtypes", "unchecked" } )
   @Override
   public IList<ITsNode> makeRoots( ITsNode aRootNode, IList<ISkideUnit> aItems ) {
-    IStringMap<DefaultTsNode<IStridableParameterized>> rootNodes = makeCategoryNodesMap( aRootNode );
+    IStringMap<DefaultTsNode<IStridableParameterized>> rootNodes = makeCategoryNodesMap( aRootNode, aItems );
     for( ISkideUnit u : aItems ) {
       String categId = OPDEF_SKIDE_UNIT_CATEGORY.getValue( u.params() ).asString();
       if( !ALL_UNIT_CATEGORIES.hasKey( categId ) ) {

@@ -17,6 +17,8 @@ interface ISkResources {
   String STR_DEVELOPMENT_DEBUG_D   = Messages.getString( "STR_DEVELOPMENT_DEBUG_D" );   //$NON-NLS-1$
   String STR_ADMINISTRATION        = Messages.getString( "STR_ADMINISTRATION" );        //$NON-NLS-1$
   String STR_ADMINISTRATION_D      = Messages.getString( "STR_ADMINISTRATION_D" );      //$NON-NLS-1$
+  String STR_APP_SPECIFIC          = Messages.getString( "STR_APP_SPECIFIC" );          //$NON-NLS-1$
+  String STR_APP_SPECIFIC_D        = Messages.getString( "STR_APP_SPECIFIC_D" );        //$NON-NLS-1$
   String STR_SKIDE_UNIT_CATEGORY   = Messages.getString( "STR_SKIDE_UNIT_CATEGORY" );   //$NON-NLS-1$
   String STR_SKIDE_UNIT_CATEGORY_D = Messages.getString( "STR_SKIDE_UNIT_CATEGORY_D" ); //$NON-NLS-1$
 

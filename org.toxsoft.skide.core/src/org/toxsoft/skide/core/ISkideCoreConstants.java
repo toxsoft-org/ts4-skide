@@ -72,6 +72,7 @@ public interface ISkideCoreConstants {
   String ICONID_CATEG_EXTERNAL_SYSTEMS  = "ucateg-external-systems";  //$NON-NLS-1$
   String ICONID_CATEG_DEVELOPMENT_DEBUG = "ucateg-development-debug"; //$NON-NLS-1$
   String ICONID_CATEG_ADMINISTRATION    = "ucateg-administration";    //$NON-NLS-1$
+  String ICONID_CATEG_APP_SPECIFIC      = "ucateg-app-specific";      //$NON-NLS-1$
 
   // ------------------------------------------------------------------------------------
   // Application preferences

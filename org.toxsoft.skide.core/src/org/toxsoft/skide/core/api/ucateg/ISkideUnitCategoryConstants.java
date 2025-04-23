@@ -26,6 +26,7 @@ public interface ISkideUnitCategoryConstants {
   String UCATEGID_EXTERNAL_SYSTEMS  = SKIDE_ID + ".ucateg.ExternalSystems";  //$NON-NLS-1$
   String UCATEGID_DEVELOPMENT_DEBUG = SKIDE_ID + ".ucateg.DevelopmentDebug"; //$NON-NLS-1$
   String UCATEGID_ADMINISTRATION    = SKIDE_ID + ".ucateg.Administration";   //$NON-NLS-1$
+  String UCATEGID_APP_SPECIFIC      = SKIDE_ID + ".ucateg.AppSpecific";      //$NON-NLS-1$
 
   String OPID_SKIDE_UNIT_CATEGORY = SKIDE_FULL_ID + ".UnitCategory"; //$NON-NLS-1$
 
@@ -75,6 +76,15 @@ public interface ISkideUnitCategoryConstants {
   );
 
   /**
+   * Units category: application specific SkIDE units.
+   */
+  IStridableParameterized UCATEG_APP_SPECIFIC = StridableParameterized.create( UCATEGID_APP_SPECIFIC, //
+      TSID_NAME, STR_APP_SPECIFIC, //
+      TSID_DESCRIPTION, STR_APP_SPECIFIC_D, //
+      TSID_ICON_ID, ICONID_CATEG_APP_SPECIFIC //
+  );
+
+  /**
    * All categories in the order of appearance in tree.
    */
   IStridablesList<IStridableParameterized> ALL_UNIT_CATEGORIES = new StridablesList<>( //
@@ -82,7 +92,8 @@ public interface ISkideUnitCategoryConstants {
       UCATEG_DELPOYMENT, //
       UCATEG_EXTERNAL_SYSTEMS, //
       UCATEG_DEVELOPMENT_DEBUG, //
-      UCATEG_ADMINISTRATION //
+      UCATEG_ADMINISTRATION, //
+      UCATEG_APP_SPECIFIC //
   );
 
   /**
