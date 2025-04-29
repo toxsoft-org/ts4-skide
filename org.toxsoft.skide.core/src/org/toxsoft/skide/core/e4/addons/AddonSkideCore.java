@@ -30,8 +30,6 @@ public class AddonSkideCore
   @Override
   protected void doRegisterQuants( IQuantRegistrator aQuantRegistrator ) {
     aQuantRegistrator.registerQuant( new QuantSkCoreGui() );
-    // 2025-01-03 mvk --- remove wrong(!) dependency from skf.users
-    // aQuantRegistrator.registerQuant( new QuantSkUsersGui() );
     aQuantRegistrator.registerQuant( new QuantSkide010Workroom() );
     aQuantRegistrator.registerQuant( new QuantSkide020SkConnection() );
     aQuantRegistrator.registerQuant( new QuantSkide030Environment() );
