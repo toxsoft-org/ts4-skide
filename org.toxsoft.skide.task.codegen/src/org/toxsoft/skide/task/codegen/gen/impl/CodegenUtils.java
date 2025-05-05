@@ -79,7 +79,7 @@ public class CodegenUtils {
   }
 
   /**
-   * Creates a Java constant name from two entity ID.
+   * Creates a Java constant name from two entity IDs.
    * <p>
    * This method may be used when making constant name for class property (ClassID and PropID) or and object SKID name
    * (ClassID and ObjStrid).
@@ -97,6 +97,29 @@ public class CodegenUtils {
     String p1 = idpath2ConstName( aIdPath1 );
     String p2 = idpath2ConstName( aIdPath2 );
     return aPrefix + "__" + p1 + "__" + p2; //$NON-NLS-1$//$NON-NLS-2$
+  }
+
+  /**
+   * Creates a Java constant name from three entity IDs.
+   * <p>
+   * This method may be used when making constant name for class property (ClassID and PropID) or and object SKID name
+   * (ClassID and ObjStrid).
+   *
+   * @param aPrefix String - the ID prefix (an IDname)
+   * @param aIdPath1 String - the identifier 1 (an IDpath)
+   * @param aIdPath2 String - the identifier 2 (an IDpath)
+   * @param aIdPath3 String - the identifier 3 (an IDpath)
+   * @return String - upper-case Java constant name
+   * @throws TsNullArgumentRtException any argument = <code>null</code>
+   * @throws TsIllegalArgumentRtException prefix is not an IDname
+   * @throws TsIllegalArgumentRtException any identifier is not an IDpath
+   */
+  public static String makeJavaConstName3( String aPrefix, String aIdPath1, String aIdPath2, String aIdPath3 ) {
+    StridUtils.checkValidIdName( aPrefix );
+    String p1 = idpath2ConstName( aIdPath1 );
+    String p2 = idpath2ConstName( aIdPath2 );
+    String p3 = idpath2ConstName( aIdPath3 );
+    return aPrefix + "__" + p1 + "__" + p2 + "__" + p3; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
   }
 
   /**

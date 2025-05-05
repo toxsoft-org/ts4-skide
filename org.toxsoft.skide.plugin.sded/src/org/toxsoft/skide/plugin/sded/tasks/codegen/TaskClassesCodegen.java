@@ -44,14 +44,16 @@ public class TaskClassesCodegen
    * TODO need to check that class generated constant IDs may be duplicated<br>
    */
 
-  private static final String PREFIX_CLASS   = "CLSID"; //$NON-NLS-1$
-  private static final String PREFIX_ATTR    = "ATRID"; //$NON-NLS-1$
-  private static final String PREFIX_RTDATA  = "RTDID"; //$NON-NLS-1$
-  private static final String PREFIX_RIVET   = "RIVID"; //$NON-NLS-1$
-  private static final String PREFIX_LINK    = "LNKID"; //$NON-NLS-1$
-  private static final String PREFIX_COMMAND = "CMDID"; //$NON-NLS-1$
-  private static final String PREFIX_EVENT   = "EVNID"; //$NON-NLS-1$
-  private static final String PREFIX_CLOB    = "CLBID"; //$NON-NLS-1$
+  private static final String PREFIX_CLASS    = "CLSID";   //$NON-NLS-1$
+  private static final String PREFIX_ATTR     = "ATRID";   //$NON-NLS-1$
+  private static final String PREFIX_RTDATA   = "RTDID";   //$NON-NLS-1$
+  private static final String PREFIX_RIVET    = "RIVID";   //$NON-NLS-1$
+  private static final String PREFIX_LINK     = "LNKID";   //$NON-NLS-1$
+  private static final String PREFIX_COMMAND  = "CMDID";   //$NON-NLS-1$
+  private static final String PREFIX_CMD_ARG  = "CMARGID"; //$NON-NLS-1$
+  private static final String PREFIX_EVENT    = "EVNID";   //$NON-NLS-1$
+  private static final String PREFIX_EV_PARAM = "EVPRMID"; //$NON-NLS-1$
+  private static final String PREFIX_CLOB     = "CLBID";   //$NON-NLS-1$
 
   private static final IMap<ESkClassPropKind, String> PROP_PREFIX_MAP;
 
@@ -82,40 +84,75 @@ public class TaskClassesCodegen
   // implementation
   //
 
+  private static String makeComment( IDataType propDataType, String aName ) {
+    if( propDataType != null ) {
+      if( propDataType.atomicType() == EAtomicType.VALOBJ ) {
+        String keeperId = propDataType.params().getStr( TSID_KEEPER_ID, "???" ); //$NON-NLS-1$
+        return String.format( "[%s - %s] %s", propDataType.atomicType().id(), keeperId, aName ); //$NON-NLS-1$
+      }
+      return String.format( "[%s] %s", propDataType.atomicType().id(), aName ); //$NON-NLS-1$
+    }
+    return aName;
+  }
+
+  private static IDataType findPropDataType( ISkClassProps<?> aProps, IDtoClassPropInfoBase prop ) {
+    IDataType propDataType = null;
+    switch( aProps.kind() ) {
+      case ATTR: {
+        propDataType = ((IDtoAttrInfo)prop).dataType();
+        break;
+      }
+      case RTDATA: {
+        propDataType = ((IDtoRtdataInfo)prop).dataType();
+        break;
+      }
+      case CLOB:
+      case CMD:
+      case EVENT:
+      case LINK:
+      case RIVET:
+        break;
+      default:
+        throw new TsNotAllEnumsUsedRtException();
+    }
+    return propDataType;
+  }
+
   private static void writeClassProps( String aClassId, ISkClassProps<?> aProps, IJavaConstantsInterfaceWriter aJw ) {
     String prefix = PROP_PREFIX_MAP.getByKey( aProps.kind() );
     for( IDtoClassPropInfoBase prop : aProps.listSelf() ) {
-      IDataType propDataType = null;
+      // write property constant
+      IDataType propDataType = findPropDataType( aProps, prop );
+      String cn = makeJavaConstName2( prefix, aClassId, prop.id() );
+      aJw.addConstString( cn, prop.id(), makeComment( propDataType, prop.nmName() ) );
+      // some property kinds requires sub-properties to be written
       switch( aProps.kind() ) {
-        case ATTR: {
-          propDataType = ((IDtoAttrInfo)prop).dataType();
+        case CMD: {
+          IDtoCmdInfo cmdInfo = (IDtoCmdInfo)prop;
+          for( IDataDef argInfo : cmdInfo.argDefs() ) {
+            String constName = makeJavaConstName3( PREFIX_CMD_ARG, aClassId, prop.id(), argInfo.id() );
+            aJw.addConstString( constName, argInfo.id(), makeComment( argInfo, argInfo.nmName() ) );
+          }
           break;
         }
-        case RTDATA: {
-          propDataType = ((IDtoRtdataInfo)prop).dataType();
+        case EVENT: {
+          IDtoEventInfo eventInfo = (IDtoEventInfo)prop;
+          for( IDataDef paramInfo : eventInfo.paramDefs() ) {
+            String constName = makeJavaConstName3( PREFIX_CMD_ARG, aClassId, prop.id(), paramInfo.id() );
+
+            aJw.addConstString( constName, paramInfo.id(), makeComment( paramInfo, paramInfo.nmName() ) );
+          }
           break;
         }
+        case ATTR:
+        case RTDATA:
         case CLOB:
-        case CMD:
-        case EVENT:
         case LINK:
         case RIVET:
           break;
         default:
           throw new TsNotAllEnumsUsedRtException();
       }
-      String cn = makeJavaConstName2( prefix, aClassId, prop.id() );
-      String comment = prop.nmName();
-      if( propDataType != null ) {
-        if( propDataType.atomicType() == EAtomicType.VALOBJ ) {
-          String keeperId = propDataType.params().getStr( TSID_KEEPER_ID, "???" ); //$NON-NLS-1$
-          comment = String.format( "[%s - %s] %s", propDataType.atomicType().id(), keeperId, prop.nmName() ); //$NON-NLS-1$
-        }
-        else {
-          comment = String.format( "[%s] %s", propDataType.atomicType().id(), prop.nmName() ); //$NON-NLS-1$
-        }
-      }
-      aJw.addConstString( cn, prop.id(), comment );
     }
   }
 
