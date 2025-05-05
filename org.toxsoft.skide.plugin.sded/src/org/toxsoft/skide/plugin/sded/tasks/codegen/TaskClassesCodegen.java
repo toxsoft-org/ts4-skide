@@ -138,7 +138,7 @@ public class TaskClassesCodegen
         case EVENT: {
           IDtoEventInfo eventInfo = (IDtoEventInfo)prop;
           for( IDataDef paramInfo : eventInfo.paramDefs() ) {
-            String constName = makeJavaConstName3( PREFIX_CMD_ARG, aClassId, prop.id(), paramInfo.id() );
+            String constName = makeJavaConstName3( PREFIX_EV_PARAM, aClassId, prop.id(), paramInfo.id() );
 
             aJw.addConstString( constName, paramInfo.id(), makeComment( paramInfo, paramInfo.nmName() ) );
           }
