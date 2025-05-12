@@ -15,7 +15,6 @@ import org.toxsoft.core.tslib.bricks.ctx.impl.*;
 import org.toxsoft.core.tslib.bricks.geometry.impl.*;
 import org.toxsoft.core.tslib.bricks.strid.idgen.*;
 import org.toxsoft.core.tslib.bricks.strid.more.*;
-import org.toxsoft.core.tslib.gw.skid.*;
 import org.toxsoft.core.tslib.utils.*;
 import org.toxsoft.core.tslib.utils.errors.*;
 import org.toxsoft.core.tslib.utils.login.*;
@@ -96,9 +95,12 @@ public class SkideExternalConnectionsService
     // FIXME temporary code
     IS5ConnectionParams.OP_USERNAME.setValue( args.params(), avStr( aLoginInfo.login() ) );
     IS5ConnectionParams.OP_PASSWORD.setValue( args.params(), avStr( aLoginInfo.password() ) );
+    // 2025-05-12 mvk---+++
     // dima 22.01.25 current role was not root
-    Skid rootRole = ISkUserServiceHardConstants.SKID_ROLE_ROOT;
-    IS5ConnectionParams.OP_ROLE.setValue( args.params(), avValobj( rootRole ) );
+    // Skid rootRole = ISkUserServiceHardConstants.SKID_ROLE_ROOT;
+    // IS5ConnectionParams.OP_ROLE.setValue( args.params(), avValobj( rootRole ) );
+    String role = ISkUserServiceHardConstants.ROLE_ID_ROOT;
+    IS5ConnectionParams.OP_ROLE.setValue( args.params(), avStr( role ) );
 
     TsTestUtils.pl( " ==== LoginInfo = %s", aLoginInfo.toString() );
     // ---
