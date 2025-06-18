@@ -22,6 +22,7 @@ import org.toxsoft.skide.core.api.tasks.*;
 import org.toxsoft.skide.plugin.exconn.main.*;
 import org.toxsoft.skide.plugin.sded.main.*;
 import org.toxsoft.uskat.core.*;
+import org.toxsoft.uskat.core.api.objserv.*;
 import org.toxsoft.uskat.core.api.sysdescr.*;
 import org.toxsoft.uskat.core.connection.*;
 import org.toxsoft.uskat.core.gui.conn.*;
@@ -152,21 +153,23 @@ public class TaskObjectsUpload
   private int actuallyUpload( IListEdit<Skid> aSrcObjSkidList ) {
 
     int count = 0;
-    // dima 01.08.24 new version
-    // разбиваем на два этапа, сначала создаем все объекты без инициализации связей
-    for( Skid skid : aSrcObjSkidList ) {
-      // create DtoFullObject
-      DtoFullObject dto = DtoFullObject.createDtoFullObject( skid, srcCoreApi );
-      dto.links().map().clear();
-      dto.rivets().map().clear();
-      DtoFullObject.defineFullObject( destCoreApi, dto );
-    }
-    // теперь объекты созданы можно и связи инициализировать
-    for( Skid skid : aSrcObjSkidList ) {
-      DtoFullObject dto = DtoFullObject.createDtoFullObject( skid, srcCoreApi );
-      DtoFullObject.defineFullObject( destCoreApi, dto );
-      ++count;
-    }
+
+    // 2025-06-18 mvk---+++
+    // // dima 01.08.24 new version
+    // // разбиваем на два этапа, сначала создаем все объекты без инициализации связей
+    // for( Skid skid : aSrcObjSkidList ) {
+    // // create DtoFullObject
+    // DtoFullObject dto = DtoFullObject.createDtoFullObject( skid, srcCoreApi );
+    // dto.links().map().clear();
+    // dto.rivets().map().clear();
+    // DtoFullObject.defineFullObject( destCoreApi, dto );
+    // }
+    // // теперь объекты созданы можно и связи инициализировать
+    // for( Skid skid : aSrcObjSkidList ) {
+    // DtoFullObject dto = DtoFullObject.createDtoFullObject( skid, srcCoreApi );
+    // DtoFullObject.defineFullObject( destCoreApi, dto );
+    // ++count;
+    // }
 
     // old version - падает если в системном описании есть связи
     // for( Skid skid : aSrcObjSkidList ) {
@@ -177,6 +180,15 @@ public class TaskObjectsUpload
     // DtoFullObject.defineFullObject( destCoreApi, dto );
     // ++count;
     // }
+    ISkObjectService srcObjService = srcCoreApi.objService();
+    IListEdit<IDtoObject> objs = new ElemArrayList<>( aSrcObjSkidList.size() );
+    for( Skid skid : aSrcObjSkidList ) {
+      ISkObject obj = srcObjService.get( skid );
+      objs.add( new DtoObject( skid, obj.attrs(), obj.rivets().map() ) );
+    }
+    // разбиваем на два этапа, сначала создаем все объекты без инициализации связей
+    ISkObjectService dtsObjService = destCoreApi.objService();
+    dtsObjService.defineObjects( ISkidList.EMPTY, objs );
 
     return count;
   }
