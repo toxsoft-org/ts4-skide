@@ -188,7 +188,7 @@ public class TaskObjectsUpload
     }
     // разбиваем на два этапа, сначала создаем все объекты без инициализации связей
     ISkObjectService dtsObjService = destCoreApi.objService();
-    dtsObjService.defineObjects( ISkidList.EMPTY, objs );
+    count = dtsObjService.defineObjects( ISkidList.EMPTY, objs ).size();
 
     return count;
   }
