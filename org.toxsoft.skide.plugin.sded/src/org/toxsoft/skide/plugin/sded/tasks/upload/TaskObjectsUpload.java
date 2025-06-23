@@ -22,8 +22,10 @@ import org.toxsoft.skide.core.api.tasks.*;
 import org.toxsoft.skide.plugin.exconn.main.*;
 import org.toxsoft.skide.plugin.sded.main.*;
 import org.toxsoft.uskat.core.*;
+import org.toxsoft.uskat.core.api.linkserv.*;
 import org.toxsoft.uskat.core.api.objserv.*;
 import org.toxsoft.uskat.core.api.sysdescr.*;
+import org.toxsoft.uskat.core.api.sysdescr.dto.*;
 import org.toxsoft.uskat.core.connection.*;
 import org.toxsoft.uskat.core.gui.conn.*;
 import org.toxsoft.uskat.core.impl.dto.*;
@@ -186,9 +188,16 @@ public class TaskObjectsUpload
       ISkObject obj = srcObjService.get( skid );
       objs.add( new DtoObject( skid, obj.attrs(), obj.rivets().map() ) );
     }
-    // разбиваем на два этапа, сначала создаем все объекты без инициализации связей
     ISkObjectService dtsObjService = destCoreApi.objService();
     count = dtsObjService.defineObjects( ISkidList.EMPTY, objs ).size();
+    // dima 23.06.25 export links
+    for( IDtoObject obj : objs ) {
+      ISkClassInfo ci = destCoreApi.sysdescr().findClassInfo( obj.classId() );
+      for( IDtoLinkInfo li : ci.links().list() ) {
+        IDtoLinkFwd lf = destCoreApi.linkService().getLinkFwd( obj.skid(), li.id() );
+        destCoreApi.linkService().setLink( lf );
+      }
+    }
 
     return count;
   }
