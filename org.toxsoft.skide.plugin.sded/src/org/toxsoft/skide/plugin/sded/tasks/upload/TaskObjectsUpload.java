@@ -182,20 +182,26 @@ public class TaskObjectsUpload
     // DtoFullObject.defineFullObject( destCoreApi, dto );
     // ++count;
     // }
+
+    // mvk 2025-06-24 TODO: обратные склепки, транзакция, групповая запись, DtoFullObject
+    ISkSysdescr srcSysdescr = srcCoreApi.sysdescr();
     ISkObjectService srcObjService = srcCoreApi.objService();
+    ISkLinkService srcLinkService = srcCoreApi.linkService();
+    ISkObjectService dstObjService = destCoreApi.objService();
+    ISkLinkService dstLinkService = destCoreApi.linkService();
+
     IListEdit<IDtoObject> objs = new ElemArrayList<>( aSrcObjSkidList.size() );
     for( Skid skid : aSrcObjSkidList ) {
       ISkObject obj = srcObjService.get( skid );
       objs.add( new DtoObject( skid, obj.attrs(), obj.rivets().map() ) );
     }
-    ISkObjectService dtsObjService = destCoreApi.objService();
-    count = dtsObjService.defineObjects( ISkidList.EMPTY, objs ).size();
-    // dima 23.06.25 export links
+    // разбиваем на два этапа, сначала создаем все объекты без инициализации связей
+    count = dstObjService.defineObjects( ISkidList.EMPTY, objs ).size();
     for( IDtoObject obj : objs ) {
-      ISkClassInfo ci = destCoreApi.sysdescr().findClassInfo( obj.classId() );
+      ISkClassInfo ci = srcSysdescr.findClassInfo( obj.classId() );
       for( IDtoLinkInfo li : ci.links().list() ) {
-        IDtoLinkFwd lf = destCoreApi.linkService().getLinkFwd( obj.skid(), li.id() );
-        destCoreApi.linkService().setLink( lf );
+        IDtoLinkFwd lf = srcLinkService.getLinkFwd( obj.skid(), li.id() );
+        dstLinkService.setLink( lf );
       }
     }
 
