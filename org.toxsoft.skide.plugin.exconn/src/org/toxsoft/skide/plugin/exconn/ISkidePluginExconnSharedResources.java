@@ -31,5 +31,6 @@ public interface ISkidePluginExconnSharedResources {
   String MSG_ERR_EXPORT                          = Messages.getString( "MSG_ERR_EXPORT" );                          //$NON-NLS-1$
   String MSG_EXPORT_PROCESS_COMPLETED_ERROR_FREE = Messages.getString( "MSG_EXPORT_PROCESS_COMPLETED_ERROR_FREE" ); //$NON-NLS-1$
   String MSG_EXPORT_PROCESS_FAILED               = Messages.getString( "MSG_EXPORT_PROCESS_FAILED" );               //$NON-NLS-1$
+  String MSG_WAIT_CONNECT                        = Messages.getString( "MSG_WAIT_CONNECT" );                        //$NON-NLS-1$
 
 }

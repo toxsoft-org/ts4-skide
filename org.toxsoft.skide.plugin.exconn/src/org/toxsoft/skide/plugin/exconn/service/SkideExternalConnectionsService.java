@@ -15,10 +15,12 @@ import org.toxsoft.core.tslib.bricks.ctx.impl.*;
 import org.toxsoft.core.tslib.bricks.geometry.impl.*;
 import org.toxsoft.core.tslib.bricks.strid.idgen.*;
 import org.toxsoft.core.tslib.bricks.strid.more.*;
+import org.toxsoft.core.tslib.bricks.threadexec.*;
 import org.toxsoft.core.tslib.utils.*;
 import org.toxsoft.core.tslib.utils.errors.*;
 import org.toxsoft.core.tslib.utils.login.*;
 import org.toxsoft.core.tslib.utils.logs.impl.*;
+import org.toxsoft.uskat.backend.s5.gui.utils.*;
 import org.toxsoft.uskat.core.api.users.*;
 import org.toxsoft.uskat.core.connection.*;
 import org.toxsoft.uskat.core.gui.conn.*;
@@ -26,6 +28,7 @@ import org.toxsoft.uskat.core.gui.conn.cfg.*;
 import org.toxsoft.uskat.core.gui.conn.m5.*;
 import org.toxsoft.uskat.core.impl.*;
 import org.toxsoft.uskat.s5.client.*;
+import org.toxsoft.uskat.s5.client.remote.*;
 
 /**
  * {@link ISkideExternalConnectionsService} implementation.
@@ -113,8 +116,13 @@ public class SkideExternalConnectionsService
     ISkConnection skConn = conSup.createConnection( connId, aContext );
     // open connection
     try {
-      // TODO invoke connection progress dialog
-      skConn.open( args );
+      // dima 24.07.25
+      // Отображение диалога прогресса подключения к серверу
+      ITsThreadExecutor threadExecutor = new SkGuiThreadExecutor( display );
+      ISkCoreConfigConstants.REFDEF_THREAD_EXECUTOR.setRef( args, threadExecutor );
+      ISkCoreConfigConstants.REFDEF_BACKEND_PROVIDER.setRef( args, new S5RemoteBackendProvider() );
+      S5BackendGuiUtils.showConnProgressDialog( shell, skConn, args, MSG_WAIT_CONNECT, 10000 );
+      // skConn.open( args );
       return connId;
     }
     catch( Exception ex ) {
