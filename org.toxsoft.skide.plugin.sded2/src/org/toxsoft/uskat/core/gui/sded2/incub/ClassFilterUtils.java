@@ -17,12 +17,36 @@ public class ClassFilterUtils {
     throw new TsUnderDevelopmentRtException( "ClassFilterUtils.createClassFilterParamsBuilder()" );
   }
 
-  public static ITsFilter<ISkClassInfo> createClassInfoFilter() {
+  /**
+   * Creates {@link ITsFilter} instance to filter out {@link ISkClassInfo} entities.
+   * <p>
+   * Created filter throws an exception on <code>null</code> input.
+   *
+   * @param aFilterParams {@link ITsCombiFilterParams} - the filter parameters
+   * @return {@link ITsFilter}&lt;{@link ISkClassInfo}&gt; - created instance
+   * @throws TsNullArgumentRtException any argument = <code>null</code>
+   * @throws TsIllegalArgumentRtException argument contains not applicable parameters
+   */
+  public static ITsFilter<ISkClassInfo> createClassInfoFilter( ITsCombiFilterParams aFilterParams ) {
+    TsNullArgumentRtException.checkNull( aFilterParams );
+
     // TODO implement ClassFilterUtils.createClassInfoFilter()
     throw new TsUnderDevelopmentRtException( "ClassFilterUtils.createClassInfoFilter()" );
   }
 
-  public static ITsFilter<IDtoClassInfo> createDtoClassFilter() {
+  /**
+   * Creates {@link ITsFilter} instance to filter out {@link IDtoClassInfo} entities.
+   * <p>
+   * Created filter throws an exception on <code>null</code> input.
+   *
+   * @param aFilterParams {@link ITsCombiFilterParams} - the filter parameters
+   * @return {@link ITsFilter}&lt;{@link IDtoClassInfo}&gt; - created instance
+   * @throws TsNullArgumentRtException any argument = <code>null</code>
+   * @throws TsIllegalArgumentRtException argument contains not applicable parameters
+   */
+  public static ITsFilter<IDtoClassInfo> createDtoClassFilter( ITsCombiFilterParams aFilterParams ) {
+    TsNullArgumentRtException.checkNull( aFilterParams );
+
     // TODO implement ClassFilterUtils.createDtoClassFilter()
     throw new TsUnderDevelopmentRtException( "ClassFilterUtils.createDtoClassFilter()" );
   }

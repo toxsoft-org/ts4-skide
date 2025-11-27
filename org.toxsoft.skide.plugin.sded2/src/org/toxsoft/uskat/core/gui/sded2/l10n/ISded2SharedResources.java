@@ -9,6 +9,12 @@ package org.toxsoft.uskat.core.gui.sded2.l10n;
 public interface ISded2SharedResources {
 
   /**
+   * Common
+   */
+  String STR_FILTER_TEXT   = Messages.getString( "STR_FILTER_TEXT" );   //$NON-NLS-1$
+  String STR_FILTER_TEXT_D = Messages.getString( "STR_FILTER_TEXT_D" ); //$NON-NLS-1$
+
+  /**
    * SkClass
    */
   String STR_SCI_CLASS_ID      = Messages.getString( "SkClass.STR_CLASS_ID" );      //$NON-NLS-1$

@@ -1,5 +1,7 @@
 package org.toxsoft.uskat.core.gui.sded2.gui;
 
+import static org.toxsoft.core.tsgui.m5.gui.mpc.IMultiPaneComponentConstants.*;
+import static org.toxsoft.core.tslib.av.impl.AvUtils.*;
 import static org.toxsoft.uskat.core.gui.km5.sded.IKM5SdedConstants.*;
 
 import org.eclipse.swt.*;
@@ -72,8 +74,9 @@ public class Sded2ClassEditor
     IM5Model<ISkClassInfo> modelSk = m5().getModel( Sded2SkClassInfoM5Model.MODEL_ID, ISkClassInfo.class );
     IM5LifecycleManager<ISkClassInfo> lmSk = modelSk.getLifecycleManager( skConn() );
     IM5ItemsProvider<ISkClassInfo> ipSk = lmSk.itemsProvider();
-    ITsGuiContext ctxSk = new TsGuiContext( tsContext() );
-    classesListPane = modelSk.panelCreator().createCollEditPanel( ctxSk, ipSk, lmSk );
+    ITsGuiContext ctx1 = new TsGuiContext( tsContext() );
+    OPDEF_IS_FILTER_PANE.setValue( ctx1.params(), AV_TRUE );
+    classesListPane = modelSk.panelCreator().createCollEditPanel( ctx1, ipSk, lmSk );
 
     // right pane
     IM5Model<IDtoClassInfo> modelDto = m5().getModel( MID_SDED_DTO_CLASS_INFO, IDtoClassInfo.class );

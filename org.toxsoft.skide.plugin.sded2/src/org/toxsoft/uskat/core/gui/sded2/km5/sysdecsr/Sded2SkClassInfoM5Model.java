@@ -1,12 +1,17 @@
 package org.toxsoft.uskat.core.gui.sded2.km5.sysdecsr;
 
 import static org.toxsoft.core.tsgui.m5.IM5Constants.*;
+import static org.toxsoft.core.tsgui.m5.gui.mpc.IMultiPaneComponentConstants.*;
 import static org.toxsoft.core.tslib.av.impl.AvUtils.*;
 import static org.toxsoft.core.tslib.av.metainfo.IAvMetaConstants.*;
 import static org.toxsoft.uskat.core.gui.km5.sded.IKM5SdedConstants.*;
 import static org.toxsoft.uskat.core.gui.km5.sded.ISkSdedKm5SharedResources.*;
 import static org.toxsoft.uskat.core.gui.sded2.l10n.ISded2SharedResources.*;
 
+import org.toxsoft.core.tsgui.bricks.ctx.*;
+import org.toxsoft.core.tsgui.m5.gui.mpc.impl.*;
+import org.toxsoft.core.tsgui.m5.gui.panels.*;
+import org.toxsoft.core.tsgui.m5.gui.panels.impl.*;
 import org.toxsoft.core.tsgui.m5.model.*;
 import org.toxsoft.core.tsgui.m5.model.impl.*;
 import org.toxsoft.core.tsgui.m5.std.models.misc.*;
@@ -111,6 +116,21 @@ public class Sded2SkClassInfoM5Model
     super( MODEL_ID, ISkClassInfo.class, aConn );
     setNameAndDescription( STR_N_M5M_CLASS, STR_D_M5M_CLASS );
     addFieldDefs( CLASS_ID, NAME, PARENT_ID, DESCRIPTION );
+    setPanelCreator( new M5DefaultPanelCreator<>() {
+
+      protected IM5CollectionPanel<ISkClassInfo> doCreateCollEditPanel( ITsGuiContext aContext,
+          IM5ItemsProvider<ISkClassInfo> aItemsProvider, IM5LifecycleManager<ISkClassInfo> aLifecycleManager ) {
+        OPDEF_IS_ACTIONS_CRUD.setValue( aContext.params(), AV_TRUE );
+        MultiPaneComponentModown<ISkClassInfo> mpc =
+            new ClassInfoMpc( aContext, model(), aItemsProvider, aLifecycleManager );
+        return new M5CollectionPanelMpcModownWrapper<>( mpc, false );
+      }
+
+      protected IM5FilterPanel<ISkClassInfo> doCreateFilterPanel( ITsGuiContext aContext ) {
+        return new SkClassM5FilterPane( aContext, model() );
+      }
+
+    } );
   }
 
   // ------------------------------------------------------------------------------------
