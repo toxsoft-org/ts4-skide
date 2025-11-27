@@ -11,10 +11,6 @@ import org.toxsoft.core.tsgui.graphics.icons.*;
 @SuppressWarnings( "javadoc" )
 public interface ISkidePluginSded2Constants {
 
-  String SDED2_ID     = "org.toxsoft.skide.sded2"; //$NON-NLS-1$
-  String SDED2_M5_ID  = SDED2_ID + ".m5";          //$NON-NLS-1$
-  String SDED2_ACT_ID = SDED2_ID + ".act";         //$NON-NLS-1$
-
   // ------------------------------------------------------------------------------------
   // Icons
 

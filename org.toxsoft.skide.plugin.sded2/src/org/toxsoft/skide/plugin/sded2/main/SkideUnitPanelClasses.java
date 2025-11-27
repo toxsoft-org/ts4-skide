@@ -4,8 +4,7 @@ import org.eclipse.swt.widgets.*;
 import org.toxsoft.core.tsgui.bricks.ctx.*;
 import org.toxsoft.skide.core.api.*;
 import org.toxsoft.skide.core.api.impl.*;
-import org.toxsoft.uskat.core.gui.glib.*;
-import org.toxsoft.uskat.core.gui.glib2.*;
+import org.toxsoft.uskat.core.gui.sded2.gui.*;
 
 /**
  * {@link AbstractSkideUnitPanel} implementation for {@link SkideUnitSdedClasses}.
@@ -21,7 +20,7 @@ class SkideUnitPanelClasses
 
   @Override
   protected Control doCreateControl( Composite aParent ) {
-    SdedClassEditor sdedClasses = new SdedClassEditor( tsContext(), null );
+    Sded2ClassEditor sdedClasses = new Sded2ClassEditor( tsContext(), null );
     return sdedClasses.createControl( aParent );
   }
 

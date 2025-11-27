@@ -1,10 +1,12 @@
 package org.toxsoft.skide.plugin.sded2.e4.addons;
 
 import org.eclipse.e4.core.contexts.*;
+import org.toxsoft.core.tsgui.bricks.quant.*;
 import org.toxsoft.core.tsgui.mws.bases.*;
 import org.toxsoft.skide.core.api.*;
 import org.toxsoft.skide.plugin.sded2.*;
 import org.toxsoft.skide.plugin.sded2.main.*;
+import org.toxsoft.uskat.core.gui.sded2.*;
 
 /**
  * Plugin addon.
@@ -24,6 +26,11 @@ public class AddonSkidePluginSded2
   // ------------------------------------------------------------------------------------
   // MwsAbstractAddon
   //
+
+  @Override
+  protected void doRegisterQuants( IQuantRegistrator aQuantRegistrator ) {
+    aQuantRegistrator.registerQuant( new QuantSkCoreSded2() );
+  }
 
   @Override
   protected void initApp( IEclipseContext aAppContext ) {
