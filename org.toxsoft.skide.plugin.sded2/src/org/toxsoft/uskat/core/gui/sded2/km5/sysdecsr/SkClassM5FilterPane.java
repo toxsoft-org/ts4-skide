@@ -70,7 +70,10 @@ class SkClassM5FilterPane
   private final GenericChangeEventer                          eventer;
   private final IStridablesList<IM5FieldDef<ISkClassInfo, ?>> searchFields;
 
-  private ITsFilter<ISkClassInfo> filter = ITsFilter.ALL;
+  /**
+   * At pane creation created, filter allows only GW classes, {@link #chbOnlyGw} msut be set to <code>true</code>.
+   */
+  private ITsFilter<ISkClassInfo> filter = new FilterImpl( true, EMPTY_STRING );
 
   private Button chbOnlyGw = null;
   private Text   txtString = null;
@@ -101,6 +104,8 @@ class SkClassM5FilterPane
     // chbOnlyGw
     chbOnlyGw = new Button( backplane, SWT.TOGGLE );
     chbOnlyGw.setLayoutData( new BorderData( SWT.LEFT ) );
+    chbOnlyGw.setToolTipText( STR_SHOW_ONLY_GW_CLASSES_D );
+    chbOnlyGw.setSelection( true );
     // EIconSize iconSize = hdpiService().getToolbarIconsSize(); // TODO what icon size to use?
     EIconSize iconSize = EIconSize.IS_16X16;
     chbOnlyGw.setImage( iconManager().loadStdIcon( ICONID_COLORED_WORLD_GREEN, iconSize ) );
@@ -119,6 +124,7 @@ class SkClassM5FilterPane
 
     } );
     txtString.addModifyListener( aEvent -> whenWidgetsContentChanged() );
+    updateFilter();
     return backplane;
   }
 
@@ -126,7 +132,7 @@ class SkClassM5FilterPane
   // implementation
   //
 
-  private void whenWidgetsContentChanged() {
+  private void updateFilter() {
     String str = txtString.getText();
     boolean onlyGw = chbOnlyGw.getSelection();
     if( !onlyGw && str.isEmpty() ) {
@@ -135,6 +141,10 @@ class SkClassM5FilterPane
     else {
       filter = new FilterImpl( onlyGw, str );
     }
+  }
+
+  private void whenWidgetsContentChanged() {
+    updateFilter();
     eventer.fireChangeEvent();
   }
 

@@ -121,8 +121,9 @@ public class Sded2SkClassInfoM5Model
       protected IM5CollectionPanel<ISkClassInfo> doCreateCollEditPanel( ITsGuiContext aContext,
           IM5ItemsProvider<ISkClassInfo> aItemsProvider, IM5LifecycleManager<ISkClassInfo> aLifecycleManager ) {
         OPDEF_IS_ACTIONS_CRUD.setValue( aContext.params(), AV_TRUE );
+        OPDEF_IS_SUPPORTS_TREE.setValue( aContext.params(), AV_TRUE );
         MultiPaneComponentModown<ISkClassInfo> mpc =
-            new ClassInfoMpc( aContext, model(), aItemsProvider, aLifecycleManager );
+            new SkClassInfoMpc( aContext, model(), aItemsProvider, aLifecycleManager );
         return new M5CollectionPanelMpcModownWrapper<>( mpc, false );
       }
 
