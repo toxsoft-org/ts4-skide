@@ -45,7 +45,6 @@ public class Sded2SkObjectM5LifecycleManager
   //
 
   private IDtoObject makeDtoObject( IM5Bunch<ISkObject> aValues ) {
-    String classId = aValues.getAsAv( ISkHardConstants.AID_CLASS_ID ).asString();
     String id = aValues.getAsAv( ISkHardConstants.AID_STRID ).asString();
     Skid skid = new Skid( classId, id );
     DtoObject dtoObject = DtoObject.createDtoObject( skid, coreApi() );

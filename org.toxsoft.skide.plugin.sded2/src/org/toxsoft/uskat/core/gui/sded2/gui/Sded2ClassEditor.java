@@ -6,6 +6,7 @@ import static org.toxsoft.uskat.core.gui.km5.sded.IKM5SdedConstants.*;
 
 import org.eclipse.swt.*;
 import org.eclipse.swt.custom.*;
+import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
 import org.toxsoft.core.tsgui.bricks.ctx.*;
 import org.toxsoft.core.tsgui.bricks.ctx.impl.*;
@@ -15,12 +16,14 @@ import org.toxsoft.core.tsgui.m5.model.*;
 import org.toxsoft.core.tsgui.panels.inpled.*;
 import org.toxsoft.core.tslib.bricks.strid.more.*;
 import org.toxsoft.core.tslib.coll.helpers.*;
+import org.toxsoft.core.tslib.gw.gwid.*;
 import org.toxsoft.core.tslib.utils.errors.*;
 import org.toxsoft.uskat.core.api.sysdescr.*;
 import org.toxsoft.uskat.core.api.sysdescr.dto.*;
 import org.toxsoft.uskat.core.connection.*;
 import org.toxsoft.uskat.core.gui.conn.*;
 import org.toxsoft.uskat.core.gui.glib.*;
+import org.toxsoft.uskat.core.gui.glib.widgets.*;
 import org.toxsoft.uskat.core.gui.sded2.km5.sysdecsr.*;
 import org.toxsoft.uskat.core.impl.dto.*;
 
@@ -47,6 +50,7 @@ public class Sded2ClassEditor
   private final ISkSysdescrListener sysdescrListener = ( api, op, classId ) -> whenSysdescrChanged( op, classId );
 
   private final IM5CollectionPanel<ISkClassInfo> classesListPane;
+  private final GwidViewWidget                   gwidViewWidget;
   private final IM5EntityPanel<IDtoClassInfo>    classEditPane;
   private final IInplaceEditorPanel              inplaceEditor;
 
@@ -78,7 +82,8 @@ public class Sded2ClassEditor
     OPDEF_IS_FILTER_PANE.setValue( ctx1.params(), AV_TRUE );
     classesListPane = modelSk.panelCreator().createCollEditPanel( ctx1, ipSk, lmSk );
 
-    // right pane
+    // right pane components
+    gwidViewWidget = new GwidViewWidget( tsContext() );
     IM5Model<IDtoClassInfo> modelDto = m5().getModel( MID_SDED_DTO_CLASS_INFO, IDtoClassInfo.class );
     IM5LifecycleManager<IDtoClassInfo> lmDto = modelDto.getLifecycleManager( skConn() );
     ITsGuiContext ctxDto = new TsGuiContext( tsContext() );
@@ -111,9 +116,11 @@ public class Sded2ClassEditor
     if( sel != null ) {
       IDtoClassInfo dto = DtoClassInfo.createFromSk( sel, false );
       classEditPane.setEntity( dto );
+      gwidViewWidget.setGwid( Gwid.createClass( sel.id() ) );
     }
     else {
       classEditPane.setEntity( null );
+      gwidViewWidget.setGwid( null );
     }
     inplaceEditor.refresh();
   }
@@ -155,7 +162,13 @@ public class Sded2ClassEditor
   protected void doInitGui( Composite aParent ) {
     SashForm sfMain = new SashForm( aParent, SWT.HORIZONTAL );
     classesListPane.createControl( sfMain );
-    inplaceEditor.createControl( sfMain );
+    // right pane
+    Composite rightPane = new Composite( sfMain, SWT.NONE );
+    rightPane.setLayout( new BorderLayout() );
+    gwidViewWidget.createControl( rightPane );
+    gwidViewWidget.getControl().setLayoutData( new BorderData( SWT.TOP ) );
+    inplaceEditor.createControl( rightPane );
+    inplaceEditor.getControl().setLayoutData( new BorderData( SWT.CENTER ) );
     sfMain.setWeights( 3000, 7000 );
     // setup
     classesListPane.addTsSelectionListener( ( s, i ) -> whenClassListSelectionChanges() );

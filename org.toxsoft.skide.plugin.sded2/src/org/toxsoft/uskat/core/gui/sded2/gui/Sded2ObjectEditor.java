@@ -69,9 +69,8 @@ public class Sded2ObjectEditor
     IM5LifecycleManager<ISkClassInfo> lmClass = m5mClass.getLifecycleManager( skConn() );
     IM5ItemsProvider<ISkClassInfo> ipClass = lmClass.itemsProvider();
     ITsGuiContext ctx1 = new TsGuiContext( tsContext() );
-    OPDEF_IS_ACTIONS_TREE_MODES.setValue( ctx1.params(), AV_TRUE );
-    OPDEF_IS_SUPPORTS_TREE.setValue( ctx1.params(), AV_TRUE );
-    clsTree = m5mClass.panelCreator().createStdCollViewerPanel( ctx1, ipClass );
+    OPDEF_IS_FILTER_PANE.setValue( ctx1.params(), AV_TRUE );
+    clsTree = m5mClass.panelCreator().createCollViewerPanel( ctx1, ipClass );
   }
 
   // ------------------------------------------------------------------------------------
