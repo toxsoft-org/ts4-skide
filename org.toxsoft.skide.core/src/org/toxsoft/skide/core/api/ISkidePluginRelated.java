@@ -16,7 +16,7 @@ public interface ISkidePluginRelated {
   ISkideEnvironment skEnv();
 
   /**
-   * Returns the environment instance specifically created fro this plugin.
+   * Returns the environment instance specifically created for this plugin.
    *
    * @return {@link IPluginEnvironment} - plugin-specific environment
    */
