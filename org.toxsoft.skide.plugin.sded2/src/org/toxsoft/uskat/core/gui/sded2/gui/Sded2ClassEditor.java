@@ -33,7 +33,12 @@ import org.toxsoft.uskat.core.impl.dto.*;
  * Panel contents:
  * <ul>
  * <li>left pane - classes list;</li>
- * <li>right pane - selected class editor.</li>
+ * <li>right pane - selected class editor with two tabs:
+ * <ul>
+ * <li>properties editor (each tab - properties of one {@link ESkClassPropKind});</li>
+ * <li>single tree view of all tabs.</li>
+ * </ul>
+ * .</li>
  * </ul>
  * <p>
  * Notes:

@@ -5,19 +5,19 @@ import org.toxsoft.core.tsgui.m5.model.impl.*;
 import org.toxsoft.core.tslib.bricks.strid.impl.*;
 import org.toxsoft.core.tslib.bricks.validator.*;
 import org.toxsoft.core.tslib.coll.*;
-import org.toxsoft.core.tslib.gw.skid.*;
 import org.toxsoft.core.tslib.utils.errors.*;
-import org.toxsoft.uskat.core.*;
 import org.toxsoft.uskat.core.api.objserv.*;
 import org.toxsoft.uskat.core.connection.*;
-import org.toxsoft.uskat.core.impl.dto.*;
 import org.toxsoft.uskat.core.utils.*;
 
 /**
- * LM class for this model.
+ * LM class to be used with {@link Sded2SkObjectM5Model}.
  * <p>
+ * This LM does <b>not</b> has code to create or edit (only to remove and enumerate) objects of class
+ * {@link #classId()}. The LM and model are intended to be used together with {@link Sded2SkObjectMpc} which has code to
+ * add and edit objects using M5-models specific for the {@link #classId()}.
  *
- * @author dima
+ * @author hazard157
  */
 public class Sded2SkObjectM5LifecycleManager
     extends M5LifecycleManager<ISkObject, ISkConnection>
@@ -41,20 +41,6 @@ public class Sded2SkObjectM5LifecycleManager
   }
 
   // ------------------------------------------------------------------------------------
-  // implementation
-  //
-
-  private IDtoObject makeDtoObject( IM5Bunch<ISkObject> aValues ) {
-    String id = aValues.getAsAv( ISkHardConstants.AID_STRID ).asString();
-    Skid skid = new Skid( classId, id );
-    DtoObject dtoObject = DtoObject.createDtoObject( skid, coreApi() );
-    dtoObject.attrs().setValue( ISkHardConstants.AID_NAME, aValues.getAsAv( ISkHardConstants.AID_NAME ) );
-    dtoObject.attrs().setValue( ISkHardConstants.AID_DESCRIPTION, aValues.getAsAv( ISkHardConstants.AID_DESCRIPTION ) );
-    return dtoObject;
-
-  }
-
-  // ------------------------------------------------------------------------------------
   // ISkConnected
   //
 
@@ -66,24 +52,6 @@ public class Sded2SkObjectM5LifecycleManager
   // ------------------------------------------------------------------------------------
   // M5LifecycleManager
   //
-
-  @Override
-  protected ISkObject doCreate( IM5Bunch<ISkObject> aValues ) {
-    IDtoObject dtoObject = makeDtoObject( aValues );
-    return skObjServ().defineObject( dtoObject );
-  }
-
-  @Override
-  protected ValidationResult doBeforeEdit( IM5Bunch<ISkObject> aValues ) {
-    IDtoObject dtoObject = makeDtoObject( aValues );
-    return skObjServ().svs().validator().canEditObject( dtoObject, aValues.originalEntity() );
-  }
-
-  @Override
-  protected ISkObject doEdit( IM5Bunch<ISkObject> aValues ) {
-    IDtoObject dtoObject = makeDtoObject( aValues );
-    return skObjServ().defineObject( dtoObject );
-  }
 
   @Override
   protected ValidationResult doBeforeRemove( ISkObject aEntity ) {
@@ -109,7 +77,7 @@ public class Sded2SkObjectM5LifecycleManager
    *
    * @return String - class ID
    */
-  public String getClassId() {
+  public String classId() {
     return classId;
   }
 

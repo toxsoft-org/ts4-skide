@@ -35,8 +35,8 @@ import org.toxsoft.uskat.core.gui.sded2.km5.sysdecsr.*;
  * <p>
  * Notes:
  * <ul>
- * <li>Handles {@link ISkSysdescr#eventer()} events to update displayed classes list;</li>
- * <li>Handles {@link ISkObjectService#eventer()} events to update displayed objects list;</li>
+ * <li>FIXME Handles {@link ISkSysdescr#eventer()} events to update displayed classes list;</li>
+ * <li>FIXME Handles {@link ISkObjectService#eventer()} events to update displayed objects list;</li>
  * <li>To access USkat core, the {@link ISkConnection} is used as specified in constructor.</li>
  * </ul>
  *
@@ -153,7 +153,7 @@ public class Sded2ObjectEditor
     holdObjsList.setLayout( new BorderLayout() );
     holdObjEditor = new Composite( sfMain, SWT.BORDER );
     holdObjEditor.setLayout( new BorderLayout() );
-    // TODO setup
+    // setup
     sfMain.setWeights( 2500, 2500, 5000 );
     clsTree.addTsSelectionListener( ( src, sel ) -> whenClassSelectionChanges() );
     whenClassSelectionChanges();
