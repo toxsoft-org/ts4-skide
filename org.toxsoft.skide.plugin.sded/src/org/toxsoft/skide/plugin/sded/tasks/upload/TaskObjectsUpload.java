@@ -4,7 +4,6 @@ import static org.toxsoft.core.tslib.bricks.gentask.IGenericTaskConstants.*;
 import static org.toxsoft.core.tslib.gw.IGwHardConstants.*;
 import static org.toxsoft.skide.plugin.exconn.main.UploadToServerTaskProcessor.*;
 import static org.toxsoft.skide.plugin.sded.ISkidePluginSdedSharedResources.*;
-import static org.toxsoft.uskat.core.ISkHardConstants.*;
 
 import org.toxsoft.core.tsgui.dialogs.*;
 import org.toxsoft.core.tslib.bricks.ctx.*;
@@ -17,6 +16,7 @@ import org.toxsoft.core.tslib.gw.*;
 import org.toxsoft.core.tslib.gw.skid.*;
 import org.toxsoft.core.tslib.utils.*;
 import org.toxsoft.core.tslib.utils.errors.*;
+import org.toxsoft.core.tslib.utils.logs.impl.*;
 import org.toxsoft.skide.core.api.*;
 import org.toxsoft.skide.core.api.tasks.*;
 import org.toxsoft.skide.plugin.exconn.main.*;
@@ -27,6 +27,8 @@ import org.toxsoft.uskat.core.api.objserv.*;
 import org.toxsoft.uskat.core.api.sysdescr.*;
 import org.toxsoft.uskat.core.api.sysdescr.dto.*;
 import org.toxsoft.uskat.core.connection.*;
+import org.toxsoft.uskat.core.devapi.*;
+import org.toxsoft.uskat.core.devapi.transactions.*;
 import org.toxsoft.uskat.core.gui.conn.*;
 import org.toxsoft.uskat.core.impl.dto.*;
 
@@ -73,7 +75,7 @@ public class TaskObjectsUpload
     IStridablesList<ISkClassInfo> llToUpload = srcCoreApi.sysdescr().listClasses();
 
     // reduce list of src classes - leave only GW classes
-    llToUpload = removeNonGwSrcCodeClasses( llToUpload );
+    llToUpload = getGwClasses( llToUpload );
 
     // prepare list of objects to upload - first load all objects of GW classes
     IListEdit<Skid> srcObjSkidList = new ElemArrayList<>();
@@ -155,53 +157,37 @@ public class TaskObjectsUpload
   private int actuallyUpload( IListEdit<Skid> aSrcObjSkidList ) {
 
     int count = 0;
+    // Разбиваем на два этапа, сначала создаем все объекты без инициализации связей
+    ISkTransactionService dstTransactionService = ((IDevCoreApi)destCoreApi).transactionService();
+    // Первый этап, создание объектов и склепок между ними в одной транзакции
+    dstTransactionService.start();
 
-    // 2025-06-18 mvk---+++
-    // // dima 01.08.24 new version
-    // // разбиваем на два этапа, сначала создаем все объекты без инициализации связей
-    // for( Skid skid : aSrcObjSkidList ) {
-    // // create DtoFullObject
-    // DtoFullObject dto = DtoFullObject.createDtoFullObject( skid, srcCoreApi );
-    // dto.links().map().clear();
-    // dto.rivets().map().clear();
-    // DtoFullObject.defineFullObject( destCoreApi, dto );
-    // }
-    // // теперь объекты созданы можно и связи инициализировать
-    // for( Skid skid : aSrcObjSkidList ) {
-    // DtoFullObject dto = DtoFullObject.createDtoFullObject( skid, srcCoreApi );
-    // DtoFullObject.defineFullObject( destCoreApi, dto );
-    // ++count;
-    // }
-
-    // old version - падает если в системном описании есть связи
-    // for( Skid skid : aSrcObjSkidList ) {
-    //
-    // // create DtoFullObject
-    // DtoFullObject dto = DtoFullObject.createDtoFullObject( skid, srcCoreApi );
-    // dto.links().map().clear();
-    // DtoFullObject.defineFullObject( destCoreApi, dto );
-    // ++count;
-    // }
-
-    // mvk 2025-06-24 TODO: обратные склепки, транзакция, групповая запись, DtoFullObject
-    ISkSysdescr srcSysdescr = srcCoreApi.sysdescr();
-    ISkObjectService srcObjService = srcCoreApi.objService();
-    ISkLinkService srcLinkService = srcCoreApi.linkService();
-    ISkObjectService dstObjService = destCoreApi.objService();
-    ISkLinkService dstLinkService = destCoreApi.linkService();
-
-    IListEdit<IDtoObject> objs = new ElemArrayList<>( aSrcObjSkidList.size() );
-    for( Skid skid : aSrcObjSkidList ) {
-      ISkObject obj = srcObjService.get( skid );
-      objs.add( new DtoObject( skid, obj.attrs(), obj.rivets().map() ) );
+    for( Skid objId : aSrcObjSkidList ) {
+      if( objId.equals( Skid.NONE ) ) {
+        continue;
+      }
+      ISkObject obj = srcCoreApi.objService().get( objId );
+      destCoreApi.objService().defineObject( new DtoObject( obj.skid(), obj.attrs(), obj.rivets().map() ) );
+      LoggerUtils.defaultLogger().info( "UploadObjsTask.actuallyUpload(...): define object %s", obj.skid() ); //$NON-NLS-1$
+      count++;
     }
-    // разбиваем на два этапа, сначала создаем все объекты без инициализации связей
-    count = dstObjService.defineObjects( ISkidList.EMPTY, objs ).size();
-    for( IDtoObject obj : objs ) {
-      ISkClassInfo ci = srcSysdescr.findClassInfo( obj.classId() );
+
+    // Завершение транзакции создания объектов
+    dstTransactionService.commit();
+
+    // Второй этап, создание связей между объектами
+    for( Skid objId : aSrcObjSkidList ) {
+      ISkClassInfo ci = srcCoreApi.sysdescr().findClassInfo( objId.classId() );
       for( IDtoLinkInfo li : ci.links().list() ) {
-        IDtoLinkFwd lf = srcLinkService.getLinkFwd( obj.skid(), li.id() );
-        dstLinkService.setLink( lf );
+        IDtoLinkFwd lf = srcCoreApi.linkService().getLinkFwd( objId, li.id() );
+        if( lf.rightSkids().size() != 0 ) {
+          destCoreApi.linkService().setLink( lf );
+        }
+        else {
+          if( li.linkConstraint().isExactCount() ) {
+            LoggerUtils.errorLogger().warning( "Link %s has empty list", lf.gwid() ); //$NON-NLS-1$
+          }
+        }
       }
     }
 
@@ -209,17 +195,17 @@ public class TaskObjectsUpload
   }
 
   /**
-   * Remove non-GW and source defined code classes from argument but retains hierarchy validity.
+   * Returns GW from argument but retains hierarchy validity.
    * <p>
    * Root class is retained too.
    *
    * @param aList {@link IStridablesList}&lt;{@link ISkClassInfo}&gt; - list to filter out
    * @return {@link IStridablesListEdit}&lt;{@link ISkClassInfo}&gt; - filtered list
    */
-  private IStridablesListEdit<ISkClassInfo> removeNonGwSrcCodeClasses( IStridablesList<ISkClassInfo> aList ) {
+  private static IStridablesListEdit<ISkClassInfo> getGwClasses( IStridablesList<ISkClassInfo> aList ) {
     IStridablesListEdit<ISkClassInfo> ll = new StridablesList<>();
     for( ISkClassInfo cinf : aList ) {
-      if( isGwClass( cinf, srcCoreApi ) || GW_ROOT_CLASS_ID.equals( cinf.id() ) ) {
+      if( isGwClass( cinf ) || GW_ROOT_CLASS_ID.equals( cinf.id() ) ) {
         ll.add( cinf );
       }
     }
@@ -250,17 +236,15 @@ public class TaskObjectsUpload
     return ll;
   }
 
-  private static boolean isGwClass( ISkClassInfo aCinf, ISkCoreApi aCoreApi ) {
-    if( isSourceCodeDefinedClass( aCinf ) ) {
+  private static boolean isGwClass( ISkClassInfo aCinf ) {
+    if( aCinf.id().startsWith( ISkHardConstants.SK_ID + '.' ) ) {
       return false;
     }
-    // check class is Green World class
-    String claimServiceId = aCoreApi.sysdescr().determineClassClaimingServiceId( aCinf.id() );
-    return claimServiceId.equals( ISkSysdescr.SERVICE_ID );
+    return true;
   }
 
-  private static boolean isSourceCodeDefinedClass( ISkClassInfo aCinf ) {
-    return OPDEF_SK_IS_SOURCE_CODE_DEFINED_CLASS.getValue( aCinf.params() ).asBool();
-  }
+  // private static boolean isSourceCodeDefinedClass( ISkClassInfo aCinf ) {
+  // return OPDEF_SK_IS_SOURCE_CODE_DEFINED_CLASS.getValue( aCinf.params() ).asBool();
+  // }
 
 }
