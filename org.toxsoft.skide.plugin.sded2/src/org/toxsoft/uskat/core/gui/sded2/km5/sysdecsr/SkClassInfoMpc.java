@@ -1,6 +1,6 @@
 package org.toxsoft.uskat.core.gui.sded2.km5.sysdecsr;
 
-import static org.toxsoft.uskat.core.gui.sded2.l10n.ISded2SharedResources.*;
+import static org.toxsoft.uskat.core.gui.sded2.km5.sysdecsr.ISkResources.*;
 
 import org.toxsoft.core.tsgui.bricks.ctx.*;
 import org.toxsoft.core.tsgui.bricks.tstree.tmm.*;

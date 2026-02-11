@@ -4,9 +4,10 @@ import static org.toxsoft.core.tsgui.m5.IM5Constants.*;
 import static org.toxsoft.core.tsgui.m5.gui.mpc.IMultiPaneComponentConstants.*;
 import static org.toxsoft.core.tslib.av.impl.AvUtils.*;
 import static org.toxsoft.core.tslib.av.metainfo.IAvMetaConstants.*;
-import static org.toxsoft.uskat.core.gui.km5.sded.IKM5SdedConstants.*;
-import static org.toxsoft.uskat.core.gui.km5.sded.ISkSdedKm5SharedResources.*;
-import static org.toxsoft.uskat.core.gui.sded2.l10n.ISded2SharedResources.*;
+import static org.toxsoft.uskat.core.api.sysdescr.ESkClassPropKind.*;
+import static org.toxsoft.uskat.core.gui.ISkCoreGuiConstants.*;
+import static org.toxsoft.uskat.core.gui.sded2.km5.IKM5Sded2Constants.*;
+import static org.toxsoft.uskat.core.gui.sded2.km5.sysdecsr.ISkResources.*;
 
 import org.toxsoft.core.tsgui.bricks.ctx.*;
 import org.toxsoft.core.tsgui.m5.gui.mpc.impl.*;
@@ -15,10 +16,13 @@ import org.toxsoft.core.tsgui.m5.gui.panels.impl.*;
 import org.toxsoft.core.tsgui.m5.model.*;
 import org.toxsoft.core.tsgui.m5.model.impl.*;
 import org.toxsoft.core.tsgui.m5.std.models.misc.*;
+import org.toxsoft.core.tsgui.valed.api.*;
 import org.toxsoft.core.tslib.av.*;
+import org.toxsoft.core.tslib.coll.*;
 import org.toxsoft.core.tslib.gw.*;
 import org.toxsoft.core.tslib.utils.errors.*;
 import org.toxsoft.uskat.core.api.sysdescr.*;
+import org.toxsoft.uskat.core.api.sysdescr.dto.*;
 import org.toxsoft.uskat.core.connection.*;
 import org.toxsoft.uskat.core.gui.km5.*;
 import org.toxsoft.uskat.core.gui.sded2.*;
@@ -104,6 +108,153 @@ public class Sded2SkClassInfoM5Model
 
       };
 
+  /**
+   * Field contains of list attributes {@link IDtoClassInfo#attrInfos()}.
+   */
+  public final IM5MultiModownFieldDef<ISkClassInfo, IDtoAttrInfo> SELF_ATTR_INFOS =
+      new M5MultiModownFieldDef<>( FID_SELF_ATTR_INFOS, Sded2DtoAttrInfoM5Model.MODEL_ID ) {
+
+        @Override
+        protected void doInit() {
+          setNameAndDescription( ATTR.pluralName(), ATTR.description() );
+          params().setStr( TSID_ICON_ID, ICONID_SDED_CLASS_ATTR );
+          params().setBool( IValedControlConstants.OPDEF_IS_HEIGHT_FIXED, false );
+          params().setInt( IValedControlConstants.OPDEF_VERTICAL_SPAN, 10 );
+          setFlags( 0 );
+        }
+
+        protected IList<IDtoAttrInfo> doGetFieldValue( ISkClassInfo aEntity ) {
+          return aEntity.attrs().listSelf();
+        }
+
+      };
+
+  /**
+   * Field contains of list rivetibutes {@link IDtoClassInfo#rivetInfos()}.
+   */
+  public final IM5MultiModownFieldDef<ISkClassInfo, IDtoRivetInfo> SELF_RIVET_INFOS =
+      new M5MultiModownFieldDef<>( FID_SELF_RIVET_INFOS, Sded2DtoRivetInfoM5Model.MODEL_ID ) {
+
+        @Override
+        protected void doInit() {
+          setNameAndDescription( RIVET.pluralName(), RIVET.description() );
+          params().setStr( TSID_ICON_ID, ICONID_SDED_CLASS_RIVET );
+          params().setBool( IValedControlConstants.OPDEF_IS_HEIGHT_FIXED, false );
+          params().setInt( IValedControlConstants.OPDEF_VERTICAL_SPAN, 10 );
+          setFlags( 0 );
+        }
+
+        protected IList<IDtoRivetInfo> doGetFieldValue( ISkClassInfo aEntity ) {
+          return aEntity.rivets().listSelf();
+        }
+
+      };
+
+  /**
+   * Field contains of list linkibutes {@link IDtoClassInfo#linkInfos()}.
+   */
+  public final IM5MultiModownFieldDef<ISkClassInfo, IDtoLinkInfo> SELF_LINK_INFOS =
+      new M5MultiModownFieldDef<>( FID_SELF_LINK_INFOS, Sded2DtoLinkInfoM5Model.MODEL_ID ) {
+
+        @Override
+        protected void doInit() {
+          setNameAndDescription( LINK.pluralName(), LINK.description() );
+          params().setStr( TSID_ICON_ID, ICONID_SDED_CLASS_LINK );
+          params().setBool( IValedControlConstants.OPDEF_IS_HEIGHT_FIXED, false );
+          params().setInt( IValedControlConstants.OPDEF_VERTICAL_SPAN, 10 );
+          setFlags( 0 );
+        }
+
+        protected IList<IDtoLinkInfo> doGetFieldValue( ISkClassInfo aEntity ) {
+          return aEntity.links().listSelf();
+        }
+
+      };
+
+  /**
+   * Field contains of list rtdataibutes {@link IDtoClassInfo#rtdataInfos()}.
+   */
+  public final IM5MultiModownFieldDef<ISkClassInfo, IDtoRtdataInfo> SELF_RTDATA_INFOS =
+      new M5MultiModownFieldDef<>( FID_SELF_RTDATA_INFOS, Sded2DtoRtdataInfoM5Model.MODEL_ID ) {
+
+        @Override
+        protected void doInit() {
+          setNameAndDescription( RTDATA.pluralName(), RTDATA.description() );
+          params().setStr( TSID_ICON_ID, ICONID_SDED_CLASS_DATA );
+          params().setBool( IValedControlConstants.OPDEF_IS_HEIGHT_FIXED, false );
+          params().setInt( IValedControlConstants.OPDEF_VERTICAL_SPAN, 10 );
+          setFlags( 0 );
+        }
+
+        protected IList<IDtoRtdataInfo> doGetFieldValue( ISkClassInfo aEntity ) {
+          return aEntity.rtdata().listSelf();
+        }
+
+      };
+
+  /**
+   * Field contains of list cmdibutes {@link IDtoClassInfo#cmdInfos()}.
+   */
+  public final IM5MultiModownFieldDef<ISkClassInfo, IDtoCmdInfo> SELF_CMD_INFOS =
+      new M5MultiModownFieldDef<>( FID_SELF_CMD_INFOS, Sded2DtoCmdInfoM5Model.MODEL_ID ) {
+
+        @Override
+        protected void doInit() {
+          setNameAndDescription( CMD.pluralName(), CMD.description() );
+          params().setStr( TSID_ICON_ID, ICONID_SDED_CLASS_CMD );
+          params().setBool( IValedControlConstants.OPDEF_IS_HEIGHT_FIXED, false );
+          params().setInt( IValedControlConstants.OPDEF_VERTICAL_SPAN, 10 );
+          setFlags( 0 );
+        }
+
+        protected IList<IDtoCmdInfo> doGetFieldValue( ISkClassInfo aEntity ) {
+          return aEntity.cmds().listSelf();
+        }
+
+      };
+
+  /**
+   * Field contains of list eventibutes {@link IDtoClassInfo#eventInfos()}.
+   */
+  public final IM5MultiModownFieldDef<ISkClassInfo, IDtoEventInfo> SELF_EVENT_INFOS =
+      new M5MultiModownFieldDef<>( FID_SELF_EVENT_INFOS, Sded2DtoEventInfoM5Model.MODEL_ID ) {
+
+        @Override
+        protected void doInit() {
+          setNameAndDescription( EVENT.pluralName(), EVENT.description() );
+          params().setStr( TSID_ICON_ID, ICONID_SDED_CLASS_EVENT );
+          params().setBool( IValedControlConstants.OPDEF_IS_HEIGHT_FIXED, false );
+          params().setInt( IValedControlConstants.OPDEF_VERTICAL_SPAN, 10 );
+          setFlags( 0 );
+        }
+
+        protected IList<IDtoEventInfo> doGetFieldValue( ISkClassInfo aEntity ) {
+          return aEntity.events().listSelf();
+        }
+
+      };
+
+  /**
+   * Field contains of list clobibutes {@link IDtoClassInfo#clobInfos()}.
+   */
+  public final IM5MultiModownFieldDef<ISkClassInfo, IDtoClobInfo> SELF_CLOB_INFOS =
+      new M5MultiModownFieldDef<>( FID_SELF_CLOB_INFOS, Sded2DtoClobInfoM5Model.MODEL_ID ) {
+
+        @Override
+        protected void doInit() {
+          setNameAndDescription( CLOB.pluralName(), CLOB.description() );
+          params().setStr( TSID_ICON_ID, ICONID_SDED_CLASS_CLOB );
+          params().setBool( IValedControlConstants.OPDEF_IS_HEIGHT_FIXED, false );
+          params().setInt( IValedControlConstants.OPDEF_VERTICAL_SPAN, 10 );
+          setFlags( 0 );
+        }
+
+        protected IList<IDtoClobInfo> doGetFieldValue( ISkClassInfo aEntity ) {
+          return aEntity.clobs().listSelf();
+        }
+
+      };
+
   // TODO field PARAMS ?
 
   /**
@@ -114,10 +265,12 @@ public class Sded2SkClassInfoM5Model
    */
   public Sded2SkClassInfoM5Model( ISkConnection aConn ) {
     super( MODEL_ID, ISkClassInfo.class, aConn );
-    setNameAndDescription( STR_N_M5M_CLASS, STR_D_M5M_CLASS );
-    addFieldDefs( CLASS_ID, NAME, PARENT_ID, DESCRIPTION );
+    setNameAndDescription( STR_M5M_CLASS, STR_M5M_CLASS_D );
+    addFieldDefs( CLASS_ID, NAME, PARENT_ID, DESCRIPTION, SELF_ATTR_INFOS, SELF_RIVET_INFOS, SELF_LINK_INFOS,
+        SELF_RTDATA_INFOS, SELF_CMD_INFOS, SELF_EVENT_INFOS, SELF_CLOB_INFOS );
     setPanelCreator( new M5DefaultPanelCreator<>() {
 
+      @Override
       protected IM5CollectionPanel<ISkClassInfo> doCreateCollEditPanel( ITsGuiContext aContext,
           IM5ItemsProvider<ISkClassInfo> aItemsProvider, IM5LifecycleManager<ISkClassInfo> aLifecycleManager ) {
         OPDEF_IS_ACTIONS_CRUD.setValue( aContext.params(), AV_TRUE );
@@ -127,6 +280,7 @@ public class Sded2SkClassInfoM5Model
         return new M5CollectionPanelMpcModownWrapper<>( mpc, false );
       }
 
+      @Override
       protected IM5CollectionPanel<ISkClassInfo> doCreateCollViewerPanel( ITsGuiContext aContext,
           IM5ItemsProvider<ISkClassInfo> aItemsProvider ) {
         OPDEF_IS_ACTIONS_CRUD.setValue( aContext.params(), AV_FALSE );
@@ -135,10 +289,16 @@ public class Sded2SkClassInfoM5Model
         return new M5CollectionPanelMpcModownWrapper<>( mpc, true );
       }
 
+      @Override
       protected IM5FilterPanel<ISkClassInfo> doCreateFilterPanel( ITsGuiContext aContext ) {
         return new SkClassM5FilterPane( aContext, model() );
       }
 
+      @Override
+      protected IM5EntityPanel<ISkClassInfo> doCreateEntityEditorPanel( ITsGuiContext aContext,
+          IM5LifecycleManager<ISkClassInfo> aLifecycleManager ) {
+        return new Sded2SkClassInfoM5EntityPanel( aContext, model(), aLifecycleManager );
+      }
     } );
   }
 

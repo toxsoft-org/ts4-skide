@@ -24,7 +24,7 @@ import org.toxsoft.uskat.core.utils.*;
  * @author hazard157
  */
 public class Sded2SkObjectM5Model
-    extends KM5ConnectedModelBase<ISkObject>
+    extends KM5ModelBasic<ISkObject>
     implements ISkConnected {
 
   /**
@@ -40,6 +40,7 @@ public class Sded2SkObjectM5Model
    */
   public Sded2SkObjectM5Model( ISkConnection aConn ) {
     super( MODEL_ID, ISkObject.class, aConn );
+    addFieldDefs( STRID, NAME, DESCRIPTION );
     setPanelCreator( new M5DefaultPanelCreator<>() {
       protected IM5CollectionPanel<ISkObject> doCreateCollViewerPanel( ITsGuiContext aContext,
           IM5ItemsProvider<ISkObject> aItemsProvider ) {

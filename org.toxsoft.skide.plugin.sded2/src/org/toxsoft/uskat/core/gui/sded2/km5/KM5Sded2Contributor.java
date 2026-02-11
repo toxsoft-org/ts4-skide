@@ -2,11 +2,11 @@ package org.toxsoft.uskat.core.gui.sded2.km5;
 
 import org.toxsoft.core.tsgui.m5.*;
 import org.toxsoft.core.tsgui.m5.model.impl.*;
+import org.toxsoft.core.tslib.bricks.strid.coll.*;
+import org.toxsoft.core.tslib.bricks.strid.coll.impl.*;
+import org.toxsoft.core.tslib.coll.helpers.*;
 import org.toxsoft.core.tslib.coll.primtypes.*;
-import org.toxsoft.core.tslib.coll.primtypes.impl.*;
 import org.toxsoft.core.tslib.utils.errors.*;
-import org.toxsoft.uskat.core.api.objserv.*;
-import org.toxsoft.uskat.core.api.sysdescr.*;
 import org.toxsoft.uskat.core.connection.*;
 import org.toxsoft.uskat.core.gui.km5.*;
 import org.toxsoft.uskat.core.gui.sded2.km5.skobj.*;
@@ -25,8 +25,6 @@ public class KM5Sded2Contributor
    */
   public static final IKM5ContributorCreator CREATOR = KM5Sded2Contributor::new;
 
-  private IStringListEdit lastCreatedodelIds = new StringArrayList();
-
   /**
    * Constructor.
    *
@@ -39,21 +37,42 @@ public class KM5Sded2Contributor
   }
 
   // ------------------------------------------------------------------------------------
+  // implementation
+  //
+
+  private IStridablesListEdit<M5Model<?>> internalCreateAllModels() {
+    IStridablesListEdit<M5Model<?>> modelsList = new StridablesList<>();
+    modelsList.add( new Sded2DtoAttrInfoM5Model( skConn() ) );
+    modelsList.add( new Sded2DtoLinkInfoM5Model( skConn() ) );
+    modelsList.add( new Sded2DtoRivetInfoM5Model( skConn() ) );
+    modelsList.add( new Sded2DtoRtdataInfoM5Model( skConn() ) );
+    modelsList.add( new Sded2DtoClobInfoM5Model( skConn() ) );
+    modelsList.add( new Sded2DtoCmdInfoM5Model( skConn() ) );
+    modelsList.add( new Sded2DtoEventInfoM5Model( skConn() ) );
+    modelsList.add( new Sded2SkClassInfoM5Model( skConn() ) );
+    modelsList.add( new Sded2SkObjectM5Model( skConn() ) );
+    // modelsList.add( new MappedSkidsM5Model( skConn() ) );
+    // modelsList.add( new StringMapStringM5Model( skConn() ) );
+    // modelsList.add( new LinkIdSkidListM5Model() );
+    return modelsList;
+  }
+
+  // ------------------------------------------------------------------------------------
   // KM5AbstractContributor
   //
 
   @Override
   protected IStringList papiCreateModels() {
-    IStringListEdit llModelIds = new StringLinkedBundleList();
-    // ISkClassInfo model
-    M5Model<ISkClassInfo> skClassModel = new Sded2SkClassInfoM5Model( skConn() );
-    m5().addModel( skClassModel );
-    llModelIds.add( skClassModel.id() );
-    // ISkObject model
-    M5Model<ISkObject> skObjectModel = new Sded2SkObjectM5Model( skConn() );
-    m5().addModel( skObjectModel );
-    llModelIds.add( skObjectModel.id() );
-    return llModelIds;
+    IStridablesListEdit<M5Model<?>> modelsList = internalCreateAllModels();
+    for( M5Model<?> model : modelsList ) {
+      m5().addModel( model );
+    }
+    return modelsList.ids();
+  }
+
+  @Override
+  protected void papiUpdateModel( ECrudOp aOp, String aClassId ) {
+    // nop - models only Java entities, not ISkSysdescr classes
   }
 
 }

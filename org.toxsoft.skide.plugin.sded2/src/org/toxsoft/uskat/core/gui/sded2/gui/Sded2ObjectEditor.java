@@ -14,11 +14,13 @@ import org.toxsoft.core.tsgui.m5.gui.panels.*;
 import org.toxsoft.core.tsgui.m5.model.*;
 import org.toxsoft.core.tsgui.panels.inpled.*;
 import org.toxsoft.core.tslib.bricks.strid.more.*;
+import org.toxsoft.core.tslib.gw.gwid.*;
 import org.toxsoft.uskat.core.api.objserv.*;
 import org.toxsoft.uskat.core.api.sysdescr.*;
 import org.toxsoft.uskat.core.connection.*;
 import org.toxsoft.uskat.core.gui.conn.*;
 import org.toxsoft.uskat.core.gui.glib.*;
+import org.toxsoft.uskat.core.gui.glib.widgets.*;
 import org.toxsoft.uskat.core.gui.sded2.km5.skobj.*;
 import org.toxsoft.uskat.core.gui.sded2.km5.sysdecsr.*;
 
@@ -45,13 +47,17 @@ import org.toxsoft.uskat.core.gui.sded2.km5.sysdecsr.*;
 public class Sded2ObjectEditor
     extends AbstractSkLazyPanel {
 
+  // left pane: always exists classes list
   private final IM5CollectionPanel<ISkClassInfo> clsTree;
 
+  // middle pane: holder Composite and dynamically created/removed list of objects
+  private Composite                     holdObjsList;
   private IM5CollectionPanel<ISkObject> objsList;
-  private IInplaceEditorPanel           objEditor;
 
-  private Composite holdObjsList;
-  private Composite holdObjEditor;
+  // middle pane: holder Composite and dynamically created/removed selected object inplace editor
+  private Composite           holdObjEditor = null;
+  private GwidViewWidget      objGwid       = null;
+  private IInplaceEditorPanel objEditor     = null;
 
   /**
    * Constructor.
@@ -92,6 +98,7 @@ public class Sded2ObjectEditor
     ITsGuiContext ctx1 = new TsGuiContext( tsContext() );
     OPDEF_IS_ACTIONS_TREE_MODES.setValue( ctx1.params(), AV_FALSE );
     OPDEF_IS_SUPPORTS_TREE.setValue( ctx1.params(), AV_FALSE );
+    OPDEF_IS_FILTER_PANE.setValue( ctx1.params(), AV_TRUE );
     objsList = m5mObjs.panelCreator().createCollEditPanel( ctx1, ipObjs, lmObjs );
     objsList.createControl( holdObjsList );
     objsList.getControl().setLayoutData( new BorderData( SWT.CENTER ) );
@@ -106,6 +113,13 @@ public class Sded2ObjectEditor
     if( selObj == null ) {
       return;
     }
+    // GWID panel is created once
+    if( objGwid == null ) {
+      objGwid = new GwidViewWidget( new TsGuiContext( tsContext() ) );
+      objGwid.createControl( holdObjEditor );
+      objGwid.getControl().setLayoutData( new BorderData( SWT.TOP ) );
+    }
+    objGwid.setGwid( Gwid.createObj( selObj.skid() ) );
     // create M5 editor panel
     IM5Model<ISkObject> model = m5().getModel( selObj.classId(), ISkObject.class );
     IM5LifecycleManager<ISkObject> lm = model.getLifecycleManager( skConn() );

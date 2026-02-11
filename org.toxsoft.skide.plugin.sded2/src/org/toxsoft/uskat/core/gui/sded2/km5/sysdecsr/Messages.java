@@ -1,4 +1,4 @@
-package org.toxsoft.uskat.core.gui.sded2.l10n;
+package org.toxsoft.uskat.core.gui.sded2.km5.sysdecsr;
 
 import java.util.*;
 

@@ -40,19 +40,20 @@ class SkClassTreeMakers {
       super( aContext, aConn );
     }
 
-    private DefaultTsNode<ISkClassInfo> ensureParentNode( ISkClassInfo aCinf,
+    private DefaultTsNode<ISkClassInfo> ensureClassNode( String aClassId,
         IStringMapEdit<DefaultTsNode<ISkClassInfo>> aNodesMap ) {
       // if parent node already exists - return it
-      DefaultTsNode<ISkClassInfo> node = aNodesMap.findByKey( aCinf.parentId() );
+      DefaultTsNode<ISkClassInfo> node = aNodesMap.findByKey( aClassId );
       if( node != null ) {
         return node;
       }
       // create new node
-      DefaultTsNode<ISkClassInfo> parentNode = ensureParentNode( aCinf, aNodesMap );
-      node = new DefaultTsNode<>( NK_CLASS, parentNode, aCinf );
-      node.setName( StridUtils.printf( StridUtils.FORMAT_ID_NAME, aCinf ) );
+      ISkClassInfo aClassInfo = skSysdescr().getClassInfo( aClassId );
+      DefaultTsNode<ISkClassInfo> parentNode = ensureClassNode( aClassInfo.parentId(), aNodesMap );
+      node = new DefaultTsNode<>( NK_CLASS, parentNode, aClassInfo );
+      node.setName( StridUtils.printf( StridUtils.FORMAT_ID_NAME, aClassInfo ) );
       parentNode.addNode( node );
-      aNodesMap.put( aCinf.id(), node );
+      aNodesMap.put( aClassInfo.id(), node );
       return node;
     }
 
@@ -65,15 +66,17 @@ class SkClassTreeMakers {
       rootClassNode.setName( StridUtils.printf( StridUtils.FORMAT_ID_NAME, rootClassInfo ) );
       nodesMap.put( GW_ROOT_CLASS_ID, rootClassNode );
       for( ISkClassInfo cinf : aItems ) {
+        ensureClassNode( cinf.id(), nodesMap );
         // do nothing if class is already in tree (as root or parent of previously processed class)
-        if( nodesMap.hasKey( cinf.id() ) ) {
-          continue;
-        }
-        DefaultTsNode<ISkClassInfo> parentNode = ensureParentNode( cinf, nodesMap );
-        DefaultTsNode<ISkClassInfo> node = new DefaultTsNode<>( NK_CLASS, parentNode, cinf );
-        node.setName( StridUtils.printf( StridUtils.FORMAT_ID_NAME, cinf ) );
-        parentNode.addNode( node );
-        nodesMap.put( cinf.id(), node );
+        // if( nodesMap.hasKey( cinf.id() ) ) {
+        // continue;
+        // }
+
+        // DefaultTsNode<ISkClassInfo> parentNode = ensureClassNode( cinf.parentId(), nodesMap );
+        // DefaultTsNode<ISkClassInfo> node = new DefaultTsNode<>( NK_CLASS, parentNode, cinf );
+        // node.setName( StridUtils.printf( StridUtils.FORMAT_ID_NAME, cinf ) );
+        // parentNode.addNode( node );
+        // nodesMap.put( cinf.id(), node );
       }
       return new SingleItemList<>( rootClassNode );
     }

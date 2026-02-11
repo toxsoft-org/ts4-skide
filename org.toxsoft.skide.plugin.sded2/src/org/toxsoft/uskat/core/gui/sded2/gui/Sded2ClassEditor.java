@@ -2,7 +2,6 @@ package org.toxsoft.uskat.core.gui.sded2.gui;
 
 import static org.toxsoft.core.tsgui.m5.gui.mpc.IMultiPaneComponentConstants.*;
 import static org.toxsoft.core.tslib.av.impl.AvUtils.*;
-import static org.toxsoft.uskat.core.gui.km5.sded.IKM5SdedConstants.*;
 
 import org.eclipse.swt.*;
 import org.eclipse.swt.custom.*;
@@ -18,17 +17,16 @@ import org.toxsoft.core.tslib.bricks.strid.more.*;
 import org.toxsoft.core.tslib.coll.helpers.*;
 import org.toxsoft.core.tslib.gw.gwid.*;
 import org.toxsoft.core.tslib.utils.errors.*;
+import org.toxsoft.uskat.core.*;
 import org.toxsoft.uskat.core.api.sysdescr.*;
-import org.toxsoft.uskat.core.api.sysdescr.dto.*;
 import org.toxsoft.uskat.core.connection.*;
 import org.toxsoft.uskat.core.gui.conn.*;
 import org.toxsoft.uskat.core.gui.glib.*;
 import org.toxsoft.uskat.core.gui.glib.widgets.*;
 import org.toxsoft.uskat.core.gui.sded2.km5.sysdecsr.*;
-import org.toxsoft.uskat.core.impl.dto.*;
 
 /**
- * Class editor - allows to create, edit and delete classes in Sysdescr.
+ * Class editor - allows to create, edit and delete classes in {@link ISkCoreApi#sysdescr()}.
  * <p>
  * Panel contents:
  * <ul>
@@ -43,7 +41,7 @@ import org.toxsoft.uskat.core.impl.dto.*;
  * <p>
  * Notes:
  * <ul>
- * <li>Handles {@link ISkSysdescr#eventer()} events to update displayed classes list;</li>
+ * <li>FIXME Handles {@link ISkSysdescr#eventer()} events to update displayed classes list;</li>
  * <li>To access USkat core, the {@link ISkConnection} is used as specified in constructor.</li>
  * </ul>
  *
@@ -56,7 +54,7 @@ public class Sded2ClassEditor
 
   private final IM5CollectionPanel<ISkClassInfo> classesListPane;
   private final GwidViewWidget                   gwidViewWidget;
-  private final IM5EntityPanel<IDtoClassInfo>    classEditPane;
+  private final IM5EntityPanel<ISkClassInfo>     classEditPane;
   private final IInplaceEditorPanel              inplaceEditor;
 
   /**
@@ -89,8 +87,8 @@ public class Sded2ClassEditor
 
     // right pane components
     gwidViewWidget = new GwidViewWidget( tsContext() );
-    IM5Model<IDtoClassInfo> modelDto = m5().getModel( MID_SDED_DTO_CLASS_INFO, IDtoClassInfo.class );
-    IM5LifecycleManager<IDtoClassInfo> lmDto = modelDto.getLifecycleManager( skConn() );
+    IM5Model<ISkClassInfo> modelDto = m5().getModel( Sded2SkClassInfoM5Model.MODEL_ID, ISkClassInfo.class );
+    IM5LifecycleManager<ISkClassInfo> lmDto = modelDto.getLifecycleManager( skConn() );
     ITsGuiContext ctxDto = new TsGuiContext( tsContext() );
     classEditPane = modelDto.panelCreator().createEntityEditorPanel( ctxDto, lmDto );
     classEditPane.setEditable( false );
@@ -119,8 +117,8 @@ public class Sded2ClassEditor
       inplaceEditor.cancelAndFinishEditing();
     }
     if( sel != null ) {
-      IDtoClassInfo dto = DtoClassInfo.createFromSk( sel, false );
-      classEditPane.setEntity( dto );
+      // IDtoClassInfo dto = DtoClassInfo.createFromSk( sel, true );
+      classEditPane.setEntity( sel );
       gwidViewWidget.setGwid( Gwid.createClass( sel.id() ) );
     }
     else {
@@ -150,8 +148,8 @@ public class Sded2ClassEditor
       sel = skSysdescr().findClassInfo( selClassId );
       classesListPane.setSelectedItem( sel );
       if( inplaceEditor.isEditing() ) {
-        IDtoClassInfo dto = DtoClassInfo.createFromSk( sel, false );
-        classEditPane.setEntity( dto );
+        // IDtoClassInfo dto = DtoClassInfo.createFromSk( sel, true );
+        classEditPane.setEntity( sel );
       }
     }
     finally {

@@ -1,7 +1,7 @@
 package org.toxsoft.uskat.core.gui.sded2.km5.sysdecsr;
 
 import static org.toxsoft.core.tsgui.m5.IM5Constants.*;
-import static org.toxsoft.uskat.core.gui.km5.sded.IKM5SdedConstants.*;
+import static org.toxsoft.uskat.core.gui.sded2.km5.IKM5Sded2Constants.*;
 
 import org.toxsoft.core.tsgui.m5.*;
 import org.toxsoft.core.tsgui.m5.model.impl.*;
@@ -9,6 +9,7 @@ import org.toxsoft.core.tslib.av.opset.*;
 import org.toxsoft.core.tslib.av.opset.impl.*;
 import org.toxsoft.core.tslib.bricks.validator.*;
 import org.toxsoft.core.tslib.coll.*;
+import org.toxsoft.core.tslib.coll.impl.*;
 import org.toxsoft.core.tslib.utils.errors.*;
 import org.toxsoft.uskat.core.api.sysdescr.*;
 import org.toxsoft.uskat.core.api.sysdescr.dto.*;
@@ -27,6 +28,24 @@ class Sded2SkClassInfoM5LifecycleManager
     extends M5LifecycleManager<ISkClassInfo, ISkConnection>
     implements ISkConnected {
 
+  /**
+   * Maps {@link ESkClassPropKind} to the field ID in M5-model {@link Sded2SkClassInfoM5Model}.
+   */
+  private static final IMap<ESkClassPropKind, String> propFieldIds;
+
+  static {
+    IMapEdit<ESkClassPropKind, String> mm = new ElemMap<>();
+    mm.put( ESkClassPropKind.ATTR, FID_SELF_ATTR_INFOS );
+    mm.put( ESkClassPropKind.CLOB, FID_SELF_CLOB_INFOS );
+    mm.put( ESkClassPropKind.CMD, FID_SELF_CMD_INFOS );
+    mm.put( ESkClassPropKind.EVENT, FID_SELF_EVENT_INFOS );
+    mm.put( ESkClassPropKind.LINK, FID_SELF_LINK_INFOS );
+    mm.put( ESkClassPropKind.RIVET, FID_SELF_RIVET_INFOS );
+    mm.put( ESkClassPropKind.RTDATA, FID_SELF_RTDATA_INFOS );
+    TsInternalErrorRtException.checkFalse( mm.size() == ESkClassPropKind.asList().size() );
+    propFieldIds = mm;
+  }
+
   public Sded2SkClassInfoM5LifecycleManager( IM5Model<ISkClassInfo> aModel, ISkConnection aMaster ) {
     super( aModel, true, true, true, true, aMaster );
     TsNullArgumentRtException.checkNull( aMaster );
@@ -35,6 +54,26 @@ class Sded2SkClassInfoM5LifecycleManager
   // ------------------------------------------------------------------------------------
   // implementation
   //
+
+  private static <T extends IDtoClassPropInfoBase> ValidationResult validatePropsList( IList<T> aProps,
+      ESkClassPropKind aKind ) {
+
+    // TODO check list does not contains duplicated items
+
+    return ValidationResult.SUCCESS;
+  }
+
+  private static ValidationResult validateDtoClassInfo( IM5Bunch<ISkClassInfo> aValues ) {
+    ValidationResult vr = ValidationResult.SUCCESS;
+    for( ESkClassPropKind k : ESkClassPropKind.asList() ) {
+      IList<? extends IDtoClassPropInfoBase> llProps = aValues.getAs( propFieldIds.getByKey( k ), IList.class );
+      vr = ValidationResult.firstNonOk( vr, validatePropsList( llProps, k ) );
+      if( vr.isError() ) {
+        return vr;
+      }
+    }
+    return vr;
+  }
 
   private static IDtoClassInfo makeDtoClassInfo( IM5Bunch<ISkClassInfo> aValues ) {
     String id = aValues.getAsAv( FID_CLASS_ID ).asString();
@@ -46,16 +85,13 @@ class Sded2SkClassInfoM5LifecycleManager
     params.setStr( FID_NAME, aValues.getAsAv( FID_NAME ).asString() );
     params.setStr( FID_DESCRIPTION, aValues.getAsAv( FID_DESCRIPTION ).asString() );
     DtoClassInfo cinf = new DtoClassInfo( id, parentId, params );
-    // only when editing, class child properties are copied from original entity
-    if( aValues.originalEntity() != null ) {
-      cinf.attrInfos().addAll( aValues.originalEntity().attrs().list() );
-      cinf.rtdataInfos().addAll( aValues.originalEntity().rtdata().list() );
-      cinf.cmdInfos().addAll( aValues.originalEntity().cmds().list() );
-      cinf.eventInfos().addAll( aValues.originalEntity().events().list() );
-      cinf.linkInfos().addAll( aValues.originalEntity().links().list() );
-      cinf.cmdInfos().addAll( aValues.originalEntity().cmds().list() );
-      cinf.clobInfos().addAll( aValues.originalEntity().clobs().list() );
-    }
+    cinf.attrInfos().setAll( aValues.getAs( FID_SELF_ATTR_INFOS, IList.class ) );
+    cinf.linkInfos().setAll( aValues.getAs( FID_SELF_LINK_INFOS, IList.class ) );
+    cinf.rivetInfos().setAll( aValues.getAs( FID_SELF_RIVET_INFOS, IList.class ) );
+    cinf.rtdataInfos().setAll( aValues.getAs( FID_SELF_RTDATA_INFOS, IList.class ) );
+    cinf.cmdInfos().setAll( aValues.getAs( FID_SELF_CMD_INFOS, IList.class ) );
+    cinf.eventInfos().setAll( aValues.getAs( FID_SELF_EVENT_INFOS, IList.class ) );
+    cinf.clobInfos().setAll( aValues.getAs( FID_SELF_CLOB_INFOS, IList.class ) );
     return cinf;
   }
 
@@ -65,8 +101,12 @@ class Sded2SkClassInfoM5LifecycleManager
 
   @Override
   protected ValidationResult doBeforeCreate( IM5Bunch<ISkClassInfo> aValues ) {
+    ValidationResult vr = validateDtoClassInfo( aValues );
+    if( vr.isError() ) {
+      return vr;
+    }
     IDtoClassInfo dtoClassInfo = makeDtoClassInfo( aValues );
-    return skSysdescr().svs().validator().canCreateClass( dtoClassInfo );
+    return ValidationResult.firstNonOk( vr, skSysdescr().svs().validator().canCreateClass( dtoClassInfo ) );
   }
 
   @Override
@@ -77,8 +117,13 @@ class Sded2SkClassInfoM5LifecycleManager
 
   @Override
   protected ValidationResult doBeforeEdit( IM5Bunch<ISkClassInfo> aValues ) {
+    ValidationResult vr = validateDtoClassInfo( aValues );
+    if( vr.isError() ) {
+      return vr;
+    }
     IDtoClassInfo dtoClassInfo = makeDtoClassInfo( aValues );
-    return skSysdescr().svs().validator().canEditClass( dtoClassInfo, aValues.originalEntity() );
+    return ValidationResult.firstNonOk( vr,
+        skSysdescr().svs().validator().canEditClass( dtoClassInfo, aValues.originalEntity() ) );
   }
 
   @Override

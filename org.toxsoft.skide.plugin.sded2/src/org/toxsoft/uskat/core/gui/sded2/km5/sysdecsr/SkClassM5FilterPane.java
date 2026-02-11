@@ -4,7 +4,7 @@ import static org.toxsoft.core.tsgui.m5.IM5Constants.*;
 import static org.toxsoft.core.tslib.utils.TsLibUtils.*;
 import static org.toxsoft.uskat.core.ISkHardConstants.*;
 import static org.toxsoft.uskat.core.gui.ISkCoreGuiConstants.*;
-import static org.toxsoft.uskat.core.gui.sded2.l10n.ISded2SharedResources.*;
+import static org.toxsoft.uskat.core.gui.sded2.km5.sysdecsr.ISkResources.*;
 
 import org.eclipse.swt.*;
 import org.eclipse.swt.events.*;
@@ -106,8 +106,7 @@ class SkClassM5FilterPane
     chbOnlyGw.setLayoutData( new BorderData( SWT.LEFT ) );
     chbOnlyGw.setToolTipText( STR_SHOW_ONLY_GW_CLASSES_D );
     chbOnlyGw.setSelection( true );
-    // EIconSize iconSize = hdpiService().getToolbarIconsSize(); // TODO what icon size to use?
-    EIconSize iconSize = EIconSize.IS_16X16;
+    EIconSize iconSize = EIconSize.IS_16X16; // we fix size because need smalles icon
     chbOnlyGw.setImage( iconManager().loadStdIcon( ICONID_COLORED_WORLD_GREEN, iconSize ) );
     // txtString
     txtString = new Text( backplane, SWT.BORDER );

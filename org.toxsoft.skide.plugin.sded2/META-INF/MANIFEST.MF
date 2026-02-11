@@ -16,8 +16,7 @@ Export-Package: org.toxsoft.skide.plugin.sded2,
  org.toxsoft.uskat.core.gui.sded2.incub,
  org.toxsoft.uskat.core.gui.sded2.km5,
  org.toxsoft.uskat.core.gui.sded2.km5.skobj,
- org.toxsoft.uskat.core.gui.sded2.km5.sysdecsr,
- org.toxsoft.uskat.core.gui.sded2.l10n
+ org.toxsoft.uskat.core.gui.sded2.km5.sysdecsr
 Require-Bundle: jakarta.inject.jakarta.inject-api,
  jakarta.annotation-api,
  org.eclipse.core.runtime,

@@ -2,6 +2,7 @@ package org.toxsoft.uskat.core.gui.sded2.km5.skobj;
 
 import static org.toxsoft.core.tslib.av.impl.AvUtils.*;
 import static org.toxsoft.uskat.core.ISkHardConstants.*;
+import static org.toxsoft.uskat.core.gui.sded2.km5.skobj.ISkResources.*;
 
 import org.toxsoft.core.tsgui.bricks.ctx.*;
 import org.toxsoft.core.tsgui.dialogs.datarec.*;
@@ -16,6 +17,19 @@ import org.toxsoft.core.tslib.utils.errors.*;
 import org.toxsoft.uskat.core.api.objserv.*;
 
 /**
+ * {@link MultiPaneComponent} implementation for panels of the model {@link Sded2SkObjectM5Model}.
+ * <p>
+ * Note: his method expects that {@link #lifecycleManager()} is of concrete class
+ * {@link Sded2SkObjectM5LifecycleManager} which has method {@link Sded2SkObjectM5LifecycleManager#classId() classId()}.
+ * defined. THence, this panel displays the objects of the single class, without subclasses.
+ * <p>
+ * This MPC displays collection of {@link ISkObject} modeled by {@link Sded2SkObjectM5Model#MODEL_ID}. However, wHen
+ * invoking CRUD operation methods {@link #doAddItem()}, {@link #doAddCopyItem(ISkObject)},
+ * {@link #doEditItem(ISkObject)} and {@link #doRemoveItem(ISkObject)}, this implementation uses Sk-class specific
+ * M5-model for object editing.
+ * <p>
+ * So different models are used for objects list display and for objects removal.
+ *
  * @author hazard157
  */
 class Sded2SkObjectMpc
@@ -41,7 +55,7 @@ class Sded2SkObjectMpc
    * This method expects that {@link #lifecycleManager()} is of concrete class {@link Sded2SkObjectM5LifecycleManager}
    * which has method {@link Sded2SkObjectM5LifecycleManager#classId() classId()} defined.
    *
-   * @return {@link Pair}&gt;String;{@link IM5LifecycleManager}&lt; - apir "class ID" - "LM of the lass ID"
+   * @return {@link Pair}&gt;String;{@link IM5LifecycleManager}&lt; - pair "class ID" - "LM of the lass ID"
    */
   private Pair<String, IM5LifecycleManager<ISkObject>> getSkClassSpecificData() {
     if( lifecycleManager() instanceof Sded2SkObjectM5LifecycleManager selfLm ) {
@@ -52,7 +66,7 @@ class Sded2SkObjectMpc
       IM5LifecycleManager<ISkObject> specificLm = specificModel.getLifecycleManager( selfLm.master() );
       return new Pair<>( selfLm.classId(), specificLm );
     }
-    String FMT_MPC_EXPECTS_SPECIFIC_LM = "Panel '%s' expects lifecycle manager of class '%s'"; // TODO move to L10n
+    // TODO move to L10n
     throw new TsInternalErrorRtException( FMT_MPC_EXPECTS_SPECIFIC_LM, this.getClass().getSimpleName(),
         Sded2SkObjectM5LifecycleManager.class.getSimpleName() );
   }
@@ -90,6 +104,12 @@ class Sded2SkObjectMpc
     Pair<String, IM5LifecycleManager<ISkObject>> p = getSkClassSpecificData();
     IM5LifecycleManager<ISkObject> lm = p.right();
     return M5GuiUtils.askEdit( tsContext(), lm.model(), aItem, cdi, lm );
+  }
+
+  @Override
+  protected boolean doRemoveItem( ISkObject aItem ) {
+    Pair<String, IM5LifecycleManager<ISkObject>> p = getSkClassSpecificData();
+    return M5GuiUtils.askRemove( tsContext(), model(), aItem, getShell(), p.right() );
   }
 
 }
