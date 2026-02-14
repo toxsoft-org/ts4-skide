@@ -115,7 +115,6 @@ public class Sded2DtoPropInfoM5ModelBase<T extends IDtoClassPropInfoBase>
    * @param aConn {@link ISkConnection} - Sk-connection to be used in constructor
    * @throws TsNullArgumentRtException any argument = <code>null</code>
    * @throws TsIllegalArgumentRtException identifier is not an IDpath
-   * @throws TsItemAlreadyExistsRtException model with specified ID already exists in domain
    */
   protected Sded2DtoPropInfoM5ModelBase( String aId, Class<T> aEntityClass, ESkClassPropKind aKind,
       ISkConnection aConn ) {
