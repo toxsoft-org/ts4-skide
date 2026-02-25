@@ -144,7 +144,9 @@ public class SkideTaskProcessor
   }
 
   /**
-   * Runs (starts) the task for the specified SkIDE units.
+   * Runs (starts) the task.
+   * <p>
+   * Task will run units {@link #getTaskUnitIds()} with options {@link #getTaskInputOptions()}.
    * <p>
    * Before task will started the confirmation dialog will appear. Dialog allows to edit list of units to run and to
    * change task input options. Edited values will be saved. Confirmation dialog may be bypassed if application

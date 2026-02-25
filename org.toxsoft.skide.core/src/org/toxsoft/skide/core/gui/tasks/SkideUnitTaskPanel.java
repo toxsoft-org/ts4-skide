@@ -16,8 +16,10 @@ import org.toxsoft.core.tsgui.utils.layout.*;
 import org.toxsoft.core.tsgui.widgets.*;
 import org.toxsoft.core.tslib.av.opset.*;
 import org.toxsoft.core.tslib.bricks.ctx.*;
+import org.toxsoft.core.tslib.bricks.gentask.*;
 import org.toxsoft.core.tslib.bricks.validator.*;
 import org.toxsoft.core.tslib.coll.primtypes.*;
+import org.toxsoft.core.tslib.coll.primtypes.impl.*;
 import org.toxsoft.core.tslib.utils.*;
 import org.toxsoft.core.tslib.utils.errors.*;
 import org.toxsoft.core.tslib.utils.logs.impl.*;
@@ -28,11 +30,10 @@ import org.toxsoft.skide.core.api.tasks.*;
 /**
  * Right panel for {@link ISkideUnit} to configure and run the specified task.
  * <p>
- * Current implementation contains tab folder with tabs:
+ * Current implementation contains:
  * <ul>
- * <li>Run - runs the task and displays execution log using {@link PanelSkideTaskRunner};</li>
- * <li>Configure - allows to set up the task using {@link PanelSkideTaskConfig}.</li>
- * <li>Results - displays task result using {@link PanelSkideTaskResults};</li>
+ * <li>Toolbar {@link #toolbar} on top with buttons: Run, Configure and Clear log pane;;</li>
+ * <li>Log pane {@link #logText} - displays task execution process and results;</li>
  * </ul>
  *
  * @author hazard157
@@ -121,9 +122,28 @@ public class SkideUnitTaskPanel
         IStringMap<ITsContextRo> result = taskProcessor.runSyncSequentially( new TaskCallback() );
         logText.append( "\n" ); //$NON-NLS-1$
         if( result == null ) {
-          logText.append( String.format( MSG_TASK_CANCELED ) );
+          logText.append( MSG_TASK_CANCELED );
         }
         else {
+          // --- display each task result if not SUCCESS
+          IStringMapEdit<ValidationResult> nonOkResults = new StringMap<>();
+          for( String unitId : result.keys() ) {
+            ITsContextRo rc = result.getByKey( unitId );
+            ValidationResult vr = IGenericTaskConstants.REFDEF_OUT_TASK_RESULT.getRef( rc, null );
+            if( vr != null && !vr.isOk() ) {
+              nonOkResults.put( unitId, vr );
+            }
+          }
+          if( !nonOkResults.isEmpty() ) {
+            logText.append( "\n" ); //$NON-NLS-1$
+            logText.append( String.format( FMT_TASKS_NON_OK_RESULTS, Integer.valueOf( nonOkResults.size() ) ) );
+            logText.append( "\n" ); //$NON-NLS-1$
+            for( String unitId : nonOkResults.keys() ) {
+              logText.append( String.format( FMT_TASK_NON_OK_MSG, unitId, nonOkResults.getByKey( unitId ).message() ) );
+              logText.append( "\n" ); //$NON-NLS-1$
+            }
+          }
+          // ---
           logText.append( String.format( MSG_TASK_FINISHED ) );
         }
       }
@@ -160,9 +180,7 @@ public class SkideUnitTaskPanel
 
   private final ITsActionSetProvider aspLocal = new AspLocalActions();
 
-  private final ISkideEnvironment     skideEnv;
-  private final ISkideTaskRegistrator taskReg;
-  private final SkideTaskProcessor    taskProcessor;
+  private final SkideTaskProcessor taskProcessor;
 
   private TsToolbar toolbar;
   private Text      logText;
@@ -178,8 +196,6 @@ public class SkideUnitTaskPanel
    */
   public SkideUnitTaskPanel( ITsGuiContext aContext, ISkideUnit aUnit, String aTaskId ) {
     super( aContext, aUnit );
-    skideEnv = tsContext().get( ISkideEnvironment.class );
-    taskReg = skideEnv.taskRegistrator();
     taskProcessor = skEnv().taskRegistrator().getRegisteredProcessors().getByKey( aTaskId );
   }
 

@@ -99,7 +99,7 @@ public class Sded2SkClassInfoM5Model
       new M5AttributeFieldDef<>( FID_DESCRIPTION, DDEF_DESCRIPTION, //
           TSID_NAME, STR_SCI_DECSRIPTION, //
           TSID_DESCRIPTION, STR_SCI_DECSRIPTION_D, //
-          M5_OPDEF_FLAGS, avInt( M5FF_COLUMN ) //
+          M5_OPDEF_FLAGS, avInt( M5FF_DETAIL ) //
       ) {
 
         protected IAtomicValue doGetFieldValue( ISkClassInfo aEntity ) {
@@ -275,6 +275,7 @@ public class Sded2SkClassInfoM5Model
           IM5ItemsProvider<ISkClassInfo> aItemsProvider, IM5LifecycleManager<ISkClassInfo> aLifecycleManager ) {
         OPDEF_IS_ACTIONS_CRUD.setValue( aContext.params(), AV_TRUE );
         OPDEF_IS_SUPPORTS_TREE.setValue( aContext.params(), AV_TRUE );
+        OPDEF_IS_ADD_COPY_ACTION.setValue( aContext.params(), AV_TRUE );
         MultiPaneComponentModown<ISkClassInfo> mpc =
             new SkClassInfoMpc( aContext, model(), aItemsProvider, aLifecycleManager );
         return new M5CollectionPanelMpcModownWrapper<>( mpc, false );

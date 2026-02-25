@@ -1,0 +1,4 @@
++++ Constraint editor does not edits ts.KeeperId value
++++ editing refbook structure does not recognized by refbook items editor
++++ specifying "Secdur" keeper ID does not causes corresponding VALED to appear in object editor
+--- class editor : duplicate arrtibute IDs does not cause error message

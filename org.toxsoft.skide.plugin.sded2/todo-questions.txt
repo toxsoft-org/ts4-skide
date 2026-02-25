@@ -1,0 +1,2 @@
+--- refbook service uses SkEvent in listener, but SkEvent is NOT passed through event service. Do we need event service to be used?
+    if NOT, maybe use GtMessage (already will be used in refbook service implementation)
