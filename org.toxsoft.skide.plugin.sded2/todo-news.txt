@@ -1,0 +1,4 @@
++++ SkIDE units need seqNo to be sorted in the same order at every SkIDE run
++++ tslib: add name (maybe description) to the entity keepers for full info about value-object
+--- ConstraintEditor - add registered Keeper IDs selector for ts.KeeperId constraint
+--- class info editor: "Browse" pane displaying all properties in a tree

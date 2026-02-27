@@ -20,7 +20,7 @@ import org.toxsoft.skide.task.codegen.gen.*;
 import org.toxsoft.skide.task.codegen.gen.impl.*;
 
 /**
- * Code generation task meta-information.
+ * Class prepares for code generation and run units supporting this task.
  *
  * @author hazard157
  */

@@ -41,7 +41,7 @@ import org.toxsoft.uskat.core.impl.dto.*;
  * <li>???.</li>
  * </ul>
  * Notes: GW (Green World) classes are classes claimed by {@link ISkSysdescr} service, so for <b><i>non-GW</i></b>
- * classes method {@link ISkSysdescr#determineClassClaimingServiceId(String)} returns any ID except
+ * classes method {@link ISkSysdescr#getSkClassImplementationInfo(String)} returns any ID except
  * {@link ISkSysdescr#SERVICE_ID}. Source code defined classes are hard-coded in Java source source code. The option
  * {@link ISkHardConstants#OPDEF_SK_IS_SOURCE_CODE_DEFINED_CLASS} determines if class is a source code defined one.
  * <p>
@@ -82,7 +82,7 @@ public class TaskClassesUpload
       return false;
     }
     // check class is Green World class
-    String claimServiceId = aCoreApi.sysdescr().determineClassClaimingServiceId( aCinf.id() );
+    String claimServiceId = aCoreApi.sysdescr().getSkClassImplementationInfo( aCinf.id() ).claimingServiceId();
     return claimServiceId.equals( ISkSysdescr.SERVICE_ID );
   }
 
@@ -305,6 +305,7 @@ public class TaskClassesUpload
     destCoreApi = destConn.coreApi();
     int uploadedClassesCount = uploadClasses();
     lop.finished( ValidationResult.info( FMT_INFO_CLASSES_UPLOADED, uploadedClassesCount ) );
+    REFDEF_OUT_TASK_RESULT.setRef( aOutput, ValidationResult.SUCCESS );
   }
 
 }

@@ -63,6 +63,7 @@ public class TaskObjectsUpload
     destCoreApi = destConn.coreApi();
     int uploadedObjectsCount = uploadObjects();
     lop.finished( ValidationResult.info( FMT_OBJECTS_UPLOADED, Integer.valueOf( uploadedObjectsCount ) ) );
+    REFDEF_OUT_TASK_RESULT.setRef( aOutput, ValidationResult.SUCCESS );
   }
 
   private int uploadObjects() {

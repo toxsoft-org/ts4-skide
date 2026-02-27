@@ -1,10 +1,13 @@
 package org.toxsoft.skide.core.api.impl;
 
+import static org.toxsoft.skide.core.api.ISkidePluginHardConstants.*;
 import static org.toxsoft.skide.core.l10n.ISkideCoreSharedResources.*;
 
 import org.toxsoft.core.tsgui.bricks.ctx.*;
 import org.toxsoft.core.tslib.bricks.strid.coll.*;
 import org.toxsoft.core.tslib.bricks.strid.coll.impl.*;
+import org.toxsoft.core.tslib.coll.*;
+import org.toxsoft.core.tslib.coll.impl.*;
 import org.toxsoft.core.tslib.utils.*;
 import org.toxsoft.core.tslib.utils.errors.*;
 import org.toxsoft.core.tslib.utils.logs.impl.*;
@@ -67,7 +70,13 @@ public final class SkidePluginsRegistrator
         }
       }
     }
-    createdUnits = units;
+    IListBasicEdit<ISkideUnit> tmpSorted = new SortedElemLinkedBundleListEx<>( ( aO1, aO2 ) -> {
+      int seqNo1 = OPDEF_SKIDE_UNIT_SEQ_NO.getValue( aO1.params() ).asInt();
+      int seqNo2 = OPDEF_SKIDE_UNIT_SEQ_NO.getValue( aO2.params() ).asInt();
+      return Integer.compare( seqNo1, seqNo2 );
+    } );
+    tmpSorted.addAll( units );
+    createdUnits = new StridablesList<>( tmpSorted );
   }
 
   // ------------------------------------------------------------------------------------

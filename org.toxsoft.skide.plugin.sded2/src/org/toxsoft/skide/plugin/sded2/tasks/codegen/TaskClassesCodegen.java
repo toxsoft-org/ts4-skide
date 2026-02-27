@@ -133,7 +133,7 @@ public class TaskClassesCodegen
     ISkSysdescr sysdescr = aConn.coreApi().sysdescr();
     IStridablesList<ISkClassInfo> llClasses = sysdescr.listClasses();
     for( ISkClassInfo classInfo : llClasses ) {
-      String claimerId = sysdescr.determineClassClaimingServiceId( classInfo.id() );
+      String claimerId = sysdescr.getSkClassImplementationInfo( classInfo.id() ).claimingServiceId();
       // write only SYSDESCR claimed classes (and of course, we don't need a root class)
       if( claimerId.equals( ISkSysdescr.SERVICE_ID ) && !classInfo.id().equals( GW_ROOT_CLASS_ID ) ) {
         writeClass( classInfo, aJw );
@@ -156,6 +156,7 @@ public class TaskClassesCodegen
     writeConstants( cs.defConn(), jw );
     jw.writeFile();
     lop.finished( ValidationResult.info( FMT_INFO_JAVA_INTERFACE_WAS_GENERATED, interfaceName ) );
+    REFDEF_OUT_TASK_RESULT.setRef( aOutput, ValidationResult.SUCCESS );
   }
 
 }

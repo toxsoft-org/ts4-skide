@@ -1,5 +1,6 @@
 package org.toxsoft.uskat.core.gui.sded2.km5.sysdecsr;
 
+import static org.toxsoft.uskat.core.gui.sded2.km5.IKM5Sded2Constants.*;
 import static org.toxsoft.uskat.core.gui.sded2.km5.sysdecsr.ISkResources.*;
 
 import org.toxsoft.core.tsgui.bricks.ctx.*;
@@ -31,11 +32,6 @@ class SkClassInfoMpc
     treeModeManager().setCurrentMode( tmiByHierarchy.id() );
   }
 
-  @Override
-  protected void doTuneBeforeDisplay() {
-    tree().console().expandAll();
-  }
-
   // ------------------------------------------------------------------------------------
   // ISkGuiContextable
   //
@@ -43,6 +39,24 @@ class SkClassInfoMpc
   @Override
   public ISkConnection skConn() {
     return model().domain().tsContext().get( ISkConnection.class );
+  }
+
+  // ------------------------------------------------------------------------------------
+  // MultiPaneComponentModown
+  //
+
+  @Override
+  protected void doTuneBeforeDisplay() {
+    tree().console().expandAll();
+  }
+
+  @Override
+  protected void doAdjustEntityCreationInitialValues( IM5BunchEdit<ISkClassInfo> aValues ) {
+    // if there is a selected class initialize new class as child of selected one
+    ISkClassInfo sel = selectedItem();
+    if( sel != null ) {
+      aValues.set( FID_PARENT_ID, sel.id() );
+    }
   }
 
 }
