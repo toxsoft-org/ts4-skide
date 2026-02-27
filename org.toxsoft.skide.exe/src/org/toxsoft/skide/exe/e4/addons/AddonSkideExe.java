@@ -38,7 +38,6 @@ public class AddonSkideExe
   @Override
   protected void doRegisterQuants( IQuantRegistrator aQuantRegistrator ) {
     aQuantRegistrator.registerQuant( new QuantTsGuiRcp() );
-    // aQuantRegistrator.registerQuant( new QuantHzCoreGui() );
   }
 
   @Override
