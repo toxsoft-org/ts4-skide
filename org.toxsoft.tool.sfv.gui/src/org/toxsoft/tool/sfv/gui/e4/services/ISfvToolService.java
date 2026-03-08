@@ -2,7 +2,7 @@ package org.toxsoft.tool.sfv.gui.e4.services;
 
 import org.toxsoft.core.tslib.bricks.events.change.*;
 import org.toxsoft.core.tslib.bricks.filebound.*;
-import org.toxsoft.tool.sfv.gui.main.*;
+import org.toxsoft.core.txtproj.lib.sfv.*;
 
 /**
  * SFV tool supporting service.

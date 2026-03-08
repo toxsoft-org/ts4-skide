@@ -17,7 +17,8 @@ Require-Bundle: jakarta.inject.jakarta.inject-api,
  org.toxsoft.core.singlesrc.rcp,
  org.toxsoft.core.tsgui,
  org.toxsoft.core.tsgui.rcp,
- org.toxsoft.core.tsgui.mws
+ org.toxsoft.core.tsgui.mws,
+ org.toxsoft.core.txtproj.lib
 Bundle-RequiredExecutionEnvironment: JavaSE-21
 Automatic-Module-Name: org.toxsoft.tool.sfv.gui
 Bundle-ActivationPolicy: lazy
@@ -25,5 +26,4 @@ Export-Package: org.toxsoft.tool.sfv.gui,
  org.toxsoft.tool.sfv.gui.e4.handlers,
  org.toxsoft.tool.sfv.gui.e4.services,
  org.toxsoft.tool.sfv.gui.e4.uiparts,
- org.toxsoft.tool.sfv.gui.m5,
- org.toxsoft.tool.sfv.gui.main
+ org.toxsoft.tool.sfv.gui.m5
