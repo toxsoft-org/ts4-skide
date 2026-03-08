@@ -30,12 +30,12 @@ import org.toxsoft.uskat.core.gui.utils.*;
  *
  * @author hazard157
  */
-class SkClassM5FilterPane
+class SkClassFilterPane
     extends AbstractLazyPanel<Control>
     implements IM5FilterPanel<ISkClassInfo>, ISkGuiContextable {
 
   /**
-   * The implementation of the filter returned by method {@link SkClassM5FilterPane#getFilter()}.
+   * The implementation of the filter returned by method {@link SkClassFilterPane#getFilter()}.
    *
    * @author hazard157
    */
@@ -78,7 +78,7 @@ class SkClassM5FilterPane
   private Button chbOnlyGw = null;
   private Text   txtString = null;
 
-  public SkClassM5FilterPane( ITsGuiContext aContext, IM5Model<ISkClassInfo> aModel ) {
+  public SkClassFilterPane( ITsGuiContext aContext, IM5Model<ISkClassInfo> aModel ) {
     super( aContext );
     model = TsNullArgumentRtException.checkNull( aModel );
     eventer = new GenericChangeEventer( this );

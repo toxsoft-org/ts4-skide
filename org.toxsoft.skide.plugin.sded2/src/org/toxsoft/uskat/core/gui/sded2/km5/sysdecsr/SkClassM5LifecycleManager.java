@@ -24,7 +24,7 @@ import org.toxsoft.uskat.core.utils.*;
  *
  * @author hazard157
  */
-class Sded2SkClassInfoM5LifecycleManager
+class SkClassM5LifecycleManager
     extends M5LifecycleManager<ISkClassInfo, ISkConnection>
     implements ISkConnected {
 
@@ -46,7 +46,7 @@ class Sded2SkClassInfoM5LifecycleManager
     propFieldIds = mm;
   }
 
-  public Sded2SkClassInfoM5LifecycleManager( IM5Model<ISkClassInfo> aModel, ISkConnection aMaster ) {
+  public SkClassM5LifecycleManager( IM5Model<ISkClassInfo> aModel, ISkConnection aMaster ) {
     super( aModel, true, true, true, true, aMaster );
     TsNullArgumentRtException.checkNull( aMaster );
   }

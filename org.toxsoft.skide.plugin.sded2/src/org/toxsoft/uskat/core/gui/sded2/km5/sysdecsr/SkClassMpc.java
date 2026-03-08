@@ -17,11 +17,11 @@ import org.toxsoft.uskat.core.gui.utils.*;
  *
  * @author hazard157
  */
-class SkClassInfoMpc
+class SkClassMpc
     extends MultiPaneComponentModown<ISkClassInfo>
     implements ISkGuiContextable {
 
-  public SkClassInfoMpc( ITsGuiContext aContext, IM5Model<ISkClassInfo> aModel,
+  public SkClassMpc( ITsGuiContext aContext, IM5Model<ISkClassInfo> aModel,
       IM5ItemsProvider<ISkClassInfo> aItemsProvider, IM5LifecycleManager<ISkClassInfo> aLifecycleManager ) {
     super( aContext, aModel, aItemsProvider, aLifecycleManager );
     // add tree nodes

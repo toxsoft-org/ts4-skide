@@ -42,6 +42,7 @@ public class KM5Sded2Contributor
 
   private IStridablesListEdit<M5Model<?>> internalCreateAllModels() {
     IStridablesListEdit<M5Model<?>> modelsList = new StridablesList<>();
+    modelsList.add( new Sded2DtoPropInfoM5Model( skConn() ) );
     modelsList.add( new Sded2DtoAttrInfoM5Model( skConn() ) );
     modelsList.add( new Sded2DtoLinkInfoM5Model( skConn() ) );
     modelsList.add( new Sded2DtoRivetInfoM5Model( skConn() ) );

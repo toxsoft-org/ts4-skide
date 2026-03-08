@@ -34,7 +34,15 @@ interface ISkResources {
   String STR_SCI_DECSRIPTION_D = Messages.getString( "SkClass.STR_DECSRIPTION_D" ); //$NON-NLS-1$
 
   /**
-   * SkClassTreeMakers
+   * {@link SkClassEntityPanel}
+   */
+  String STR_TAB_BROWSE   = Messages.getString( "SkClass.STR_TAB_BROWSE" );   //$NON-NLS-1$
+  String STR_TAB_BROWSE_D = Messages.getString( "SkClass.STR_TAB_BROWSE_D" ); //$NON-NLS-1$
+  String STR_TAB_PARAMS   = Messages.getString( "SkClass.STR_TAB_PARAMS" );   //$NON-NLS-1$
+  String STR_TAB_PARAMS_D = Messages.getString( "SkClass.STR_TAB_PARAMS_D" ); //$NON-NLS-1$
+
+  /**
+   * {@link SkClassTreeMakers}
    */
   String STR_TMI_CLASS_BY_HIERARCHY   = Messages.getString( "SkClassTreeMakers.STR_BY_HIERARCHY" );   //$NON-NLS-1$
   String STR_TMI_CLASS_BY_HIERARCHY_D = Messages.getString( "SkClassTreeMakers.STR_BY_HIERARCHY_D" ); //$NON-NLS-1$
@@ -48,6 +56,8 @@ interface ISkResources {
   String STR_PROP_NAME_D        = Messages.getString( "ClassProp.STR_PROP_NAME_D" );        //$NON-NLS-1$
   String STR_PROP_DESCRIPTION   = Messages.getString( "ClassProp.STR_PROP_DESCRIPTION" );   //$NON-NLS-1$
   String STR_PROP_DESCRIPTION_D = Messages.getString( "ClassProp.STR_PROP_DESCRIPTION_D" ); //$NON-NLS-1$
+  String STR_PROP_KIND          = Messages.getString( "ClassProp.STR_PROP_KIND" );          //$NON-NLS-1$
+  String STR_PROP_KIND_D        = Messages.getString( "ClassProp.STR_PROP_KIND_D" );        //$NON-NLS-1$
 
   /**
    * {@link Sded2DtoAttrInfoM5Model}

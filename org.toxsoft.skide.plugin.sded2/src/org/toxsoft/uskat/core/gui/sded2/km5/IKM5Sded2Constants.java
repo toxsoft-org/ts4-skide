@@ -13,6 +13,7 @@ public interface IKM5Sded2Constants {
 
   String FID_CLASS_ID       = "classId";      //$NON-NLS-1$
   String FID_PARENT_ID      = "parentId";     //$NON-NLS-1$
+  String FID_PROP_KIND      = "propKind";     //$NON-NLS-1$
   String FID_DATA_TYPE      = "dataType";     //$NON-NLS-1$
   String FID_PARAM_DEFS     = "paramDefs";    //$NON-NLS-1$
   String FID_ARG_DEFS       = "argDefs";      //$NON-NLS-1$
@@ -30,5 +31,6 @@ public interface IKM5Sded2Constants {
   String FID_SELF_RTDATA_INFOS = "selfRtdataInfos"; //$NON-NLS-1$
   String FID_SELF_CMD_INFOS    = "selfCmdInfos";    //$NON-NLS-1$
   String FID_SELF_EVENT_INFOS  = "selfEventInfos";  //$NON-NLS-1$
+  String FID_ALL_PROP_INFOS    = "allPropInfos";    //$NON-NLS-1$
 
 }

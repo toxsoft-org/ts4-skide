@@ -2,7 +2,8 @@ package org.toxsoft.uskat.core.gui.sded2.km5.sysdecsr;
 
 import static org.toxsoft.core.tsgui.graphics.icons.ITsStdIconIds.*;
 import static org.toxsoft.core.tslib.av.metainfo.IAvMetaConstants.*;
-import static org.toxsoft.uskat.core.gui.km5.sded.IKM5SdedConstants.*;
+import static org.toxsoft.uskat.core.gui.sded2.km5.IKM5Sded2Constants.*;
+import static org.toxsoft.uskat.core.gui.sded2.km5.sysdecsr.ISkResources.*;
 
 import org.toxsoft.core.tsgui.bricks.ctx.*;
 import org.toxsoft.core.tsgui.graphics.icons.*;
@@ -30,7 +31,7 @@ import org.toxsoft.uskat.core.api.sysdescr.*;
  *
  * @author hazard157
  */
-class Sded2SkClassInfoM5EntityPanel
+class SkClassEntityPanel
     extends M5DefaultEntityEditorPanel<ISkClassInfo> {
 
   /**
@@ -41,7 +42,7 @@ class Sded2SkClassInfoM5EntityPanel
    * @param aLifecycleManager {@link IM5LifecycleManager} - optional lifecycle manager, may be <code>null</code>
    * @throws TsNullArgumentRtException any argument = <code>null</code>
    */
-  public Sded2SkClassInfoM5EntityPanel( ITsGuiContext aContext, IM5Model<ISkClassInfo> aModel,
+  public SkClassEntityPanel( ITsGuiContext aContext, IM5Model<ISkClassInfo> aModel,
       IM5LifecycleManager<ISkClassInfo> aLifecycleManager ) {
     super( aContext, aModel, aLifecycleManager );
   }
@@ -55,6 +56,7 @@ class Sded2SkClassInfoM5EntityPanel
     // split editors per tabs: tab per class property kind and all other editors on "Parameters" tab
     IStringMapEdit<IValedControl<?>> paramsTabEditors = new StringMap<>();
     IStringMapEdit<IValedControl<?>> otherTabPerEditors = new StringMap<>();
+    IValedControl<?> valedBrowse = null;
     for( String fieldId : editors().keys() ) {
       switch( fieldId ) {
         case FID_CLASS_ID:
@@ -62,6 +64,10 @@ class Sded2SkClassInfoM5EntityPanel
         case TSID_NAME:
         case TSID_DESCRIPTION: {
           paramsTabEditors.put( fieldId, editors().getByKey( fieldId ) );
+          break;
+        }
+        case FID_ALL_PROP_INFOS: {
+          valedBrowse = editors().getByKey( fieldId );
           break;
         }
         default: {
@@ -73,12 +79,16 @@ class Sded2SkClassInfoM5EntityPanel
     // main board
     VecTabLayout vecMain = new VecTabLayout( false );
     board().setLayout( vecMain );
+    // "Browse" tab
+    IVecTabLayoutData ldBrowse = new VecTabLayoutData( STR_TAB_BROWSE, STR_TAB_BROWSE_D );
+    vecMain.addControl( valedBrowse, ldBrowse );
     // board for "Parameters" tab
     IVecBoard vbParams = new VecBoard();
     vbParams.setLayout( makeLadderLayout( model(), paramsTabEditors ) );
     // Tab "Parameters"
-    IVecTabLayoutData ld = new VecTabLayoutData( "Params", "???", ICONID_DIALOG_INFORMATION, EIconSize.IS_16X16 );
-    vecMain.addControl( vbParams, ld );
+    IVecTabLayoutData ldParams =
+        new VecTabLayoutData( STR_TAB_PARAMS, STR_TAB_PARAMS_D, ICONID_DIALOG_INFORMATION, EIconSize.IS_16X16 );
+    vecMain.addControl( vbParams, ldParams );
     // other tabs
     for( String fieldId : otherTabPerEditors.keys() ) {
       IValedControl<?> varEditor = otherTabPerEditors.getByKey( fieldId );

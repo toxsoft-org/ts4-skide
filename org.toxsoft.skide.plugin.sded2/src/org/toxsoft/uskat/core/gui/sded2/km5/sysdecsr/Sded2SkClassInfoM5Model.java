@@ -130,7 +130,7 @@ public class Sded2SkClassInfoM5Model
       };
 
   /**
-   * Field contains of list rivetibutes {@link IDtoClassInfo#rivetInfos()}.
+   * Field contains of list rivets {@link IDtoClassInfo#rivetInfos()}.
    */
   public final IM5MultiModownFieldDef<ISkClassInfo, IDtoRivetInfo> SELF_RIVET_INFOS =
       new M5MultiModownFieldDef<>( FID_SELF_RIVET_INFOS, Sded2DtoRivetInfoM5Model.MODEL_ID ) {
@@ -151,7 +151,7 @@ public class Sded2SkClassInfoM5Model
       };
 
   /**
-   * Field contains of list linkibutes {@link IDtoClassInfo#linkInfos()}.
+   * Field contains of list links {@link IDtoClassInfo#linkInfos()}.
    */
   public final IM5MultiModownFieldDef<ISkClassInfo, IDtoLinkInfo> SELF_LINK_INFOS =
       new M5MultiModownFieldDef<>( FID_SELF_LINK_INFOS, Sded2DtoLinkInfoM5Model.MODEL_ID ) {
@@ -172,7 +172,7 @@ public class Sded2SkClassInfoM5Model
       };
 
   /**
-   * Field contains of list rtdataibutes {@link IDtoClassInfo#rtdataInfos()}.
+   * Field contains of list rtdata {@link IDtoClassInfo#rtdataInfos()}.
    */
   public final IM5MultiModownFieldDef<ISkClassInfo, IDtoRtdataInfo> SELF_RTDATA_INFOS =
       new M5MultiModownFieldDef<>( FID_SELF_RTDATA_INFOS, Sded2DtoRtdataInfoM5Model.MODEL_ID ) {
@@ -193,7 +193,7 @@ public class Sded2SkClassInfoM5Model
       };
 
   /**
-   * Field contains of list cmdibutes {@link IDtoClassInfo#cmdInfos()}.
+   * Field contains of list commands {@link IDtoClassInfo#cmdInfos()}.
    */
   public final IM5MultiModownFieldDef<ISkClassInfo, IDtoCmdInfo> SELF_CMD_INFOS =
       new M5MultiModownFieldDef<>( FID_SELF_CMD_INFOS, Sded2DtoCmdInfoM5Model.MODEL_ID ) {
@@ -214,7 +214,7 @@ public class Sded2SkClassInfoM5Model
       };
 
   /**
-   * Field contains of list eventibutes {@link IDtoClassInfo#eventInfos()}.
+   * Field contains of list events {@link IDtoClassInfo#eventInfos()}.
    */
   public final IM5MultiModownFieldDef<ISkClassInfo, IDtoEventInfo> SELF_EVENT_INFOS =
       new M5MultiModownFieldDef<>( FID_SELF_EVENT_INFOS, Sded2DtoEventInfoM5Model.MODEL_ID ) {
@@ -235,7 +235,7 @@ public class Sded2SkClassInfoM5Model
       };
 
   /**
-   * Field contains of list clobibutes {@link IDtoClassInfo#clobInfos()}.
+   * Field contains of list CLOBs {@link IDtoClassInfo#clobInfos()}.
    */
   public final IM5MultiModownFieldDef<ISkClassInfo, IDtoClobInfo> SELF_CLOB_INFOS =
       new M5MultiModownFieldDef<>( FID_SELF_CLOB_INFOS, Sded2DtoClobInfoM5Model.MODEL_ID ) {
@@ -255,6 +255,28 @@ public class Sded2SkClassInfoM5Model
 
       };
 
+  /**
+   * Field contains {@link ISkClassInfo#listProps(boolean, boolean, boolean) ISkClassInfo#listProps( true, true, false
+   * )}.
+   */
+  public final IM5MultiModownFieldDef<ISkClassInfo, IDtoClassPropInfoBase> ALL_PROPS =
+      new M5MultiModownFieldDef<>( FID_ALL_PROP_INFOS, Sded2DtoPropInfoM5Model.MODEL_ID ) {
+
+        @Override
+        protected void doInit() {
+          setNameAndDescription( STR_TAB_BROWSE, STR_TAB_BROWSE_D );
+          params().setStr( TSID_ICON_ID, ICONID_SDED_CLASS_CLOB );
+          params().setBool( IValedControlConstants.OPDEF_IS_HEIGHT_FIXED, false );
+          params().setInt( IValedControlConstants.OPDEF_VERTICAL_SPAN, 10 );
+          setFlags( M5FF_READ_ONLY );
+        }
+
+        protected IList<IDtoClassPropInfoBase> doGetFieldValue( ISkClassInfo aEntity ) {
+          return aEntity.listProps( true, true, false );
+        }
+
+      };
+
   // TODO field PARAMS ?
 
   /**
@@ -267,7 +289,7 @@ public class Sded2SkClassInfoM5Model
     super( MODEL_ID, ISkClassInfo.class, aConn );
     setNameAndDescription( STR_M5M_CLASS, STR_M5M_CLASS_D );
     addFieldDefs( CLASS_ID, NAME, PARENT_ID, DESCRIPTION, SELF_ATTR_INFOS, SELF_RIVET_INFOS, SELF_LINK_INFOS,
-        SELF_RTDATA_INFOS, SELF_CMD_INFOS, SELF_EVENT_INFOS, SELF_CLOB_INFOS );
+        SELF_RTDATA_INFOS, SELF_CMD_INFOS, SELF_EVENT_INFOS, SELF_CLOB_INFOS, ALL_PROPS );
     setPanelCreator( new M5DefaultPanelCreator<>() {
 
       @Override
@@ -277,7 +299,7 @@ public class Sded2SkClassInfoM5Model
         OPDEF_IS_SUPPORTS_TREE.setValue( aContext.params(), AV_TRUE );
         OPDEF_IS_ADD_COPY_ACTION.setValue( aContext.params(), AV_TRUE );
         MultiPaneComponentModown<ISkClassInfo> mpc =
-            new SkClassInfoMpc( aContext, model(), aItemsProvider, aLifecycleManager );
+            new SkClassMpc( aContext, model(), aItemsProvider, aLifecycleManager );
         return new M5CollectionPanelMpcModownWrapper<>( mpc, false );
       }
 
@@ -286,19 +308,19 @@ public class Sded2SkClassInfoM5Model
           IM5ItemsProvider<ISkClassInfo> aItemsProvider ) {
         OPDEF_IS_ACTIONS_CRUD.setValue( aContext.params(), AV_FALSE );
         OPDEF_IS_SUPPORTS_TREE.setValue( aContext.params(), AV_TRUE );
-        MultiPaneComponentModown<ISkClassInfo> mpc = new SkClassInfoMpc( aContext, model(), aItemsProvider, null );
+        MultiPaneComponentModown<ISkClassInfo> mpc = new SkClassMpc( aContext, model(), aItemsProvider, null );
         return new M5CollectionPanelMpcModownWrapper<>( mpc, true );
       }
 
       @Override
       protected IM5FilterPanel<ISkClassInfo> doCreateFilterPanel( ITsGuiContext aContext ) {
-        return new SkClassM5FilterPane( aContext, model() );
+        return new SkClassFilterPane( aContext, model() );
       }
 
       @Override
       protected IM5EntityPanel<ISkClassInfo> doCreateEntityEditorPanel( ITsGuiContext aContext,
           IM5LifecycleManager<ISkClassInfo> aLifecycleManager ) {
-        return new Sded2SkClassInfoM5EntityPanel( aContext, model(), aLifecycleManager );
+        return new SkClassEntityPanel( aContext, model(), aLifecycleManager );
       }
     } );
   }
@@ -309,12 +331,12 @@ public class Sded2SkClassInfoM5Model
 
   @Override
   protected IM5LifecycleManager<ISkClassInfo> doCreateDefaultLifecycleManager() {
-    return new Sded2SkClassInfoM5LifecycleManager( this, skConn() );
+    return new SkClassM5LifecycleManager( this, skConn() );
   }
 
   @Override
   protected IM5LifecycleManager<ISkClassInfo> doCreateLifecycleManager( Object aMaster ) {
-    return new Sded2SkClassInfoM5LifecycleManager( this, ISkConnection.class.cast( aMaster ) );
+    return new SkClassM5LifecycleManager( this, ISkConnection.class.cast( aMaster ) );
   }
 
 }
