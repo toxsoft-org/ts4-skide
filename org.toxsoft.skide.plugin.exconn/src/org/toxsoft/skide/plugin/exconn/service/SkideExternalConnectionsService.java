@@ -28,7 +28,6 @@ import org.toxsoft.uskat.core.gui.conn.cfg.*;
 import org.toxsoft.uskat.core.gui.conn.m5.*;
 import org.toxsoft.uskat.core.impl.*;
 import org.toxsoft.uskat.s5.client.*;
-import org.toxsoft.uskat.s5.client.remote.*;
 
 /**
  * {@link ISkideExternalConnectionsService} implementation.
@@ -120,7 +119,6 @@ public class SkideExternalConnectionsService
       // Отображение диалога прогресса подключения к серверу
       ITsThreadExecutor threadExecutor = new SkGuiThreadExecutor( display );
       ISkCoreConfigConstants.REFDEF_THREAD_EXECUTOR.setRef( args, threadExecutor );
-      ISkCoreConfigConstants.REFDEF_BACKEND_PROVIDER.setRef( args, new S5RemoteBackendProvider() );
       S5BackendGuiUtils.showConnProgressDialog( shell, skConn, args, MSG_WAIT_CONNECT, 10000 );
       // skConn.open( args );
       return connId;

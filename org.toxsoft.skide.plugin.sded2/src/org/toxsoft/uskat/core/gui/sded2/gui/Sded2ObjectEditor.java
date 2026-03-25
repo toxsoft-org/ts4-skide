@@ -47,14 +47,14 @@ import org.toxsoft.uskat.core.gui.sded2.km5.sysdecsr.*;
 public class Sded2ObjectEditor
     extends AbstractSkLazyPanel {
 
-  // left pane: always exists classes list
+  // left pane: classes list (always exists)
   private final IM5CollectionPanel<ISkClassInfo> clsTree;
 
-  // middle pane: holder Composite and dynamically created/removed list of objects
+  // middle holder pane: Composite and dynamically created/removed list of objects
   private Composite                     holdObjsList;
   private IM5CollectionPanel<ISkObject> objsList;
 
-  // middle pane: holder Composite and dynamically created/removed selected object inplace editor
+  // middle holder pane: Composite and dynamically created/removed selected object inplace editor
   private Composite           holdObjEditor = null;
   private GwidViewWidget      objGwid       = null;
   private IInplaceEditorPanel objEditor     = null;
@@ -107,8 +107,9 @@ public class Sded2ObjectEditor
   }
 
   private void whenObjectSelectionChanges() {
+    // remove object panel
     clearRightPane();
-
+    // if no object selected leave the object panel blank
     ISkObject selObj = objsList.selectedItem();
     if( selObj == null ) {
       return;
