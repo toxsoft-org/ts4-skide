@@ -14,6 +14,7 @@ import org.toxsoft.core.tslib.bricks.ctx.*;
 import org.toxsoft.core.tslib.bricks.ctx.impl.*;
 import org.toxsoft.core.tslib.utils.errors.*;
 import org.toxsoft.core.tslib.utils.logs.*;
+import org.toxsoft.core.tslib.utils.logs.impl.*;
 import org.toxsoft.core.tslib.utils.progargs.*;
 import org.toxsoft.core.txtproj.lib.workroom.*;
 import org.toxsoft.uskat.backend.memtext.*;
@@ -21,7 +22,6 @@ import org.toxsoft.uskat.backend.sqlite.*;
 import org.toxsoft.uskat.core.api.cmdserv.*;
 import org.toxsoft.uskat.core.gui.conn.*;
 import org.toxsoft.uskat.core.impl.*;
-import org.toxsoft.uskat.core.logger.*;
 
 /**
  * SkIDE builtin connection initialization.

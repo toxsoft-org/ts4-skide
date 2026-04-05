@@ -8,9 +8,9 @@ import org.toxsoft.core.tsgui.panels.*;
 import org.toxsoft.core.tslib.coll.primtypes.*;
 import org.toxsoft.core.tslib.coll.primtypes.impl.*;
 import org.toxsoft.core.tslib.utils.logs.*;
+import org.toxsoft.core.tslib.utils.logs.impl.*;
 import org.toxsoft.skide.core.api.*;
 import org.toxsoft.skide.core.api.impl.*;
-import org.toxsoft.uskat.core.logger.*;
 
 /**
  * {@link PanelSkideProjectExplorer} right panel implementation.

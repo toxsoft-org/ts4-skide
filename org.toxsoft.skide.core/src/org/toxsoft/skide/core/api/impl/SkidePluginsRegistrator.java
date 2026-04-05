@@ -11,9 +11,9 @@ import org.toxsoft.core.tslib.coll.impl.*;
 import org.toxsoft.core.tslib.utils.*;
 import org.toxsoft.core.tslib.utils.errors.*;
 import org.toxsoft.core.tslib.utils.logs.*;
+import org.toxsoft.core.tslib.utils.logs.impl.*;
 import org.toxsoft.core.txtproj.lib.workroom.*;
 import org.toxsoft.skide.core.api.*;
-import org.toxsoft.uskat.core.logger.*;
 
 /**
  * {@link ISkidePluginsRegistrator} implementation.

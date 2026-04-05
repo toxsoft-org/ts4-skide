@@ -22,9 +22,9 @@ import org.toxsoft.core.tslib.coll.primtypes.*;
 import org.toxsoft.core.tslib.utils.*;
 import org.toxsoft.core.tslib.utils.errors.*;
 import org.toxsoft.core.tslib.utils.logs.*;
+import org.toxsoft.core.tslib.utils.logs.impl.*;
 import org.toxsoft.skide.core.api.*;
 import org.toxsoft.skide.core.api.tasks.*;
-import org.toxsoft.uskat.core.logger.*;
 
 /**
  * Panel to run and monitor the execution of the specified task.
