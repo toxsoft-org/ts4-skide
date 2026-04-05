@@ -21,9 +21,10 @@ import org.toxsoft.core.tslib.bricks.validator.*;
 import org.toxsoft.core.tslib.coll.primtypes.*;
 import org.toxsoft.core.tslib.utils.*;
 import org.toxsoft.core.tslib.utils.errors.*;
-import org.toxsoft.core.tslib.utils.logs.impl.*;
+import org.toxsoft.core.tslib.utils.logs.*;
 import org.toxsoft.skide.core.api.*;
 import org.toxsoft.skide.core.api.tasks.*;
+import org.toxsoft.uskat.core.logger.*;
 
 /**
  * Panel to run and monitor the execution of the specified task.
@@ -121,7 +122,7 @@ public class PanelSkideTaskRunner
         }
       }
       catch( Exception ex ) {
-        LoggerUtils.errorLogger().error( ex );
+        logger.error( ex );
         logText.append( "\n" ); //$NON-NLS-1$
         logText.append( String.format( FMT_TASK_FAILED, ex.getMessage() ) );
       }
@@ -160,6 +161,11 @@ public class PanelSkideTaskRunner
   private final ISkideTaskRegistrator taskReg;
 
   private SkideTaskProcessor taskProcessor = null;
+
+  /**
+   * The logger.
+   */
+  private final ILogger logger = LoggerUtils.getLogger( getClass() );
 
   /**
    * Constructor.

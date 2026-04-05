@@ -16,7 +16,7 @@ import org.toxsoft.core.tslib.gw.*;
 import org.toxsoft.core.tslib.gw.skid.*;
 import org.toxsoft.core.tslib.utils.*;
 import org.toxsoft.core.tslib.utils.errors.*;
-import org.toxsoft.core.tslib.utils.logs.impl.*;
+import org.toxsoft.core.tslib.utils.logs.*;
 import org.toxsoft.skide.core.api.*;
 import org.toxsoft.skide.core.api.tasks.*;
 import org.toxsoft.skide.plugin.exconn.main.*;
@@ -31,6 +31,7 @@ import org.toxsoft.uskat.core.devapi.*;
 import org.toxsoft.uskat.core.devapi.transactions.*;
 import org.toxsoft.uskat.core.gui.conn.*;
 import org.toxsoft.uskat.core.impl.dto.*;
+import org.toxsoft.uskat.core.logger.*;
 
 /**
  * SkIDE task {@link UploadToServerTaskProcessor} runner for {@link SkideUnitObjects}.
@@ -44,6 +45,11 @@ public class TaskObjectsUpload
 
   private ISkCoreApi srcCoreApi  = null;
   private ISkCoreApi destCoreApi = null;
+
+  /**
+   * The logger.
+   */
+  private final ILogger logger = LoggerUtils.getLogger( getClass() );
 
   /**
    * Constructor.
@@ -168,7 +174,7 @@ public class TaskObjectsUpload
       }
       ISkObject obj = srcCoreApi.objService().get( objId );
       destCoreApi.objService().defineObject( new DtoObject( obj.skid(), obj.attrs(), obj.rivets().map() ) );
-      LoggerUtils.defaultLogger().info( "UploadObjsTask.actuallyUpload(...): define object %s", obj.skid() ); //$NON-NLS-1$
+      logger.info( "UploadObjsTask.actuallyUpload(...): define object %s", obj.skid() ); //$NON-NLS-1$
       count++;
     }
 
@@ -185,7 +191,7 @@ public class TaskObjectsUpload
         }
         else {
           if( li.linkConstraint().isExactCount() ) {
-            LoggerUtils.errorLogger().warning( "Link %s has empty list", lf.gwid() ); //$NON-NLS-1$
+            logger.warning( "Link %s has empty list", lf.gwid() ); //$NON-NLS-1$
           }
         }
       }

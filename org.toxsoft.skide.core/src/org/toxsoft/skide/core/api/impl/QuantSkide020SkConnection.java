@@ -5,24 +5,23 @@ import static org.toxsoft.skide.core.l10n.ISkideCoreSharedResources.*;
 import static org.toxsoft.uskat.backend.memtext.MtbBackendToFile.*;
 import static org.toxsoft.uskat.core.impl.ISkCoreConfigConstants.*;
 
-import java.io.File;
+import java.io.*;
 
-import org.eclipse.e4.core.contexts.IEclipseContext;
-import org.eclipse.swt.widgets.Display;
-import org.toxsoft.core.tsgui.bricks.quant.AbstractQuant;
-import org.toxsoft.core.tslib.bricks.ctx.ITsContext;
-import org.toxsoft.core.tslib.bricks.ctx.impl.TsContext;
-import org.toxsoft.core.tslib.utils.errors.TsInternalErrorRtException;
-import org.toxsoft.core.tslib.utils.logs.impl.LoggerUtils;
-import org.toxsoft.core.tslib.utils.progargs.ProgramArgs;
-import org.toxsoft.core.txtproj.lib.workroom.ITsWorkroom;
-import org.toxsoft.uskat.backend.memtext.MtbBackendToFile;
-import org.toxsoft.uskat.backend.sqlite.ISkBackensSqliteConstants;
-import org.toxsoft.uskat.backend.sqlite.SkBackendSqlite;
-import org.toxsoft.uskat.core.api.cmdserv.ISkCommand;
-import org.toxsoft.uskat.core.gui.conn.ISkConnectionSupplier;
-import org.toxsoft.uskat.core.gui.conn.SkGuiThreadExecutor;
-import org.toxsoft.uskat.core.impl.ISkCoreConfigConstants;
+import org.eclipse.e4.core.contexts.*;
+import org.eclipse.swt.widgets.*;
+import org.toxsoft.core.tsgui.bricks.quant.*;
+import org.toxsoft.core.tslib.bricks.ctx.*;
+import org.toxsoft.core.tslib.bricks.ctx.impl.*;
+import org.toxsoft.core.tslib.utils.errors.*;
+import org.toxsoft.core.tslib.utils.logs.*;
+import org.toxsoft.core.tslib.utils.progargs.*;
+import org.toxsoft.core.txtproj.lib.workroom.*;
+import org.toxsoft.uskat.backend.memtext.*;
+import org.toxsoft.uskat.backend.sqlite.*;
+import org.toxsoft.uskat.core.api.cmdserv.*;
+import org.toxsoft.uskat.core.gui.conn.*;
+import org.toxsoft.uskat.core.impl.*;
+import org.toxsoft.uskat.core.logger.*;
 
 /**
  * SkIDE builtin connection initialization.
@@ -55,6 +54,11 @@ public class QuantSkide020SkConnection
   public static final String CMDLINE_ARG_USE_SQLITE_SYSDB = "UseSqliteSysDb"; //$NON-NLS-1$
 
   /**
+   * The logger.
+   */
+  private static final ILogger logger = LoggerUtils.getLogger( QuantSkide020SkConnection.class );
+
+  /**
    * Constructor.
    */
   public QuantSkide020SkConnection() {
@@ -82,7 +86,7 @@ public class QuantSkide020SkConnection
     REFDEF_BACKEND_PROVIDER.setRef( args, MtbBackendToFile.PROVIDER );
     ISkCoreConfigConstants.REFDEF_THREAD_EXECUTOR.setRef( args, new SkGuiThreadExecutor( display ) );
     cs.defConn().open( args );
-    LoggerUtils.defaultLogger().info( LOG_FMT_INFO_TEXTUAL_SYSDB, file.getAbsolutePath() );
+    logger.info( LOG_FMT_INFO_TEXTUAL_SYSDB, file.getAbsolutePath() );
   }
 
   /**
@@ -102,7 +106,7 @@ public class QuantSkide020SkConnection
     ISkBackensSqliteConstants.OPDEF_DB_FILE_NAME.setValue( args.params(), avStr( file.getAbsolutePath() ) );
     ISkCoreConfigConstants.REFDEF_THREAD_EXECUTOR.setRef( args, new SkGuiThreadExecutor( display ) );
     cs.defConn().open( args );
-    LoggerUtils.defaultLogger().info( LOG_FMT_INFO_SQLITE_SYSDB, file.getAbsolutePath() );
+    logger.info( LOG_FMT_INFO_SQLITE_SYSDB, file.getAbsolutePath() );
   }
 
   // ------------------------------------------------------------------------------------

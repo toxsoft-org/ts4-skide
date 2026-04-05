@@ -22,10 +22,11 @@ import org.toxsoft.core.tslib.coll.primtypes.*;
 import org.toxsoft.core.tslib.coll.primtypes.impl.*;
 import org.toxsoft.core.tslib.utils.*;
 import org.toxsoft.core.tslib.utils.errors.*;
-import org.toxsoft.core.tslib.utils.logs.impl.*;
+import org.toxsoft.core.tslib.utils.logs.*;
 import org.toxsoft.skide.core.api.*;
 import org.toxsoft.skide.core.api.impl.*;
 import org.toxsoft.skide.core.api.tasks.*;
+import org.toxsoft.uskat.core.logger.*;
 
 /**
  * Right panel for {@link ISkideUnit} to configure and run the specified task.
@@ -148,7 +149,7 @@ public class SkideUnitTaskPanel
         }
       }
       catch( Exception ex ) {
-        LoggerUtils.errorLogger().error( ex );
+        logger.error( ex );
         logText.append( "\n" ); //$NON-NLS-1$
         logText.append( String.format( FMT_TASK_FAILED, ex.getMessage() ) );
       }
@@ -184,6 +185,11 @@ public class SkideUnitTaskPanel
 
   private TsToolbar toolbar;
   private Text      logText;
+
+  /**
+   * The logger.
+   */
+  private final ILogger logger = LoggerUtils.getLogger( getClass() );
 
   /**
    * Constructor.

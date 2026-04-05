@@ -10,9 +10,10 @@ import org.toxsoft.core.tslib.coll.*;
 import org.toxsoft.core.tslib.coll.impl.*;
 import org.toxsoft.core.tslib.utils.*;
 import org.toxsoft.core.tslib.utils.errors.*;
-import org.toxsoft.core.tslib.utils.logs.impl.*;
+import org.toxsoft.core.tslib.utils.logs.*;
 import org.toxsoft.core.txtproj.lib.workroom.*;
 import org.toxsoft.skide.core.api.*;
+import org.toxsoft.uskat.core.logger.*;
 
 /**
  * {@link ISkidePluginsRegistrator} implementation.
@@ -29,6 +30,11 @@ public final class SkidePluginsRegistrator
    * List of created units, <code>null</code> means that units were not created yet.
    */
   private IStridablesList<ISkideUnit> createdUnits = null;
+
+  /**
+   * The logger.
+   */
+  private final ILogger logger = LoggerUtils.getLogger( getClass() );
 
   /**
    * Constructor.
@@ -52,7 +58,7 @@ public final class SkidePluginsRegistrator
         initializedPlugins.add( p );
       }
       catch( Exception ex ) {
-        LoggerUtils.errorLogger().error( ex, FMT_ERR_CANT_INIT_SKIDE_PLUGIN, p.id(), ex.getMessage() );
+        logger.error( ex, FMT_ERR_CANT_INIT_SKIDE_PLUGIN, p.id(), ex.getMessage() );
       }
     }
     // create units
@@ -62,8 +68,7 @@ public final class SkidePluginsRegistrator
       for( ISkideUnit u : uu ) {
         if( units.hasKey( u.id() ) ) {
           ISkideUnit uExisting = units.getByKey( u.id() );
-          LoggerUtils.errorLogger().warning( FMT_ERR_DUPLICATE_PROJ_UNIT_ID, u.id(), p.id(),
-              uExisting.skidePlugin().id() );
+          logger.warning( FMT_ERR_DUPLICATE_PROJ_UNIT_ID, u.id(), p.id(), uExisting.skidePlugin().id() );
         }
         else {
           units.add( u );
@@ -112,7 +117,7 @@ public final class SkidePluginsRegistrator
         p.close();
       }
       catch( Exception ex ) {
-        LoggerUtils.errorLogger().error( ex );
+        logger.error( ex );
       }
     }
   }

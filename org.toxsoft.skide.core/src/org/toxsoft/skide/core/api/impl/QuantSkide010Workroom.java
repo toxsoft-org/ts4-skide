@@ -13,10 +13,11 @@ import org.toxsoft.core.tsgui.bricks.quant.*;
 import org.toxsoft.core.tsgui.dialogs.*;
 import org.toxsoft.core.tslib.utils.*;
 import org.toxsoft.core.tslib.utils.errors.*;
-import org.toxsoft.core.tslib.utils.logs.impl.*;
+import org.toxsoft.core.tslib.utils.logs.*;
 import org.toxsoft.core.tslib.utils.progargs.*;
 import org.toxsoft.core.txtproj.lib.workroom.*;
 import org.toxsoft.skide.core.api.*;
+import org.toxsoft.uskat.core.logger.*;
 
 /**
  * SkIDE workroom initialization quant.
@@ -42,6 +43,11 @@ public class QuantSkide010Workroom
    * The application workroom flavor.
    */
   public static final WorkroomFlavor WORKROOM_FLAVOR = new WorkroomFlavor( SKIDE_FULL_ID, 4 );
+
+  /**
+   * The logger.
+   */
+  private static final ILogger logger = LoggerUtils.getLogger( QuantSkide010Workroom.class );
 
   /**
    * Constructor.
@@ -86,7 +92,7 @@ public class QuantSkide010Workroom
     catch( Exception ex ) {
       Shell shell = new Shell( display );
       TsDialogUtils.error( shell, ex );
-      LoggerUtils.errorLogger().error( ex );
+      logger.error( ex );
       quitSkideOnStartupError( aAppContext );
       return;
     }

@@ -7,9 +7,10 @@ import org.toxsoft.core.tsgui.bricks.ctx.impl.*;
 import org.toxsoft.core.tsgui.panels.*;
 import org.toxsoft.core.tslib.coll.primtypes.*;
 import org.toxsoft.core.tslib.coll.primtypes.impl.*;
-import org.toxsoft.core.tslib.utils.logs.impl.*;
+import org.toxsoft.core.tslib.utils.logs.*;
 import org.toxsoft.skide.core.api.*;
 import org.toxsoft.skide.core.api.impl.*;
+import org.toxsoft.uskat.core.logger.*;
 
 /**
  * {@link PanelSkideProjectExplorer} right panel implementation.
@@ -25,6 +26,11 @@ class ContentPanel
   private final IStringMapEdit<AbstractSkideUnitPanel> unitPanelsMap = new StringMap<>();
 
   private final StackLayout stackLayout = new StackLayout();
+
+  /**
+   * The logger.
+   */
+  private final ILogger logger = LoggerUtils.getLogger( getClass() );
 
   public ContentPanel( Composite aParent, ITsGuiContext aContext ) {
     super( aParent, aContext );
@@ -56,7 +62,7 @@ class ContentPanel
         unitPanelsMap.put( aUnit.id(), panel );
       }
       catch( Exception ex ) {
-        LoggerUtils.errorLogger().error( ex );
+        logger.error( ex );
         stackLayout.topControl = null;
         this.layout();
         return;
