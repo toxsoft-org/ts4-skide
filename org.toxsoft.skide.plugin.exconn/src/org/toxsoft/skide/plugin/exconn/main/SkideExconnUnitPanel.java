@@ -83,7 +83,7 @@ class SkideExconnUnitPanel
       dialog.run( true, false, aRunnable );
     }
     catch( InvocationTargetException | InterruptedException e ) {
-      LoggerUtils.errorLogger().error( e );
+      LoggerUtils.error( e );
       Display.getDefault().asyncExec( () -> TsDialogUtils.error( aShell, e.getCause() != null ? e.getCause() : e ) );
     }
   }

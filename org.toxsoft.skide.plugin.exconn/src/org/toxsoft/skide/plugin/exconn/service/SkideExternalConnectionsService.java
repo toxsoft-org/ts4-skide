@@ -126,7 +126,7 @@ public class SkideExternalConnectionsService
     catch( Exception ex ) {
       TsDialogUtils.error( shell, ex );
       conSup.removeConnection( connId );
-      LoggerUtils.errorLogger().error( ex );
+      LoggerUtils.error( ex );
       return null;
     }
   }
