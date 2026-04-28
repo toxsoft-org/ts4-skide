@@ -73,7 +73,9 @@ public class TaskObjectsUpload
     ISkConnection destConn = REFDEF_IN_OPEN_SK_CONN.getRef( aInput );
     destCoreApi = destConn.coreApi();
     int uploadedObjectsCount = uploadObjects();
-    lop.finished( ValidationResult.info( FMT_OBJECTS_UPLOADED, Integer.valueOf( uploadedObjectsCount ) ) );
+    ValidationResult vr = ValidationResult.info( FMT_OBJECTS_UPLOADED, Integer.valueOf( uploadedObjectsCount ) );
+    lop.finished( vr );
+    REFDEF_OUT_TASK_RESULT.setRef( aOutput, vr );
   }
 
   private int uploadObjects() {

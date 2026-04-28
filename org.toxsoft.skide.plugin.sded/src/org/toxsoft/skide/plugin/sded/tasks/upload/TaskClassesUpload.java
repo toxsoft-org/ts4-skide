@@ -304,7 +304,10 @@ public class TaskClassesUpload
     ISkConnection destConn = REFDEF_IN_OPEN_SK_CONN.getRef( aInput );
     destCoreApi = destConn.coreApi();
     int uploadedClassesCount = uploadClasses();
-    lop.finished( ValidationResult.info( FMT_INFO_CLASSES_UPLOADED, uploadedClassesCount ) );
+    ValidationResult vr = ValidationResult.info( FMT_INFO_CLASSES_UPLOADED, uploadedClassesCount );
+    lop.finished( vr );
+    REFDEF_OUT_TASK_RESULT.setRef( aOutput, vr );
+
   }
 
 }
