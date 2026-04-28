@@ -84,7 +84,9 @@ public class TaskObjectsCodegen
     ISkConnectionSupplier cs = tsContext().get( ISkConnectionSupplier.class );
     writeConstants( cs.defConn(), jw );
     jw.writeFile();
-    lop.finished( ValidationResult.info( FMT_INFO_JAVA_INTERFACE_WAS_GENERATED, interfaceName ) );
+    ValidationResult vr = ValidationResult.info( FMT_INFO_JAVA_INTERFACE_WAS_GENERATED, interfaceName );
+    lop.finished( vr );
+    REFDEF_OUT_TASK_RESULT.setRef( aOutput, vr );
   }
 
 }
