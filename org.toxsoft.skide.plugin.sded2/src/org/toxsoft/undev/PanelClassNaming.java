@@ -1,7 +1,6 @@
 package org.toxsoft.undev;
 
 import static org.toxsoft.core.tslib.gw.IGwHardConstants.*;
-import static org.toxsoft.uskat.core.gui.sded2.l10n.ISded2SharedResources.*;
 
 import org.eclipse.swt.*;
 import org.eclipse.swt.custom.*;
@@ -157,8 +156,8 @@ public class PanelClassNaming
     CLabel l;
     // ID
     l = new CLabel( backplane, SWT.LEFT );
-    l.setText( STR_SCI_CLASS_ID );
-    l.setToolTipText( STR_SCI_CLASS_ID_D );
+    // l.setText( STR_SCI_CLASS_ID );
+    // l.setToolTipText( STR_SCI_CLASS_ID_D );
 
     // nmName
     // parent ID
