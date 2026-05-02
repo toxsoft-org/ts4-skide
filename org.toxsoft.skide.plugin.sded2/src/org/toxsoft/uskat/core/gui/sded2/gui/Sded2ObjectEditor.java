@@ -21,8 +21,8 @@ import org.toxsoft.uskat.core.connection.*;
 import org.toxsoft.uskat.core.gui.conn.*;
 import org.toxsoft.uskat.core.gui.glib.*;
 import org.toxsoft.uskat.core.gui.glib.widgets.*;
-import org.toxsoft.uskat.core.gui.sded2.km5.skobj.*;
-import org.toxsoft.uskat.core.gui.sded2.km5.sysdecsr.*;
+import org.toxsoft.uskat.core.gui.km5.sded2.skobj.*;
+import org.toxsoft.uskat.core.gui.km5.sded2.sysdecsr.*;
 
 /**
  * Object editor - allows to create, edit and delete objects in object service.<br>

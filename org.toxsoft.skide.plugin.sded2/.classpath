@@ -6,6 +6,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
-	<classpathentry excluding="org/toxsoft/undev/" kind="src" path="src"/>
+	<classpathentry excluding="org/toxsoft/undev/|org/toxsoft/uskat/core/gui/sded2/incub/" kind="src" path="src"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

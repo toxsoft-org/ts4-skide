@@ -23,7 +23,7 @@ import org.toxsoft.uskat.core.connection.*;
 import org.toxsoft.uskat.core.gui.conn.*;
 import org.toxsoft.uskat.core.gui.glib.*;
 import org.toxsoft.uskat.core.gui.glib.widgets.*;
-import org.toxsoft.uskat.core.gui.sded2.km5.sysdecsr.*;
+import org.toxsoft.uskat.core.gui.km5.sded2.sysdecsr.*;
 
 /**
  * Class editor - allows to create, edit and delete classes in {@link ISkCoreApi#sysdescr()}.
