@@ -11,7 +11,7 @@ import org.toxsoft.uskat.core.gui.glib.*;
 import org.toxsoft.uskat.core.utils.*;
 
 /**
- * Panel displays all properties of {@link ISkClassInfo} as a single tree.
+ * Viewer panel displays all properties of {@link ISkClassInfo} as a single tree.
  *
  * @author hazard157
  */
@@ -47,8 +47,7 @@ public class PanelSkClassPropBrowser
 
   @Override
   public boolean isViewer() {
-    // TODO Auto-generated method stub
-    return false;
+    return true;
   }
 
   @Override
