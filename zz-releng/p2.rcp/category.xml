@@ -8,6 +8,7 @@
    <!-- TODO: -->
    <bundle id="org.toxsoft.skide.core"/>
    <bundle id="org.toxsoft.skide.plugin.sded"/>
+   <bundle id="org.toxsoft.skide.plugin.sded2"/>
    <bundle id="org.toxsoft.skide.plugin.exconn"/>
    <bundle id="org.toxsoft.skide.plugin.project"/>
    <bundle id="org.toxsoft.skide.plugin.template"/>
@@ -18,6 +19,7 @@
    <!-- TODO: -->
    <bundle id="org.toxsoft.skide.core.source"/>
    <bundle id="org.toxsoft.skide.plugin.sded.source"/>
+   <bundle id="org.toxsoft.skide.plugin.sded2.source"/>
    <bundle id="org.toxsoft.skide.plugin.exconn.source"/>
    <bundle id="org.toxsoft.skide.plugin.project.source"/>
    <bundle id="org.toxsoft.skide.plugin.template.source"/>
