@@ -21,14 +21,14 @@
       <product
             application="org.eclipse.e4.ui.workbench.swt.E4Application"
             description="SkIDE launcher"
-            name="SkIDE">
+            name="CI SkIDE">
          <property
                name="applicationXMI"
                value="platform:/plugin/org.toxsoft.core.tsgui.mws/Application.e4xmi">
          </property>
          <property
                name="appName"
-               value="SkIDE">
+               value="CI SkIDE">
          </property>
       </product>
    </extension>
