@@ -21,14 +21,14 @@
       <product
             application="org.eclipse.e4.ui.workbench.swt.E4Application"
             description="SkIDE launcher"
-            name="Samsung Irkaz (SI) SkIDE">
+            name="BI SkIDE">
          <property
                name="applicationXMI"
                value="platform:/plugin/org.toxsoft.core.tsgui.mws/Application.e4xmi">
          </property>
          <property
                name="appName"
-               value="Samsung Irkaz (SI) SkIDE">
+               value="BI SkIDE">
          </property>
       </product>
    </extension>
